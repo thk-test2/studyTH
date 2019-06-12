@@ -14,11 +14,19 @@
 ### 그라운드 룰
 - 적극적인 참여
 - 코드나 문서를 자유롭게 수정하되 Commit에 기록하기
+- Commit 메시지 작성시 구분하기 쉽도록 태그 붙이기.
+Ex)
+  -  [general] Add commit Rule
+  -  [scoring] Update scoringServer README
+  -  [studyJB] Upload Cpp uniform initializer
+  -  [studyTH] Solving Baekjoon p.1000
+    
 
 ### 프로젝트 아이디어 리스트
 1. 주식 시장 분석 Tool
-- 증권회사 API 사용
-- Deep learning 접목
+- 증권회사 API 사용: Window 개발환경(?)
+- Deep learning 접목 데이터 분석
+- Cpp 서버 앱 필요할수도
 
 ### 기타
 - 마크다운 문법: https://gist.github.com/ihoneymon/652be052a0727ad59601
