@@ -23,10 +23,8 @@ Ex)
     
 
 ### 프로젝트 아이디어 리스트
-1. 주식 시장 분석 Tool
-- 증권회사 API 사용: Window 개발환경(?)
-- Deep learning 접목 데이터 분석
-- Cpp 서버 앱 필요할수도
+1. 자산시장 분석 툴
+2. 코딩 테스트 채점 서버
 
 ### 기타
 - 마크다운 문법: https://gist.github.com/ihoneymon/652be052a0727ad59601
