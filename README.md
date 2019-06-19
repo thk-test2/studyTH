@@ -15,7 +15,7 @@
 - 적극적인 참여
 - 코드나 문서를 자유롭게 수정하되 Commit에 기록하기
 - Commit 메시지 작성시 구분하기 쉽도록 태그 붙이기.
-Ex)
+- 예제)
   -  [general] Add commit Rule
   -  [scoring] Update scoringServer README
   -  [studyJB] Upload Cpp uniform initializer
