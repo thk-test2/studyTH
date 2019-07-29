@@ -1,4 +1,6 @@
 
+# 틀림
+
 from itertools import combinations_with_replacement
 from itertools import product
 import operator
@@ -7,16 +9,32 @@ channel = int(input())
 broken_n = int(input())
 broken_button = input().split()
 
+channel_list = list(str(channel))
+channel_in_buttons = True
+# print(channel_list)
+
+buttons = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+for i in broken_button:
+    buttons.remove(i)
+
 if channel == 100:
     print('0')
     exit()
+else:
+    for i in channel_list:
+        if i in buttons:
+            # print('test')
+            continue
+        else:
+            # print('test2')
+            channel_in_buttons = False
+            break
 
-buttons = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+if channel_in_buttons:
+    print(min(abs(channel-100),len(channel_list)))
+    exit()
 
 # print(channel, broken_n, broken_button)
-
-for i in broken_button:
-    buttons.remove(i)
 
 final_buttons = []
 
