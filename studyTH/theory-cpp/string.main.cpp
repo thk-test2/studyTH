@@ -44,12 +44,6 @@ class MyString {
   int find(int find_from, char c) const;
 
   int compare(const MyString& str) const;
-
-  inline bool operator==(const MyString& str) { return !compare(str); }
-
-  MyString& operator+(const MyString& str) { return insert(length(), str); }
-
-  inline char& operator[] (const int index) { return string_content[index]; }
 };
 
 MyString::MyString(char c) {
@@ -281,17 +275,4 @@ int main() {
   MyString str2("abcde");
 
   std::cout << "str1 and str2 compare : " << str1.compare(str2) << std::endl;
-
-  str1 = str1+str2;
-  str1.println();
-
-  if(str1 == str2)
-    std::cout << "They are same" << std::endl;
-  else
-    std::cout << "They are different" << std::endl;
-
-  str1[5] = 'z';
-  str1.println();  
-
-  return 0;
 }
