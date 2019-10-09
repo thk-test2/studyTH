@@ -135,6 +135,125 @@ https://modoocode.com/135
 10장. STL 활용법 익히기
 
 12장. rvalue와 move semantic 확실히 하고 넘어갈것
+12 - 1. rvalue 레퍼런스와 이동 생성자
+  1) 복사 생략
+  - C++ 컴파일러는 복사를 생략할 때가 있다. 
+    불필요한 복사는 지양해야 하며 rvalue를 이용해 이동을 구현해 줄 때가 있다.
+
+  2) lvalue와 rvalue
+  - 모든 C++ expression은 크게 두 가지 카테고리로 구분된다.
+  - lvalue는 주소값을 취할 수 있는 값으로 주로 좌측에 위치.
+    정빈이의 정의로는 사용자가 정의한 변수라고 한다.
+  - rvalue는 주소값을 가져올 수 없는 임시값.
+    정빈's 정의는 사용자가 정의하지 않았는데 컴파일러가 연산과정중 생성하는 변수(메모리)
+
+  - & 연산자 한번만 쓰면 lvalue의 레퍼런스를 얻을 수 있다.
+  - MyString str3 = str1 + str2;
+  => MyString str3(str1.operator+(str2));
+  => MyString MyString::operator+(const MyString &s) 가 어떻게 MyString(const MyString &str); 를 호출할 수 있을까?
+  => & 가 lvalue reference를 의미하지만 예외적으로 const T& 의 타입에 한해서 rvalue도 reference로 받을 수 있다.
+
+  3) 이동은 어떻게?
+  - 기존 복사 생성자에서는 const MyString & 로 받았기 때문에 string_content의 값의 변경이 불가능
+  - rvalue만 받을 수 있는 방법이 있어야 함
+
+  4) rvalue reference
+  - &를 두 개 사용해서 정의
+
+  5) 이동 생성자 작성 시 주의할 점
+  - MyString을 C++ 컨테이너 들, vector 에 넣기 위해서는 이동 생성자에 noexcept 키워드를 써야함
+  - 이동하다가 예외 발생시 메모리 해제하면 안되기 때문.
+  - vector의 경우 이동 생성자가 noexcept 가 아닌 이상 이동 생성자를 사용하지 않는다.
+
+12 - 2. Move 문법 (std::move semantics) 과 완벽한 전달 (perfect forwarding)
+  1) move semantics
+  - 좌측값도 복사가 아닌 이동을 시키고 싶다면?
+  - swap 할 때 std::move() 로 lvalue를 rvalue로 캐스팅 시키고, 대입 연산자를 &&을 받도록 재정의
+
+  2) Perfect forwarding와 Universal Reference
+  - wrapper 함수를 생각해보자. vector의 emplace_back 함수는 인자를 받으면 알아서 객체를 생성해서 추가시킴
+  - 템플릿 인자 T에 대해서 우측값 레퍼런스를 받는 형태를 Universal reference라고 한다.
+  - 이는 rvalue만 받는 레퍼런스와 다르다.
+    rvalue 뿐만 아니라 lvalue도 받으며, reference collapsing rule에 따라 T의 타입을 추론함
+  - typedef int& T;
+    T& r1;   // int& &; r1 은 int&
+    T&& r2;  // int & &&;  r2 는 int&
+
+    typedef int&& U U& r3;  // int && &; r3 는 int&
+    U&& r4;                 // int && &&; r4 는 int&&
+  - 즉 쉽게 생각하면 & 는 1 이고 && 은 0 이라 둔 뒤에, OR 연산을 한다고 보면 됩니다.
+  - forward 함수는 u가 우측값 레퍼런스 일 때만 move를 적용한 것처럼 동작
+
+13 - 1. 객체의 유일한 소유권 - unique_ptr
+  1) 자원 관리의 중요성
+  - C++에서 한번 획득한 자원은 직접 해제해주지 않는 이상 남아있음
+    예외 발생 등 다양한 이유로 메모리가 남아있게 됨
+  - RAII: Resource Acquisition Is Initialization
+    자원 관리를 스택에 할당한 객체를 통해 수행하는 것이다.
+  - 예외가 발생해서 함수를 빠져나가더라도, 스택에 정의되어 있는 모든 객체들은 빠짐없이 소멸자가 호출
+  
+  2) unique_ptr : 객체의 유일한 소유권
+  - 메모리 관리의 두가지 문제점: leak과 double free
+  - 특정 객체에 유일한 소유권을 부여하는 포인터 객체를 unique_ptr 이라고 한다.
+  - -> 연산자를 오버로드 해서 포인터와 동일하게 사용 가능
+
+  3) = delete 키워드
+  - C++ 11에 추가된 기능으로 메소드 삭제. 명시적으로 쓰지 말라는 뜻
+  - unique_ptr의 복사 생성자는 삭제되어 복사할 수 없음
+  - move semantic으로 소유권 이전은 가능하다. 이동 생성자는 있음
+
+  4) unique_ptr을 함수에 레퍼런스로 전달은 가능하나, 취지에 맞지 않다.
+  - ptr.get()을 써서 임시 접근
+
+  5) std::make_unique 를 써서 편하게 생성하자. 템플릿 인자로 전달된 클래스의 생성자들에게 perfect forwarding 수행
+    std::unique_ptr<Foo> ptr(new Foo(3, 5));
+    auto ptr = std::make_unique<Foo>(3, 5);
+
+  6) vector 컨테이너에 넣으려면 move를 쓰거나, emplace_back 이용하면 직접 생성하면서 넣을 수 있음.
+     emplace_back이 직접 perfect forwarding 수행
+
+    - std::vector<std::unique_ptr<A>> vec;
+      std::unique_ptr<A> pa(new A(1));
+
+      vec.push_back(std::move(pa));  // 잘 실행됨
+
+    - std::vector<std::unique_ptr<A>> vec;
+
+      // vec.push_back(std::unique_ptr<A>(new A(1))); 과 동일
+      vec.emplace_back(new A(1));
+
+
+13 - 2. 자원을 공유할 때 - shared_ptr 와 weak_ptr
+  1) shared_ptr 로 객체를 가리킬 경우 다른 shared_ptr 역시 그 객체를 가리킬 수 있다.
+  - 몇 개의 shared_ptr 들이 원래 객체를 가리키는지 알아야한다. 
+    이를 reference count 라고 하며, 0가 되어야 객체를 해제할 수 있음
+  - shared_ptr 끼리 공유하는 control block에 ref count를 기록함
+  - make_shared를 통해 동적할당 횟수를 줄이자.
+    => std::shared_ptr<A> p1(new A());
+	=> std::shared_ptr<A> p1 = std::make_shared<A>();
+  
+  2) shared_ptr 은 인자로 주소값이 전달되면, 자기가 해당 객체를 첫번째로 소유하는 것처럼 행동함
+  - A* a = new A();
+    std::shared_ptr<A> pa1(a);
+    std::shared_ptr<A> pa2(a);
+  - 위의 경우 제어블록이 따로 생성됨. 
+    this를 사용해 shared_ptr을 만들고 싶으면 enable_shared_from_this를 상속
+
+  3) weak_ptr
+  - 순환 참조 문제 해결을 위해 등장. 스마트 포인터처럼 객체를 안전하게 참조하지만, 참조 개수를 늘리지는 않음
+  - weak_ptr 자체로는 원래 객체를 참조할 수 없고, 반드시 shared_ptr로 변환해서 사용
+  - 가리키고 있는 객체가 이미 소멸되었다면 empty shared_ptr로 변환되고,
+    아닐경우 해당 객체를 가리키는 shared_ptr 로 변환된다.
+
+  - shared_ptr의 제어블록에는 weak count도 존재한다.
+  - shared_ptr은 0개 지만 아직 weak_ptr이 남아있을 때, 물론 객체는 해제되어 있는 상태이지만
+    제어블록마저 해제해 버리면 제어 블록에서 참조 카운트가 0이라는 사실을 알 수 없다.
+
+13장 연습문제
+  - 가계도 관리 라이브러리
+
+14. 함수를 객체로! (C++ std::function, std::mem_fn, std::bind)
+
 
 15장. Thread : 매우 중요하고 프로젝트도 진행할 것
 
