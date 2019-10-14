@@ -253,14 +253,115 @@ https://modoocode.com/135
   - 가계도 관리 라이브러리
 
 14. 함수를 객체로! (C++ std::function, std::mem_fn, std::bind)
+  1) Callable : ()를 붙여서 호출 할 수 있는 모든 것
+  - struct S {
+      void operator()(int a, int b) { std::cout << "a + b = " << a + b << std::endl; }
+    };
+  - auto f = [](int a, int b) { std::cout << "a + b = " << a + b << std::endl; };
+    f(3, 5);
+
+  2) std::function
+  - Callable 들을 객체의 형태로 보관할 수 있는 std::function 클래스 제공
+  - std::function<void()> f3 = []() { std::cout << "Func3 호출! " << std::endl; };
+
+  3) 멤버 함수를 std::function 으로 받으려면
+  - 멤버 함수들은 구현상 자신을 호출한 객체를 암묵적 인자로 받고 있다.
+  - std::function<int()> f1 = a.some_func;
+    => std::function<int(A&)> f1 = &A::some_func;
+  - 멤버 함수들의 경우 암시적 변환이 발생하지 않으므로 & 연산자를 통해 명시적으로 주소값을 전달해줘야 합니다.
+
+  - mem_fn()을 쓰면 편리하게 전달할 수 있다.
+    하지만 <functional> 헤더를 추가해야 하므로 람다 함수를 쓰는 경우가 많음.
+
+  4) std::bind
+  - 함수 객체 생성시에 인자를 특정한 것으로 지정할 수 있음
+  - std::bind(add, 2, std::placeholders::_1);
+
+  - 레퍼런스를 인자로 전달할 때 복사를 방지하기 위해 std::ref 사용함.
+    // s1 이 그대로 전달된 것이 아니라 s1 의 복사본이 전달됨!
+    auto do_something_with_s1 = std::bind(do_something, s1, std::placeholders::_1);
+  =>
+    auto do_something_with_s1 =
+      std::bind(do_something, std::ref(s1), std::placeholders::_1);
 
 
 15장. Thread : 매우 중요하고 프로젝트도 진행할 것
 
+15 - 1. 동시에 실행을 시킨다고? - C++ 쓰레드(thread)
+  1) 병렬 처리 했을 때 효율적인 로직을 thread를 생성하여 수행함
+  - 같은 프로세스 내의 thread는 메모리를 공유한다.
+
+  2) 사용법
+  - <thread> 포함하여 사용함
+  - thread t1(func1);
+    thread t2(func2);
+    thread t3(func3);
+  - join() 이나 detach()를 안 쓰면 메인 프로그램 종료시 비정상 종료가 일어남
+
+  3) thread 로 인자 전달
+  - thread 생성자의 첫번째 인자로 함수 (정확히는 Callable 은 다 됩니다) 를 전달하고,
+    이어서 해당 함수에 전달할 인자들을 쭈르륵 써주면 됩니다.
+  - thread(worker, data.begin() + i * 2500, data.begin() + (i + 1) * 2500,
+       &partial_sums[i])
+  - 출력시 cout 으로는 보장이 되지 않으므로 printf를 씀
+
+15 - 2. C++ 뮤텍스(mutex) 와 조건 변수(condition variable)
+  1) Race Condition
+  - thread 끼리 메모리를 공유하기 때문에 비정상 결과 가능
+  - 어셈블리 수준으로 가면 여러 줄이 수행되기 때문
+
+  2) mutex
+  - 한번에 하나의 쓰레드만 접근할 수 있도록 함
+  - 한 쓰레드만 실행될 수 있는 부분을 critical section 이라 한다.
+  - deadlock의 위험을 스마트 포인터를 써서 어느정도 회피한다.
+    std::lock_guard<std::mutex> lock(m);
+
+  - unique_ptr을 써도 모든 deadlock을 회피할 수 없다.
+    따라서 check가 필요함
+      if (!m1.try_lock()) {
+        m2.unlock();
+        continue;
+      }
+
+  3) deadlock 회피 가이드 라인
+  - 중첩된 Lock 을 사용하는 것을 피해라
+  - Lock 을 소유하고 있을 때 유저 코드를 호출하는 것을 피해라
+  - Lock 들을 언제나 정해진 순서로 획득해라
+
+  4) 생산자(Producer) 와 소비자(Consumer) 패턴
+  - 생산자는 일감을 가져오고 소비자는 일을 수행한다.
+  - 생산자가 work queue에 일을 넣을때 소비자는 loop 돌면서 체크하는 것이 아니라
+    필요할 때 일어나면 된다.
+  - 이 때 condition_variable 을 쓴다.
+  - Consumer
+    std::unique_lock<std::mutex> lk(*m);
+    cv->wait(lk,
+         [&] { return !downloaded_pages->empty() || *num_processed == 25; });
+
+  - Producer
+    // consumer 에게 content 가 준비되었음을 알린다.
+    cv->notify_one();
+
+  5) 뭘 배웠지?
+  - 여러 쓰레드에서 같은 객체의 값을 수정한다면 Race Condition 이 발생합니다.
+    이를 해결하기 위해서는 여러가지 방법이 있지만, 한 가지 방법으로 뮤텍스를 사용하는 방법이 있습니다.
+
+  - 뮤텍스는 한 번에 한 쓰레드에서만 획득할 수 있습니다. 획득한 뮤텍스는 반드시 반환해야 합니다.
+
+  - lock_guard 나 unique_lock 등을 이용하면 뮤텍스의 획득-반환을 손쉽게 처리할 수 있습니다.
+
+  - 뮤텍스를 사용할 때 데드락이 발생하지 않도록 주의해야 합니다. 데드락을 디버깅하는 것은 매우 어렵습니다.
+
+  - condition_variable 을 사용하면 생산자-소비자 패턴을 쉽게 구현할 수 있습니다.
+
+15 - 3. C++ memory order 와 atomic 객체
+
+15 - 4. C++ future, promise, packaged_task, async
+
 
 16 - 1. C++ 유니폼 초기화(Uniform Initialization)
   1) 균일한 초기화 (Uniform Initialization)
-    - A a(); => C++ 의 컴파일러는 함수의 정의처럼 보이는 것들은 모두 함수의 정의로 해석 
+    - A a(); => C++ 의 컴파일러는 함수의 정의처럼 보이는 것들은 모두 함수의 정의로 해석
     - 생성자를 호출하기 위해 ()를 사용하는 대신에 {}를 사용
     - 큰 차이점은 일부 암시적 타입 변환들을 불허함
       - 부동 소수점 타입에서 정수 타입으로의 변환 (우리의 예시지요)
@@ -319,7 +420,7 @@ https://modoocode.com/135
         - Arggregate 타입 (사용자 정의 생성자, 소멸자가 없으며 모든 데이터 멤버들이 public)
 	      쉽게 말해 pair 같은 애들을 이야기함
 		- constexpr 생성자를 가지며 복사 및 이동 생성자가 없음
-	
+
 	- C++ 14 부터 constexpr 생성자를 지원함으로써 사용자들이 리터럴 타입들을 직접 만들 수 있게 되었습니다.
 
   4) constexpr 생성자
