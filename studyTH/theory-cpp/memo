@@ -1,11 +1,11 @@
 https://modoocode.com/135
 
-1-2. 첫 C++ 프로그램 분석하기
+1 - 2. 첫 C++ 프로그램 분석하기
 - namespace에 이름을 지정하지 않으면, 해당 파일에서만 접근이 가능하고 static으로 동작한다.
 - using namespace std; 는 권장하지 않는다. 너무 거대하고 버전별 차이가 많이 때문
 
 
-2-2. C++은 C 친구일까
+2 - 2. C++은 C 친구일까
 - 레퍼런스 & 로 변수를 받으면 하나의 별명이 된다.
 - 레퍼런스는 정의시 반드시 초기화 되어야 한다. 컴파일시 원래 가리키던 변수의 주소값으로 치환된다.
 - 상수에 대한 참조를 하려면 const 키워드를 사용한다.
@@ -32,11 +32,11 @@ https://modoocode.com/135
 
 
 5 - 2.
-- 두 개의 동등한 객체 사이에서의 이항 연산자는 멤버 함수가 아닌 외부 함수로 오버로딩 하는 것이 좋습니다. 
+- 두 개의 동등한 객체 사이에서의 이항 연산자는 멤버 함수가 아닌 외부 함수로 오버로딩 하는 것이 좋습니다.
   (예를 들어 Complex 의 operator+(const Complex&, const Complex&) 와 같이 말입니다.)
 
-- 두 개의 객체 사이의 이항 연산자 이지만 한 객체만 값이 바뀐다던지 등의 
-  동등하지 않는 이항 연산자는 멤버 함수로 오버로딩 하는 것이 좋습니다. 
+- 두 개의 객체 사이의 이항 연산자 이지만 한 객체만 값이 바뀐다던지 등의
+  동등하지 않는 이항 연산자는 멤버 함수로 오버로딩 하는 것이 좋습니다.
   (예를 들어서 operator+= 는 이항 연산자 이지만 operator+=(const Complex&) 가 낫다)
 
 - 단항 연산자는 멤버 함수로 오버로딩 하는 것이 좋습니다 (예를 들어 operator++ 의 경우 멤버 함수로 오버로딩 합니다)
@@ -137,7 +137,7 @@ https://modoocode.com/135
 12장. rvalue와 move semantic 확실히 하고 넘어갈것
 12 - 1. rvalue 레퍼런스와 이동 생성자
   1) 복사 생략
-  - C++ 컴파일러는 복사를 생략할 때가 있다. 
+  - C++ 컴파일러는 복사를 생략할 때가 있다.
     불필요한 복사는 지양해야 하며 rvalue를 이용해 이동을 구현해 줄 때가 있다.
 
   2) lvalue와 rvalue
@@ -165,6 +165,7 @@ https://modoocode.com/135
   - 이동하다가 예외 발생시 메모리 해제하면 안되기 때문.
   - vector의 경우 이동 생성자가 noexcept 가 아닌 이상 이동 생성자를 사용하지 않는다.
 
+
 12 - 2. Move 문법 (std::move semantics) 과 완벽한 전달 (perfect forwarding)
   1) move semantics
   - 좌측값도 복사가 아닌 이동을 시키고 싶다면?
@@ -184,6 +185,7 @@ https://modoocode.com/135
   - 즉 쉽게 생각하면 & 는 1 이고 && 은 0 이라 둔 뒤에, OR 연산을 한다고 보면 됩니다.
   - forward 함수는 u가 우측값 레퍼런스 일 때만 move를 적용한 것처럼 동작
 
+
 13 - 1. 객체의 유일한 소유권 - unique_ptr
   1) 자원 관리의 중요성
   - C++에서 한번 획득한 자원은 직접 해제해주지 않는 이상 남아있음
@@ -191,7 +193,7 @@ https://modoocode.com/135
   - RAII: Resource Acquisition Is Initialization
     자원 관리를 스택에 할당한 객체를 통해 수행하는 것이다.
   - 예외가 발생해서 함수를 빠져나가더라도, 스택에 정의되어 있는 모든 객체들은 빠짐없이 소멸자가 호출
-  
+
   2) unique_ptr : 객체의 유일한 소유권
   - 메모리 관리의 두가지 문제점: leak과 double free
   - 특정 객체에 유일한 소유권을 부여하는 포인터 객체를 unique_ptr 이라고 한다.
@@ -225,18 +227,18 @@ https://modoocode.com/135
 
 13 - 2. 자원을 공유할 때 - shared_ptr 와 weak_ptr
   1) shared_ptr 로 객체를 가리킬 경우 다른 shared_ptr 역시 그 객체를 가리킬 수 있다.
-  - 몇 개의 shared_ptr 들이 원래 객체를 가리키는지 알아야한다. 
+  - 몇 개의 shared_ptr 들이 원래 객체를 가리키는지 알아야한다.
     이를 reference count 라고 하며, 0가 되어야 객체를 해제할 수 있음
   - shared_ptr 끼리 공유하는 control block에 ref count를 기록함
   - make_shared를 통해 동적할당 횟수를 줄이자.
     => std::shared_ptr<A> p1(new A());
 	=> std::shared_ptr<A> p1 = std::make_shared<A>();
-  
+
   2) shared_ptr 은 인자로 주소값이 전달되면, 자기가 해당 객체를 첫번째로 소유하는 것처럼 행동함
   - A* a = new A();
     std::shared_ptr<A> pa1(a);
     std::shared_ptr<A> pa2(a);
-  - 위의 경우 제어블록이 따로 생성됨. 
+  - 위의 경우 제어블록이 따로 생성됨.
     this를 사용해 shared_ptr을 만들고 싶으면 enable_shared_from_this를 상속
 
   3) weak_ptr
@@ -249,8 +251,10 @@ https://modoocode.com/135
   - shared_ptr은 0개 지만 아직 weak_ptr이 남아있을 때, 물론 객체는 해제되어 있는 상태이지만
     제어블록마저 해제해 버리면 제어 블록에서 참조 카운트가 0이라는 사실을 알 수 없다.
 
+
 13장 연습문제
   - 가계도 관리 라이브러리
+
 
 14. 함수를 객체로! (C++ std::function, std::mem_fn, std::bind)
   1) Callable : ()를 붙여서 호출 할 수 있는 모든 것
@@ -305,6 +309,11 @@ https://modoocode.com/135
        &partial_sums[i])
   - 출력시 cout 으로는 보장이 되지 않으므로 printf를 씀
 
+  4) 생각 해보기
+  - 문제 1
+    피보나치 수열을 멀티 쓰레딩을 활용해서 빠르게 계산할 수 있는 방법은 없을까요?
+
+
 15 - 2. C++ 뮤텍스(mutex) 와 조건 변수(condition variable)
   1) Race Condition
   - thread 끼리 메모리를 공유하기 때문에 비정상 결과 가능
@@ -354,9 +363,107 @@ https://modoocode.com/135
 
   - condition_variable 을 사용하면 생산자-소비자 패턴을 쉽게 구현할 수 있습니다.
 
+
 15 - 3. C++ memory order 와 atomic 객체
+  1) 메모리는 엄청 느리다.
+  - 인텔의 i7-6700의 경우 RAM에서 읽어오는데 최소 42사이클 걸림
+  - Cache를 써서 속도를 보완함.
+  - L1, L2, L3로 갈수록 느리고 크기가 커짐
+  - Cache hit 빈도가 높을수록 빠르게 연산함
+
+  2) 컴퓨터는 우리의 명령을 그대로 수행하지 않는다.
+  - CPU 파이프라이닝을 위해 명령어를 재배치 한다.
+  - Cache에 있는 것을 먼저 처리하기도 한다.
+
+  3) 무엇을 믿어야 하는가?
+  - C++의 모든 객체들은 수정 순서(modification order) 라는 것을 정의할 수 있다.
+  - 여러 쓰레드에서 한 변수가 변화하는 값을 관찰할 때,
+    순서가 거꾸로 되지만 않으면 괜찮다고 본다. 최종값은 같아야 함.
+  - CPU 캐시가 각 코어별로 존재하기 때문
+  - C++에서는 이를 동기화 할 수 있는 도구를 제공한다.
+
+  4) 원자성(atomicity)
+  - C++에서 모든 쓰레드들이 수정 순서에 동의해야만 하는 경우는 모든 연산들이 '원자적'일 때이다.
+  - '원자적' 이란 CPU가 명령어 1개로 처리하는 명령으로, 다른 쓰레드가 끼어들 여지가 전혀 없는 연산
+  - 올바른 연산을 위해 굳이 mutex가 필요 없다.
+  - std::atomic<int> counter(0);
+    => lock add DWORD PTR [rdi], 1
+
+  - atomic 객체의 연산들이 과연 정말 원자적으로 구현될 수 있는지는 is_lock_free()를 호출해서 확인한다.
+
+  5) memory_order
+  - atomic 객체들의 경우 원자적 연산시 메모리 접근방식을 설정 가능
+  - memory_order_relaxed 는 앞서 말했듯이, 메모리 연산들 사이에서 어떠한 제약조건도 없다고 하였습니다.
+    다시 말해 서로 다른 변수의 relaxed 메모리 연산은 CPU 마음대로 재배치 할 수 있습니다
+    (단일 쓰레드 관점에서 결과가 동일하다면).
+
+  - memory_order_acquire와 memory_order_release
+    : producer-consumer 패턴에서 쓰는 좀더 엄격한 기준
+
+  - memory_order_acq_rel
+
+  - memory_order_seq_cst
+    : memory_order_seq_cst 는 메모리 명령의 순차적 일관성(sequential consistency) 을 보장해줍니다.
+    : 순차적 일관성이란, 메모리 명령 재배치도 없고, 모든 쓰레드에서 모든 시점에 동일한 값을 관찰할 수 있는,
+      여러분이 생각하는 그대로 CPU 가 작동하는 방식이라 생각하면 됩니다.
+    : ARM 같은 특정 아키텍쳐에서는 매우 비싼 동기화 비용이 든다.
+
+  6) 생각 해보기
+  - 문제 1
+    std::atomic<bool> 을 사용해서 lock() 과 unlock() 을 만들어보세요.
+    참고로 compare_exchange_strong 함수를 사용하는 것이 도움이 됩니다. compare_exchange_strong 은 아래와 같이 생겼습니다.
+
+    bool compare_exchange_strong(
+      T& expected, T desired, std::memory_order order = std::memory_order_seq_cst);
+
+  - 문제 2
+    위는 atomic_flag 의 test_and_set 함수를 이용해서도 동일하게 만들 수 있습니다. 한 번 다시 만들어보세요!
+    atomic_flag 는 std::atomic<bool> 과 비슷하게 true 혹은 false 만 가질 수 있지만,
+    atomic_flag 는 is_lock_free 가 언제나 참임이 보장됩니다.
+    반면에 std::atomic<bool> 은 그렇지 않습니다. (정확히 말하자면 모든 atomic 객체들은 is_lock_free 가 참인 것이 보장되지 않습니다.)
+
 
 15 - 4. C++ future, promise, packaged_task, async
+  1) synchronous와 asynchronous 실행
+  - HDD 읽기와 다른 Computation을 병행하는 등의 작업
+  - 프로그램의 실행이, 한 갈래가 아니라 여러 갈래로 갈라져서 동시에 진행되는 것을
+    비동기적(asynchronous) 실행 이라고 부릅니다.
+
+  2) std::promise와 std::future
+  - 내가 어떤 쓰레드 T 를 사용해서, 비동기적으로 값을 받아내겠다 라는 의미는,
+    미래에 (future) 쓰레드 T 가 원하는 데이터를 돌려 주겠다 라는 약속 (promise) 라고 볼 수 있습니다.
+  - std::promise<string> p;
+    std::future<string> data = p.get_future();
+  - promise 는 생산자-소비자 패턴에서 마치 생산자 (producer) 의 역할을 수행하고,
+    future 는 소비자 (consumer) 의 역할을 수행한다고 보면 됩니다.
+  - wait_for 을 사용하면 정해진 시간만 기다리고 그냥 진행 가능
+    : future_status 객체를 리턴하는데, future_status::ready, timeout, deferred의 3가지 값이 있음
+
+  3) shared_future
+  - future의 경우 딱 한번만 get을 할 수 있음. 객체가 이동하기 때문.
+  - 여러 쓰레드에서 future을 get 하려면 shared_future를 쓴다.
+
+  4) packaged_task
+  - promise-future 패턴을 asynchronous functor의 리턴값에 간단히 적용할 수 있음
+  - std::packaged_task<int(int)> task(some_task);
+    std::future<int> start = task.get_future();
+
+    thread t(std::move(task), 5);
+
+  5) std::async
+  - promise 나 packaged_task 는 비동기적으로 실행을 하기 위해서는, 쓰레드를 명시적으로 생성해서 실행해야만 했습니다.
+    하지만 std::async 에 어떤 함수를 전달한다면, 아예 쓰레드를 알아서 만들어서 해당 함수를 비동기적으로 실행하고,
+    그 결과값을 future 에 전달합니다.
+  - std::future<int> lower_half_future =
+     std::async(std::launch::async, sum, cref(v), 0, v.size() / 2);
+
+     - std::launch::async : 바로 쓰레드를 생성해서 인자로 전달된 함수를 실행한다.
+     - std::launch::deferred : future 의 get 함수가 호출되었을 때 쓰레드를 생성해서 실행한다.
+
+  6) 생각 해보기 문제
+
+
+15 - 5. C++ 쓰레드풀(ThreadPool) 만들기
 
 
 16 - 1. C++ 유니폼 초기화(Uniform Initialization)
@@ -386,6 +493,7 @@ https://modoocode.com/135
   - 유니폼 초기화 ({} 를 이용한 생성자 호출) 를 통해서 인자 없는 생성자가
     함수의 정의로 오해되는 일을 막을 수 있으며 initializer_list 를 만들어 전달할 수 있습니다.
   - initializer_list 를 통해서 객체를 간단하게 생성할 수 있습니다.
+
 
 16 - 2. constexpr 와 함께라면 컴파일 타임 상수는 문제없어
   - constexpr : 객체나 함수 앞에 붙이면 해당 객체나 함수의 리턴값을 컴파일 타임에 값을 알 수 있다는 뜻
