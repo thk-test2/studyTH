@@ -10,11 +10,12 @@
 - 프로그래밍 실력 키우기
 - 빌드 시스템 Tool 익히기(Make, CMake 등)
 - 시스템 설계 및 최적화 배우기
+- Opensource Contributor
 
-### 공부 방향
+### 세부 계획
 - Cpp 이론공부 및 코딩 꾸준히 하기
-- modern c++(c++ 11부터) 적극 사용하기. 생산성이 향상된다.
-- Python 틈틈이 보기
+- modern c++(c++ 11부터) 적극 사용하기
+- 19년 말까지 Chromium Contribution 하기
 
 ### 그라운드 룰
 - 적극적인 참여
