@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 template <typename T>
 class MyStack {
@@ -16,8 +17,13 @@ public:
     void push(T n) {
         if ( top_ < max_ )
             pstack_[++top_] = n; 
+        std::cout << "+" << std::endl;
     }
-    T pop() { return empty() ? -1 : pstack_[top_--]; }
+    T pop() { 
+        int ret = empty() ? -1 : pstack_[top_--];
+        std::cout << "-" << std::endl;
+        return ret;
+    }
     bool empty() { return top_ == -1 ? true : false; }
     int size() { return top_+1; }
     T top() { return empty() ? -1 : pstack_[top_]; }
@@ -28,23 +34,32 @@ int main() {
     std::cin >> operation_count;
     MyStack<int> _stack(operation_count);
 
-    std::string operation;
+    std::vector<int> myvec;
 
-    for (int i = 0 ; i < operation_count ; i++) {
-        std::cin >> operation;
+    for (int i = operation_count ; i > 0 ; i--)
+        myvec.push_back(i);
 
-        if (operation == "push") {
-            int temp;
-            std::cin >> temp;
-            _stack.push(temp);
+    int number;
+    std::string error_text;
+
+    for (int i = 1 ; i <= operation_count ; i++) {
+        std::cin >> number;
+
+        while ( _stack.top() != number ) {
+            if (_stack.top() < number ) {
+                _stack.push(myvec.back());
+                myvec.pop_back();
+                continue;
+            }
+            else {
+                error_text = "NO";
+                break;
+            }
         }
-        else if( operation == "pop")
-            std::cout << _stack.pop() << std::endl;
-        else if( operation == "size")
-            std::cout << _stack.size() << std::endl;
-        else if( operation == "empty")
-            std::cout << _stack.empty() << std::endl;
-        else if( operation == "top")
-            std::cout << _stack.top() << std::endl;
+        if ( !error_text.empty() ) {
+            std::cout << error_text << std::endl;
+            break;
+        }
+        _stack.pop();
     }
 }
