@@ -23,3 +23,5 @@
      - 또는, 원격 서버에 push를 했을 때 change-id가 없다고 거부하는데, 이때 나오는 명령어를 쳐도 된다.
        ex) scp -p th.kyong@we.lge.com:hooks/commit-msg ~/파일 다운로드 폴더명/commit-msg
 
+3. git ignore 쉽게 만들기
+  - https://www.gitignore.io/
