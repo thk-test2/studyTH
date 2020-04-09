@@ -20,15 +20,15 @@ public:
     }
     
     void scanTree(TreeNode* t, int partial_sum) {
-        if (t == nullptr) {
-            if (partial_sum == sum_)
-                result_ = true;
-            return;
-        }        
-        partial_sum += t->val;
         
-        scanTree(t->left, partial_sum);
-        scanTree(t->right, partial_sum);
+        partial_sum += t->val;
+        if (partial_sum == sum_ && (t->left == nullptr && t->right == nullptr))
+            result_ = true;
+        
+        if (t->left)
+            scanTree(t->left, partial_sum);
+        if (t->right)
+            scanTree(t->right, partial_sum);
     }
 private:
     int sum_ = 0;
