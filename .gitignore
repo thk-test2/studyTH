@@ -1,3 +1,9 @@
 
 # vscode 관련 파일 추적제외함
 .vscode/
+
+# CMake cache 추적 제외
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/
+Makefile
