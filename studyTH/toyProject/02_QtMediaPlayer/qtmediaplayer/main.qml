@@ -1,7 +1,7 @@
 import QtQuick 2.14
 import QtQuick.Window 2.14
 import QtQuick.Controls 2.14
-import qt.mediaplayer 1.0
+import thk.qt.mediaplayer 1.0
 
 Window {
     visible: true
@@ -20,6 +20,7 @@ Window {
             anchors.bottomMargin: 20
             anchors.horizontalCenter: parent.horizontalCenter
             Button {
+                id: button1
                 text: "Play"
             }
             Button {
@@ -28,11 +29,15 @@ Window {
         }
 
         TextField {
-            text: MediaPlayer.userName
-            placeholderText: qsTr("User name")
+            text: MediaPlayer.videoURI
+            placeholderText: qsTr("URL")
             anchors.centerIn: parent
 
-            onTextChanged: MediaPlayer.userName = text
+            onTextChanged: {
+                //MediaPlayer.setVideoURI(text)
+                MediaPlayer.videoURI = text
+                MediaPlayer.print()
+            }
         }
     }
 }

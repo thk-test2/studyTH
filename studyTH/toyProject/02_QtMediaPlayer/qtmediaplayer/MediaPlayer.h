@@ -5,24 +5,26 @@
 #include <QObject>
 #include <QString>
 #include <qqml.h>
+#include <cstdio>
 
 class MediaPlayer : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString userName READ userName WRITE setUserName NOTIFY userNameChanged)
+    Q_PROPERTY(QString videoURI READ videoURI WRITE setVideoURI NOTIFY videoURIChanged)
     QML_ELEMENT
 
 public:
     explicit MediaPlayer(QObject *parent = nullptr);
 
-    QString userName();
-    void setUserName(const QString &userName);
+    QString videoURI();
+    void setVideoURI(const QString &videoURI);
+    void print() { printf("print TEST\n"); }
 
 signals:
-    void userNameChanged();
+    void videoURIChanged();
 
 private:
-    QString m_userName;
+    QString m_videoURI;
 };
 
 #endif // MEDIAPLAYER_H
