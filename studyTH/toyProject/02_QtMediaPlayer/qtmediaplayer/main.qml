@@ -1,6 +1,7 @@
 import QtQuick 2.14
 import QtQuick.Window 2.14
 import QtQuick.Controls 2.14
+import qt.mediaplayer 1.0
 
 Window {
     visible: true
@@ -24,6 +25,14 @@ Window {
             Button {
                 text: "Stop"
             }
+        }
+
+        TextField {
+            text: MediaPlayer.userName
+            placeholderText: qsTr("User name")
+            anchors.centerIn: parent
+
+            onTextChanged: MediaPlayer.userName = text
         }
     }
 }
