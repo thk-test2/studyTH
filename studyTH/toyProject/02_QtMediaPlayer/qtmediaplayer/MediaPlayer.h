@@ -1,11 +1,14 @@
 #ifndef MEDIAPLAYER_H
 #define MEDIAPLAYER_H
 
-#include <QtMultimedia>
 #include <QObject>
 #include <QString>
 #include <qqml.h>
+
+#include <QMediaPlayer>
+
 #include <cstdio>
+#include <memory>
 
 class MediaPlayer : public QObject
 {
@@ -18,13 +21,15 @@ public:
 
     QString videoURI();
     void setVideoURI(const QString &videoURI);
-    void print() { printf("print TEST\n"); }
+    void play();
+    void stop();
 
 signals:
     void videoURIChanged();
 
 private:
     QString m_videoURI;
+    std::unique_ptr<QMediaPlayer> player;
 };
 
 #endif // MEDIAPLAYER_H

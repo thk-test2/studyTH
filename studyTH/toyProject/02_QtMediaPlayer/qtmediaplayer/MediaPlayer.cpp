@@ -1,14 +1,9 @@
 #include "MediaPlayer.h"
 
-#include <QMessageLogger>
-#include <iostream>
-#include <cstdio>
-
 MediaPlayer::MediaPlayer(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    player(std::unique_ptr<QMediaPlayer>(new QMediaPlayer()))
 {
-    std::cout << "TEST: THK" << std::endl;
-    printf("THKTHKTHKTHK\n");
 }
 
 QString MediaPlayer::videoURI()
@@ -23,8 +18,15 @@ void MediaPlayer::setVideoURI(const QString &videoURI)
 
     m_videoURI = videoURI;
     QMessageLogger().debug() << m_videoURI;
-
-    std::cout << "TEST: " << m_videoURI.toStdString() << std::endl;
-    printf("THKTHKTHKTHK\n");
     emit videoURIChanged();
+}
+
+void MediaPlayer::play()
+{
+    printf("THK play\n");
+}
+
+void MediaPlayer::stop()
+{
+    printf("THK stop\n");
 }
