@@ -1,35 +1,27 @@
-#ifndef MEDIAPLAYER_H
-#define MEDIAPLAYER_H
+#ifndef BACKEND_H
+#define BACKEND_H
 
 #include <QObject>
 #include <QString>
 #include <qqml.h>
 
-#include <QMediaPlayer>
-
-#include <cstdio>
-#include <memory>
-
 class MediaPlayer : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString videoURI READ videoURI WRITE setVideoURI NOTIFY videoURIChanged)
+    Q_PROPERTY(QString userName READ userName WRITE setUserName NOTIFY userNameChanged)
     QML_ELEMENT
 
 public:
     explicit MediaPlayer(QObject *parent = nullptr);
 
-    QString videoURI();
-    void setVideoURI(const QString &videoURI);
-    void play();
-    void stop();
+    QString userName();
+    void setUserName(const QString &userName);
 
 signals:
-    void videoURIChanged();
+    void userNameChanged();
 
 private:
-    QString m_videoURI;
-    std::unique_ptr<QMediaPlayer> player;
+    QString m_userName;
 };
 
-#endif // MEDIAPLAYER_H
+#endif // BACKEND_H

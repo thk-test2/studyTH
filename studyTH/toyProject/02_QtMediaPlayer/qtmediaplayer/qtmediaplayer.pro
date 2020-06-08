@@ -27,7 +27,7 @@ QML_IMPORT_PATH =
 QML_DESIGNER_IMPORT_PATH =
 
 CONFIG += qmltypes
-QML_IMPORT_NAME = thk.qt.mediaplayer
+QML_IMPORT_NAME = io.qt.examples.mediaplayer
 QML_IMPORT_MAJOR_VERSION = 1
 
 # Default rules for deployment.

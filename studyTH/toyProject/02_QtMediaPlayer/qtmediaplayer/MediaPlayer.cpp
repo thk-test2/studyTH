@@ -1,32 +1,20 @@
 #include "MediaPlayer.h"
 
 MediaPlayer::MediaPlayer(QObject *parent) :
-    QObject(parent),
-    player(std::unique_ptr<QMediaPlayer>(new QMediaPlayer()))
+    QObject(parent)
 {
 }
 
-QString MediaPlayer::videoURI()
+QString MediaPlayer::userName()
 {
-    return m_videoURI;
+    return m_userName;
 }
 
-void MediaPlayer::setVideoURI(const QString &videoURI)
+void MediaPlayer::setUserName(const QString &userName)
 {
-    if (videoURI == m_videoURI)
+    if (userName == m_userName)
         return;
 
-    m_videoURI = videoURI;
-    QMessageLogger().debug() << m_videoURI;
-    emit videoURIChanged();
-}
-
-void MediaPlayer::play()
-{
-    printf("THK play\n");
-}
-
-void MediaPlayer::stop()
-{
-    printf("THK stop\n");
+    m_userName = userName;
+    emit userNameChanged();
 }
