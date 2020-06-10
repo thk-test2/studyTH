@@ -5,6 +5,8 @@
 #include <QString>
 #include <qqml.h>
 
+class QMediaPlayer;
+
 class MediaPlayer : public QObject
 {
     Q_OBJECT
@@ -16,12 +18,14 @@ public:
 
     QString userName();
     void setUserName(const QString &userName);
-
+    Q_INVOKABLE void start();
+    Q_INVOKABLE void stop();
 signals:
     void userNameChanged();
 
 private:
     QString m_userName;
+    QMediaPlayer* m_player;
 };
 
 #endif // BACKEND_H

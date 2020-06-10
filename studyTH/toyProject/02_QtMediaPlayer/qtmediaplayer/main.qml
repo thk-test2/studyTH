@@ -35,8 +35,8 @@ Window {
                 id: button1
                 text: "Play"
                 onClicked: {
-                    console.log(mediaplayer.userName)
-                    //mediaplayer.start()
+                    //console.log(mediaplayer.userName)
+                    mediaplayer.start()
                 }
             }
             Button {
