@@ -1,6 +1,7 @@
 #include "MediaPlayer.h"
 #include <iostream>
 #include <QMediaPlayer>
+#include <QDirIterator>
 
 MediaPlayer::MediaPlayer(QObject *parent) :
     QObject(parent),
@@ -8,26 +9,41 @@ MediaPlayer::MediaPlayer(QObject *parent) :
 {
     m_player = new QMediaPlayer;
     connect(m_player, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+
+    QDirIterator it(":/music", QDirIterator::Subdirectories);
+    while (it.hasNext()) {
+        //qDebug() << it.next();
+        m_mediaList = it.next();
+    }
 }
 
-QString MediaPlayer::userName()
+QString MediaPlayer::mediaName()
 {
-    return m_userName;
+    return m_mediaName;
 }
 
-void MediaPlayer::setUserName(const QString &userName)
+QString MediaPlayer::mediaList()
 {
-    if (userName == m_userName)
+    return m_mediaList;
+}
+
+void MediaPlayer::setMediaName(const QString &mediaName)
+{
+    if (mediaName == m_mediaName)
         return;
 
-    m_userName = userName;
-    emit userNameChanged();
+    m_mediaName = mediaName;
+    emit mediaNameChanged();
 }
 
 void MediaPlayer::start()
 {
-    std::cout << "Start" << std::endl;
-    m_player->setMedia(QUrl("qrc:/music/5mg.mp3"));
+    QString mediaStr = QString("qrc:/music/"+m_mediaName);
+    std::cout << mediaStr.toStdString() << std::endl;
+
+    std::cout << m_mediaList.toStdString() << std::endl;
+
+    m_player->setMedia(QUrl(mediaStr));
     m_player->setVolume(50);
     m_player->play();
 }

@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/music">
         <file>5mg.mp3</file>
+        <file>5mg-2.mp3</file>
     </qresource>
 </RCC>

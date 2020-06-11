@@ -15,16 +15,30 @@ Window {
         height: 480
         color: "lightblue"
 
+        Text {
+            id: mediaList
+            color: "lightgreen"
+            width: 300
+            height: 100
+            text: "Initial"
+        }
+
         MediaPlayer {
             id: mediaplayer
+            onMediaListChanged: {
+                mediaList.text = mediaplayer.mediaList
+            }
         }
 
         TextField {
-            text: mediaplayer.userName
-            placeholderText: qsTr("User name")
+            text: mediaplayer.mediaName
+            placeholderText: qsTr("Media name")
             anchors.centerIn: parent
 
-            onTextChanged: mediaplayer.userName = text
+            onTextChanged: {
+                console.log(text)
+                mediaplayer.mediaName = text
+            }
         }
 
         Row {
@@ -35,7 +49,6 @@ Window {
                 id: button1
                 text: "Play"
                 onClicked: {
-                    //console.log(mediaplayer.userName)
                     mediaplayer.start()
                 }
             }
