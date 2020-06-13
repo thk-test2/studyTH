@@ -1,5 +1,5 @@
 #include "MediaPlayer.h"
-#include <iostream>
+
 #include <QMediaPlayer>
 #include <QDirIterator>
 
@@ -15,16 +15,7 @@ MediaPlayer::MediaPlayer(QObject *parent) :
         //qDebug() << it.next();
         m_mediaList = it.next();
     }
-}
-
-QString MediaPlayer::mediaName()
-{
-    return m_mediaName;
-}
-
-QString MediaPlayer::mediaList()
-{
-    return m_mediaList;
+    emit mediaListChanged();
 }
 
 void MediaPlayer::setMediaName(const QString &mediaName)
@@ -39,9 +30,8 @@ void MediaPlayer::setMediaName(const QString &mediaName)
 void MediaPlayer::start()
 {
     QString mediaStr = QString("qrc:/music/"+m_mediaName);
-    std::cout << mediaStr.toStdString() << std::endl;
-
-    std::cout << m_mediaList.toStdString() << std::endl;
+    qDebug() << mediaStr;
+    qDebug() << m_mediaList;
 
     m_player->setMedia(QUrl(mediaStr));
     m_player->setVolume(50);
@@ -50,6 +40,6 @@ void MediaPlayer::start()
 
 void MediaPlayer::stop()
 {
-    std::cout << "Stop" << std::endl;
+    qDebug() << "Stop";
     m_player->stop();
 }

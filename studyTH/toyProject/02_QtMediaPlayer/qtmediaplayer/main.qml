@@ -11,22 +11,32 @@ Window {
 
     Rectangle {
         id: root
-        width: 640
-        height: 480
+        anchors.fill: parent
+        //width: 640
+        //height: 480
         color: "lightblue"
 
-        Text {
-            id: mediaList
+        Rectangle {
             color: "lightgreen"
-            width: 300
-            height: 100
-            text: "Initial"
+            anchors.verticalCenter: parent.verticalCenter
+            width: parent.width / 4
+            height: parent.height / 5
+
+            Button {
+                anchors.fill: parent
+                id: mediaList
+                text: mediaplayer.mediaList
+            }
         }
 
         MediaPlayer {
             id: mediaplayer
             onMediaListChanged: {
+                console.log("MediaList changed")
                 mediaList.text = mediaplayer.mediaList
+            }
+            onMediaNameChanged: {
+                console.log("Name changed")
             }
         }
 

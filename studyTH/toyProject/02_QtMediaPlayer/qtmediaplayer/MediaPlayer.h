@@ -17,8 +17,8 @@ class MediaPlayer : public QObject
 public:
     explicit MediaPlayer(QObject *parent = nullptr);
 
-    QString mediaName();
-    QString mediaList();
+    QString mediaName() { return m_mediaName; }
+    QString mediaList() { return m_mediaList; }
     void setMediaName(const QString &mediaName);
 
     Q_INVOKABLE void start();
