@@ -25,16 +25,16 @@ Window {
             Button {
                 anchors.fill: parent
                 id: mediaList
-                text: mediaplayer.mediaList
+                text: mediaplayer.mediaName
+                onClicked: {
+                    mediaplayer.setMediaName(mediaList.text)
+                    mediaplayer.start()
+                }
             }
         }
 
         MediaPlayer {
             id: mediaplayer
-            onMediaListChanged: {
-                console.log("MediaList changed")
-                mediaList.text = mediaplayer.mediaList
-            }
             onMediaNameChanged: {
                 console.log("Name changed")
             }

@@ -12,10 +12,8 @@ MediaPlayer::MediaPlayer(QObject *parent) :
 
     QDirIterator it(":/music", QDirIterator::Subdirectories);
     while (it.hasNext()) {
-        //qDebug() << it.next();
-        m_mediaList = it.next();
+        m_mediaName = it.next();
     }
-    emit mediaListChanged();
 }
 
 void MediaPlayer::setMediaName(const QString &mediaName)
@@ -29,9 +27,8 @@ void MediaPlayer::setMediaName(const QString &mediaName)
 
 void MediaPlayer::start()
 {
-    QString mediaStr = QString("qrc:/music/"+m_mediaName);
+    QString mediaStr = QString("qrc"+m_mediaName);
     qDebug() << mediaStr;
-    qDebug() << m_mediaList;
 
     m_player->setMedia(QUrl(mediaStr));
     m_player->setVolume(50);
