@@ -8,9 +8,9 @@ class ReceiverWidget : public QWidget
     Q_OBJECT
 public:
     explicit ReceiverWidget(QWidget *parent = nullptr);
-
+    void paintEvent(QPaintEvent *event) override;
 public slots:
-    void showWidget();
+    void showWidget(QWidget* parent = nullptr);
 signals:
 };
 

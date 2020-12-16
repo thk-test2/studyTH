@@ -14,8 +14,10 @@ public:
     MainWidget(QWidget *parent = nullptr);
     ~MainWidget();
     void paintEvent(QPaintEvent* event) override;
+public slots:
+    void showReceiverWidget();
 signals:
-    void showReceiver();
+    void showReceiver(QWidget*);
 private:
     QPushButton* m_button;
     ReceiverWidget* m_receiver;
