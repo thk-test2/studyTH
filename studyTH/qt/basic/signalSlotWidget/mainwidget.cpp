@@ -5,20 +5,35 @@
 #include <QPushButton>
 #include <QDebug>
 #include <QTimer>
+#include <QTextEdit>
+#include <QGridLayout>
 
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent),
-      m_button(new QPushButton("&Download", this)),
+//      m_button(new QPushButton("&Download", this)),
       m_receiver(new ReceiverWidget())
 {
-    connect(m_button, SIGNAL(pressed()), this, SLOT(showReceiverWidget()));
-    connect(this, SIGNAL(showReceiver(QWidget*)), m_receiver, SLOT(showWidget(QWidget*)));
+    QLabel *label = new QLabel(this);
+    label->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+    label->setText("Text Editor");
 
-//    QLabel *label = new QLabel(this);
-//    label->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-//    label->setText("first line\nsecond line");
-//    label->setAlignment(Qt::AlignBottom | Qt::AlignRight);
-//    label->move(this->geometry().center());
+    QTextEdit* tEdit = new QTextEdit("TEST", this);
+
+    QPushButton* button1 = new QPushButton("Save");
+    QPushButton* button2 = new QPushButton("Load");
+
+    QGridLayout* layout = new QGridLayout(this);
+    layout->addWidget(label, 0, 0, 1, 2);
+    layout->addWidget(tEdit, 1, 0, 1, 2);
+    layout->addWidget(button1, 2, 0);
+    layout->addWidget(button2, 2, 1);
+
+    connect(button1, &QPushButton::pressed, [](){
+        qDebug() << "Saved";
+    });
+
+//    connect(m_button, &QPushButton::pressed, this, &MainWidget::showReceiverWidget);
+//    connect(this, &MainWidget::showReceiver, m_receiver, &ReceiverWidget::showWidget);
 
 //    QTimer *timer = new QTimer(this);
 //    connect(timer, SIGNAL(timeout()), this, SIGNAL(showReceiver()));

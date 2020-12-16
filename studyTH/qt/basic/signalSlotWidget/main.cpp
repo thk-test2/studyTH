@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     QMainWindow mW;
     MainWidget* w = new MainWidget(&mW);
 
-    w->setGeometry(0,0,100, 100);
+    w->setGeometry(0,0,300, 300);
     w->setStyleSheet("border: 1px solid red");
     mW.setMinimumSize(300, 300);
 
