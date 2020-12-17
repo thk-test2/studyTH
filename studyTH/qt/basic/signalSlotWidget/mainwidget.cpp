@@ -7,37 +7,56 @@
 #include <QTimer>
 #include <QTextEdit>
 #include <QGridLayout>
+#include <QFileDialog>
 
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent),
-//      m_button(new QPushButton("&Download", this)),
-      m_receiver(new ReceiverWidget())
+      //      m_button(new QPushButton("&Download", this)),
+      m_receiver(new ReceiverWidget()),
+      m_tEdit(new QTextEdit("TEST", this))
 {
     QLabel *label = new QLabel(this);
     label->setFrameStyle(QFrame::Panel | QFrame::Sunken);
     label->setText("Text Editor");
-
-    QTextEdit* tEdit = new QTextEdit("TEST", this);
 
     QPushButton* button1 = new QPushButton("Save");
     QPushButton* button2 = new QPushButton("Load");
 
     QGridLayout* layout = new QGridLayout(this);
     layout->addWidget(label, 0, 0, 1, 2);
-    layout->addWidget(tEdit, 1, 0, 1, 2);
+    layout->addWidget(m_tEdit, 1, 0, 1, 2);
     layout->addWidget(button1, 2, 0);
     layout->addWidget(button2, 2, 1);
 
-    connect(button1, &QPushButton::pressed, [](){
-        qDebug() << "Saved";
-    });
+    connect(button1, &QPushButton::pressed, this, &MainWidget::saveFile);
+    connect(button2, &QPushButton::pressed, this, &MainWidget::loadFile);
 
-//    connect(m_button, &QPushButton::pressed, this, &MainWidget::showReceiverWidget);
-//    connect(this, &MainWidget::showReceiver, m_receiver, &ReceiverWidget::showWidget);
+    //    connect(m_button, &QPushButton::pressed, this, &MainWidget::showReceiverWidget);
+    //    connect(this, &MainWidget::showReceiver, m_receiver, &ReceiverWidget::showWidget);
 
-//    QTimer *timer = new QTimer(this);
-//    connect(timer, SIGNAL(timeout()), this, SIGNAL(showReceiver()));
-//    timer->start(1);
+    //    QTimer *timer = new QTimer(this);
+    //    connect(timer, SIGNAL(timeout()), this, SIGNAL(showReceiver()));
+    //    timer->start(1);
+}
+
+void MainWidget::saveFile()
+{
+    qDebug() << "Save File";
+    QString filename = QFileDialog::getSaveFileName(this);
+    QFile file( filename );
+
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
+        return;
+
+    QTextStream out(&file);
+    out << m_tEdit->toPlainText();
+
+    file.close();
+}
+
+void MainWidget::loadFile()
+{
+    qDebug() << "Load File";
 }
 
 void MainWidget::showReceiverWidget()
