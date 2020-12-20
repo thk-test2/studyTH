@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef MAINWIDGET_H
+#define MAINWIDGET_H
 
 #include <QWidget>
 
@@ -26,4 +26,4 @@ private:
     PainterWidget* m_painter;
     QTextEdit* m_tEdit;
 };
-#endif // MAINWINDOW_H
+#endif // MAINWIDGET_H

@@ -18,10 +18,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwidget.cpp \
+    mainwindow.cpp \
     painterwidget.cpp
 
 HEADERS += \
     mainwidget.h \
+    mainwindow.h \
     painterwidget.h
 
 # Default rules for deployment.

@@ -1,23 +1,13 @@
-#include "mainwidget.h"
+#include "mainwindow.h"
 
 #include <QApplication>
-#include <QMainWindow>
-#include <QGraphicsAnchorLayout>
-#include <QDebug>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QMainWindow mW;
-    MainWidget* w = new MainWidget(&mW);
-
-    w->setGeometry(0,0,300, 300);
-    w->setStyleSheet("border: 1px solid red");
+    MainWindow mW;
     mW.setMinimumSize(300, 300);
-
-//    w.move(mW.geometry().center());
-    qDebug() << w->sizeHint();
     mW.show();
     return a.exec();
 }
