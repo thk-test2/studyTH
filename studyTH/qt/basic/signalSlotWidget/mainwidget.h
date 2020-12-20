@@ -17,7 +17,7 @@ public:
     void paintEvent(QPaintEvent* event) override;
 public slots:
     void saveFile();
-    void loadFile();
+    void openFile();
     void showReceiverWidget();
 signals:
     void showReceiver(QWidget*);

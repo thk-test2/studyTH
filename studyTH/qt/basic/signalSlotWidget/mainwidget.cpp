@@ -29,7 +29,7 @@ MainWidget::MainWidget(QWidget *parent)
     layout->addWidget(button2, 2, 1);
 
     connect(button1, &QPushButton::pressed, this, &MainWidget::saveFile);
-    connect(button2, &QPushButton::pressed, this, &MainWidget::loadFile);
+    connect(button2, &QPushButton::pressed, this, &MainWidget::openFile);
 
     //    connect(m_button, &QPushButton::pressed, this, &MainWidget::showReceiverWidget);
     //    connect(this, &MainWidget::showReceiver, m_receiver, &ReceiverWidget::showWidget);
@@ -54,9 +54,19 @@ void MainWidget::saveFile()
     file.close();
 }
 
-void MainWidget::loadFile()
+void MainWidget::openFile()
 {
-    qDebug() << "Load File";
+    qDebug() << "Open File";
+    QString filename = QFileDialog::getOpenFileName(this);
+    QFile file( filename );
+
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
+        return;
+
+    QTextStream in(&file);
+    m_tEdit->setPlainText(in.readAll());
+
+    file.close();
 }
 
 void MainWidget::showReceiverWidget()
