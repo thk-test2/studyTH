@@ -9,10 +9,9 @@ PainterWidget::PainterWidget(QWidget *parent) : QWidget(parent)
 
 }
 
-void PainterWidget::showWidget(QWidget* parent)
+void PainterWidget::showWidget()
 {
-    qDebug() << Q_FUNC_INFO << parent;
-    this->setParent(parent);
+    qDebug() << Q_FUNC_INFO;
     this->show();
 }
 

@@ -1,13 +1,30 @@
 #include "mainwindow.h"
-#include "mainwidget.h"
+#include "texteditor.h"
+#include "painterwidget.h"
 
+#include <QMenuBar>
 #include <QDebug>
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , m_mode(new QMenu("Mode Change", this))
+    , m_textMode(new QAction("Text Editor mode", m_mode))
+    , m_painterMode(new QAction("Painter Mode", m_mode))
+    , m_texteditor(new TextEditor(this))
+    , m_painter(new PainterWidget())
 {
-    MainWidget* w = new MainWidget(this);
+    m_texteditor->setGeometry(0,30,300, 270);
+    m_texteditor->setStyleSheet("border: 1px solid red");
+    qDebug() << m_texteditor->sizeHint();
 
-    w->setGeometry(0,0,300, 300);
-    w->setStyleSheet("border: 1px solid red");
-    qDebug() << w->sizeHint();
+    setUpMenuBar();
+}
+
+void MainWindow::setUpMenuBar()
+{
+    m_mode->addAction(m_textMode);
+    m_mode->addAction(m_painterMode);
+    menuBar()->addMenu(m_mode);
+
+    connect(m_painterMode, &QAction::triggered, m_painter, &PainterWidget::showWidget);
 }

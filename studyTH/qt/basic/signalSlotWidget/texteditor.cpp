@@ -1,5 +1,4 @@
-#include "mainwidget.h"
-#include "painterwidget.h"
+#include "texteditor.h"
 
 #include <QLabel>
 #include <QPushButton>
@@ -9,10 +8,8 @@
 #include <QGridLayout>
 #include <QFileDialog>
 
-MainWidget::MainWidget(QWidget *parent)
+TextEditor::TextEditor(QWidget *parent)
     : QWidget(parent),
-      m_changeButton(new QPushButton("&Change Mode", this)),
-      m_painter(new PainterWidget()),
       m_tEdit(new QTextEdit("TEST", this))
 {
     QLabel *label = new QLabel(this);
@@ -27,20 +24,16 @@ MainWidget::MainWidget(QWidget *parent)
     layout->addWidget(m_tEdit, 1, 0, 1, 2);
     layout->addWidget(button1, 2, 0);
     layout->addWidget(button2, 2, 1);
-    layout->addWidget(m_changeButton, 3, 0, 1, 2);
 
-    connect(button1, &QPushButton::pressed, this, &MainWidget::saveFile);
-    connect(button2, &QPushButton::pressed, this, &MainWidget::openFile);
-
-    connect(m_changeButton, &QPushButton::pressed, this, &MainWidget::showPainterWidget);
-    connect(this, &MainWidget::showPainter, m_painter, &PainterWidget::showWidget);
+    connect(button1, &QPushButton::pressed, this, &TextEditor::saveFile);
+    connect(button2, &QPushButton::pressed, this, &TextEditor::openFile);
 
     //    QTimer *timer = new QTimer(this);
     //    connect(timer, SIGNAL(timeout()), this, SIGNAL(showReceiver()));
     //    timer->start(1);
 }
 
-void MainWidget::saveFile()
+void TextEditor::saveFile()
 {
     qDebug() << "Save File";
     QString filename = QFileDialog::getSaveFileName(this);
@@ -55,7 +48,7 @@ void MainWidget::saveFile()
     file.close();
 }
 
-void MainWidget::openFile()
+void TextEditor::openFile()
 {
     qDebug() << "Open File";
     QString filename = QFileDialog::getOpenFileName(this);
@@ -70,15 +63,11 @@ void MainWidget::openFile()
     file.close();
 }
 
-void MainWidget::showPainterWidget()
+void TextEditor::showPainterWidget()
 {
     emit showPainter(this);
 }
 
-void MainWidget::paintEvent(QPaintEvent *event)
-{
-}
-
-MainWidget::~MainWidget()
+TextEditor::~TextEditor()
 {
 }

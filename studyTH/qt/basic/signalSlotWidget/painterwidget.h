@@ -10,7 +10,7 @@ public:
     explicit PainterWidget(QWidget *parent = nullptr);
     void paintEvent(QPaintEvent *event) override;
 public slots:
-    void showWidget(QWidget* parent = nullptr);
+    void showWidget();
 signals:
 };
 
