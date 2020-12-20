@@ -1,5 +1,5 @@
 #include "mainwidget.h"
-#include "receiverwidget.h"
+#include "painterwidget.h"
 
 #include <QLabel>
 #include <QPushButton>
@@ -11,8 +11,8 @@
 
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent),
-      //      m_button(new QPushButton("&Download", this)),
-      m_receiver(new ReceiverWidget()),
+      m_changeButton(new QPushButton("&Change Mode", this)),
+      m_painter(new PainterWidget()),
       m_tEdit(new QTextEdit("TEST", this))
 {
     QLabel *label = new QLabel(this);
@@ -27,12 +27,13 @@ MainWidget::MainWidget(QWidget *parent)
     layout->addWidget(m_tEdit, 1, 0, 1, 2);
     layout->addWidget(button1, 2, 0);
     layout->addWidget(button2, 2, 1);
+    layout->addWidget(m_changeButton, 3, 0, 1, 2);
 
     connect(button1, &QPushButton::pressed, this, &MainWidget::saveFile);
     connect(button2, &QPushButton::pressed, this, &MainWidget::openFile);
 
-    //    connect(m_button, &QPushButton::pressed, this, &MainWidget::showReceiverWidget);
-    //    connect(this, &MainWidget::showReceiver, m_receiver, &ReceiverWidget::showWidget);
+    connect(m_changeButton, &QPushButton::pressed, this, &MainWidget::showPainterWidget);
+    connect(this, &MainWidget::showPainter, m_painter, &PainterWidget::showWidget);
 
     //    QTimer *timer = new QTimer(this);
     //    connect(timer, SIGNAL(timeout()), this, SIGNAL(showReceiver()));
@@ -69,9 +70,9 @@ void MainWidget::openFile()
     file.close();
 }
 
-void MainWidget::showReceiverWidget()
+void MainWidget::showPainterWidget()
 {
-    emit showReceiver(this);
+    emit showPainter(this);
 }
 
 void MainWidget::paintEvent(QPaintEvent *event)

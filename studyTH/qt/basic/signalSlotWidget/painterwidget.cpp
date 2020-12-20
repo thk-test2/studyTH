@@ -1,22 +1,22 @@
-#include "receiverwidget.h"
+#include "painterwidget.h"
 
 #include <QPainter>
 #include <QPaintEvent>
 #include <QDebug>
 
-ReceiverWidget::ReceiverWidget(QWidget *parent) : QWidget(parent)
+PainterWidget::PainterWidget(QWidget *parent) : QWidget(parent)
 {
 
 }
 
-void ReceiverWidget::showWidget(QWidget* parent)
+void PainterWidget::showWidget(QWidget* parent)
 {
     qDebug() << Q_FUNC_INFO << parent;
     this->setParent(parent);
     this->show();
 }
 
-void ReceiverWidget::paintEvent(QPaintEvent *event)
+void PainterWidget::paintEvent(QPaintEvent *event)
 {
     QPainter painter;
     painter.begin(this);

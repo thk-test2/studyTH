@@ -4,7 +4,7 @@
 #include <QWidget>
 
 class QPushButton;
-class ReceiverWidget;
+class PainterWidget;
 class QTextEdit;
 
 class MainWidget : public QWidget
@@ -18,12 +18,12 @@ public:
 public slots:
     void saveFile();
     void openFile();
-    void showReceiverWidget();
+    void showPainterWidget();
 signals:
-    void showReceiver(QWidget*);
+    void showPainter(QWidget*);
 private:
-    QPushButton* m_button;
-    ReceiverWidget* m_receiver;
+    QPushButton* m_changeButton;
+    PainterWidget* m_painter;
     QTextEdit* m_tEdit;
 };
 #endif // MAINWINDOW_H
