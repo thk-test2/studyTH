@@ -4,7 +4,6 @@
 #include <QWidget>
 
 class QPushButton;
-class PainterWidget;
 class QTextEdit;
 
 class TextEditor : public QWidget
@@ -13,13 +12,12 @@ class TextEditor : public QWidget
 
 public:
     TextEditor(QWidget *parent = nullptr);
-    ~TextEditor();
 public slots:
     void saveFile();
     void openFile();
-    void showPainterWidget();
+    void showWidget() { show(); }
+    void hideWidget() { hide(); }
 signals:
-    void showPainter(QWidget*);
 private:
     QTextEdit* m_tEdit;
 };

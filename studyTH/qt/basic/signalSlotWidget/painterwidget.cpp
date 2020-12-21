@@ -6,13 +6,7 @@
 
 PainterWidget::PainterWidget(QWidget *parent) : QWidget(parent)
 {
-
-}
-
-void PainterWidget::showWidget()
-{
-    qDebug() << Q_FUNC_INFO;
-    this->show();
+    this->hide();
 }
 
 void PainterWidget::paintEvent(QPaintEvent *event)

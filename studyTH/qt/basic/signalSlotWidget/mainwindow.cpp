@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     , m_textMode(new QAction("Text Editor mode", m_mode))
     , m_painterMode(new QAction("Painter Mode", m_mode))
     , m_texteditor(new TextEditor(this))
-    , m_painter(new PainterWidget())
+    , m_painter(new PainterWidget(this))
 {
     m_texteditor->setGeometry(0,30,300, 270);
     m_texteditor->setStyleSheet("border: 1px solid red");
@@ -26,5 +26,9 @@ void MainWindow::setUpMenuBar()
     m_mode->addAction(m_painterMode);
     menuBar()->addMenu(m_mode);
 
+    connect(m_textMode, &QAction::triggered, m_texteditor, &TextEditor::showWidget);
+    connect(m_textMode, &QAction::triggered, m_painter, &PainterWidget::hideWidget);
+
+    connect(m_painterMode, &QAction::triggered, m_texteditor, &TextEditor::hideWidget);
     connect(m_painterMode, &QAction::triggered, m_painter, &PainterWidget::showWidget);
 }

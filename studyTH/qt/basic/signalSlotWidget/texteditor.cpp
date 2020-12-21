@@ -2,11 +2,10 @@
 
 #include <QLabel>
 #include <QPushButton>
-#include <QDebug>
-#include <QTimer>
 #include <QTextEdit>
 #include <QGridLayout>
 #include <QFileDialog>
+#include <QDebug>
 
 TextEditor::TextEditor(QWidget *parent)
     : QWidget(parent),
@@ -27,10 +26,6 @@ TextEditor::TextEditor(QWidget *parent)
 
     connect(button1, &QPushButton::pressed, this, &TextEditor::saveFile);
     connect(button2, &QPushButton::pressed, this, &TextEditor::openFile);
-
-    //    QTimer *timer = new QTimer(this);
-    //    connect(timer, SIGNAL(timeout()), this, SIGNAL(showReceiver()));
-    //    timer->start(1);
 }
 
 void TextEditor::saveFile()
@@ -61,13 +56,4 @@ void TextEditor::openFile()
     m_tEdit->setPlainText(in.readAll());
 
     file.close();
-}
-
-void TextEditor::showPainterWidget()
-{
-    emit showPainter(this);
-}
-
-TextEditor::~TextEditor()
-{
 }
