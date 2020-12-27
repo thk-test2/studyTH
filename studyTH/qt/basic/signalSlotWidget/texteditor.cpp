@@ -26,6 +26,7 @@ TextEditor::TextEditor(QWidget *parent)
 
     connect(button1, &QPushButton::pressed, this, &TextEditor::saveFile);
     connect(button2, &QPushButton::pressed, this, &TextEditor::openFile);
+    this->hide();
 }
 
 void TextEditor::saveFile()

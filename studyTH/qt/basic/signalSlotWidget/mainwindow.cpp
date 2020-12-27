@@ -16,10 +16,10 @@ MainWindow::MainWindow(QWidget *parent)
     m_texteditor->setGeometry(0, 30, 300, 270);
     m_texteditor->setStyleSheet("border: 1px solid red");
     qDebug() << m_texteditor->sizeHint();
-
     m_painter->setGeometry(0, 30, 300, 270);
 
     setUpMenuBar();
+    setUpMode();
 }
 
 void MainWindow::setUpMenuBar()
@@ -33,4 +33,9 @@ void MainWindow::setUpMenuBar()
 
     connect(m_painterMode, &QAction::triggered, m_texteditor, &TextEditor::hide);
     connect(m_painterMode, &QAction::triggered, m_painter, &PainterWidget::show);
+}
+
+void MainWindow::setUpMode()
+{
+    m_painter->show();
 }

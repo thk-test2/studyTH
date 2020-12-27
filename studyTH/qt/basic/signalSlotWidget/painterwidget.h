@@ -2,6 +2,7 @@
 #define PAINTERWIDGET_H
 
 #include <QWidget>
+#include <QPainterPath>
 
 class QPainter;
 class QPoint;
@@ -19,6 +20,7 @@ public slots:
 signals:
 private:
     QPainter* m_painter;
+    QPainterPath m_path;
     QPoint m_startPoint;
     QPoint m_endPoint;
 };

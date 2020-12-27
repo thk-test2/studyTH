@@ -16,6 +16,7 @@ signals:
 
 private:
     void setUpMenuBar();
+    void setUpMode();
     QMenu* m_mode;
     QAction* m_textMode;
     QAction* m_painterMode;
