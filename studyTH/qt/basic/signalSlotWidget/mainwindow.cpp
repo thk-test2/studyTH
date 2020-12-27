@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_painter->setGeometry(0, 30, 300, 270);
 
     setUpMenuBar();
-    setUpMode();
+    showPainter();
 }
 
 void MainWindow::setUpMenuBar()
@@ -35,7 +35,14 @@ void MainWindow::setUpMenuBar()
     connect(m_painterMode, &QAction::triggered, m_painter, &PainterWidget::show);
 }
 
-void MainWindow::setUpMode()
+void MainWindow::showEditor()
 {
+    m_texteditor->show();
+    m_painter->hide();
+}
+
+void MainWindow::showPainter()
+{
+    m_texteditor->hide();
     m_painter->show();
 }
