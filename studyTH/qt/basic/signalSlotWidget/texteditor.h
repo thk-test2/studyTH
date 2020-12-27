@@ -15,8 +15,6 @@ public:
 public slots:
     void saveFile();
     void openFile();
-    void showWidget() { show(); }
-    void hideWidget() { hide(); }
 signals:
 private:
     QTextEdit* m_tEdit;
