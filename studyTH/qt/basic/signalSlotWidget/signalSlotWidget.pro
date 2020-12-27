@@ -17,12 +17,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp \
+    mainwidget.cpp \
     painterwidget.cpp \
     texteditor.cpp
 
 HEADERS += \
-    mainwindow.h \
+    mainwidget.h \
     painterwidget.h \
     texteditor.h
 

@@ -13,8 +13,8 @@ class TextEditor : public QWidget
 public:
     TextEditor(QWidget *parent = nullptr);
 public slots:
-    void saveFile();
-    void openFile();
+//    void saveFile();
+//    void openFile();
 signals:
 private:
     QTextEdit* m_tEdit;
