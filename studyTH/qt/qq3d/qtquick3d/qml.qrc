@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>meshes/group_0_15277357.mesh</file>
+        <file>meshes/group_0_16089887.mesh</file>
+        <file>meshes/group_0_4634441.mesh</file>
+        <file>Name.qml</file>
+        <file>House.qml</file>
+        <file>meshes/name.mesh</file>
+    </qresource>
+</RCC>
