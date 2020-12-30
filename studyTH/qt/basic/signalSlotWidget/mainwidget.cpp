@@ -32,10 +32,6 @@ void MainWidget::setUpLayout()
     connect(m_textMode, &QAction::triggered, this, &MainWidget::showEditor);
     connect(m_painterMode, &QAction::triggered, this, &MainWidget::showPainter);
 
-    QLabel *label = new QLabel(this);
-    label->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-    label->setText("Text Editor");
-
     m_editor = new QTextEdit("TEST", this);
 
     QPushButton* button1 = new QPushButton("Save");
@@ -43,7 +39,6 @@ void MainWidget::setUpLayout()
 
     m_layout = new QGridLayout(this);
     m_layout->setMenuBar(menuBar);
-    m_layout->addWidget(label, 1, 0, 1, 2);
 
     m_layout->addWidget(button1, 3, 0);
     m_layout->addWidget(button2, 3, 1);
