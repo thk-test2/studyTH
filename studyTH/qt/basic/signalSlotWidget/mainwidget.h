@@ -3,6 +3,7 @@
 
 #include <QWidget>
 
+class QMenuBar;
 class QMenu;
 class QGridLayout;
 class QTextEdit;
@@ -20,6 +21,9 @@ private:
     void setUpLayout();
     void showEditor();
     void showPainter();
+    void saveFile();
+    void openFile();
+    QMenuBar* m_menubar;
     QMenu* m_mode;
     QGridLayout* m_layout;
     QAction* m_textMode;
