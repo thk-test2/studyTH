@@ -22,7 +22,6 @@ MainWidget::MainWidget(QWidget *parent)
     m_painter->setGeometry(0, 30, 300, 270);
 
     setUpLayout();
-    showEditor();
 }
 
 void MainWidget::setUpLayout()
@@ -30,7 +29,6 @@ void MainWidget::setUpLayout()
     m_mode->addAction(m_textMode);
     m_mode->addAction(m_painterMode);
     m_menubar->addMenu(m_mode);
-    m_mode->setActiveAction(m_textMode);
 
     connect(m_textMode, &QAction::triggered, this, &MainWidget::showEditor);
     connect(m_painterMode, &QAction::triggered, this, &MainWidget::showPainter);
@@ -46,6 +44,9 @@ void MainWidget::setUpLayout()
 
     m_layout->addWidget(button1, 3, 0);
     m_layout->addWidget(button2, 3, 1);
+
+    m_mode->setActiveAction(m_painterMode);
+    showPainter();
 }
 
 void MainWidget::showEditor()
@@ -85,21 +86,18 @@ void MainWidget::openFile()
 {
     qDebug() << "Open File";
     QString filename = QFileDialog::getOpenFileName(this);
-    qDebug() << filename;
     QFile file( filename );
-    qDebug() << "THK 1";
 
     if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
         return;
-    qDebug() << "THK 2";
 
-    qDebug() << m_mode->activeAction();
-    qDebug() << m_textMode;
     if (m_mode->activeAction() == m_textMode)
     {
         qDebug() << "Text open";
         QTextStream in(&file);
         m_editor->setPlainText(in.readAll());
+    } else {
+        qDebug() << "Image open";
     }
 
     file.close();
