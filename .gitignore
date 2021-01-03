@@ -10,3 +10,6 @@ Makefile
 
 # Qt user cache
 *.pro.user
+
+# Qt build files
+build-*
