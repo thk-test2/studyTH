@@ -20,7 +20,6 @@ void PainterWidget::paintEvent(QPaintEvent *event)
     m_painter->setPen(Qt::SolidLine);
     m_painter->drawPath(m_path);
     m_painter->end();
-    QWidget::paintEvent(event);
 }
 
 void PainterWidget::mousePressEvent(QMouseEvent *event)
