@@ -9,7 +9,7 @@ PainterWidget::PainterWidget(QWidget *parent)
     , m_painter(new QPainter())
     , m_pixmap(new QPixmap(300,270))
 {
-    qDebug() << this->size();
+    m_pixmap->fill(Qt::white);
     this->hide();
 }
 
@@ -30,13 +30,17 @@ void PainterWidget::mouseReleaseEvent(QMouseEvent *event)
     qDebug() << "Released:" << event->x() <<  event->y();
     m_path.lineTo(event->x(), event->y());
 
-    m_pixmap->fill(Qt::white);
-
     m_painter->begin(m_pixmap);
     m_painter->setRenderHints(QPainter::Antialiasing, true);
     m_painter->setPen(Qt::SolidLine);
     m_painter->drawPath(m_path);
     m_painter->end();
 
-    this->setPixmap(*m_pixmap);
+    this->setPixmap(m_pixmap->scaled(300,270));
+}
+
+void PainterWidget::showImage(QString str)
+{
+    m_pixmap = new QPixmap(str);
+    this->setPixmap(m_pixmap->scaled(300,270));
 }

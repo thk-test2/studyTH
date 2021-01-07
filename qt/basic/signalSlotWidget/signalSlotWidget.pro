@@ -18,13 +18,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwidget.cpp \
-    painterwidget.cpp \
-    texteditor.cpp
+    painterwidget.cpp
 
 HEADERS += \
     mainwidget.h \
-    painterwidget.h \
-    texteditor.h
+    painterwidget.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -1,5 +1,4 @@
 #include "mainwidget.h"
-#include "texteditor.h"
 #include "painterwidget.h"
 
 #include <QGridLayout>
@@ -98,6 +97,7 @@ void MainWidget::openFile()
         m_editor->setPlainText(in.readAll());
     } else {
         qDebug() << "Image open";
+        m_painter->showImage(filename);
     }
 
     file.close();

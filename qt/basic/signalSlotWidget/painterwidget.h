@@ -16,6 +16,7 @@ public:
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
 public slots:
+    void showImage(QString);
 signals:
 private:
     QPainter* m_painter;
