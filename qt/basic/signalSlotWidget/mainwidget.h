@@ -23,6 +23,7 @@ private:
     void showPainter();
     void saveFile();
     void openFile();
+    void saveImage();
     QMenuBar* m_menubar;
     QMenu* m_mode;
     QGridLayout* m_layout;

@@ -35,7 +35,7 @@ void MainWidget::setUpLayout()
     QPushButton* button1 = new QPushButton("Save");
     QPushButton* button2 = new QPushButton("Load");
 
-    connect(button1, &QPushButton::pressed, this, &MainWidget::saveFile);
+    connect(button1, &QPushButton::pressed, this, &MainWidget::saveImage);
     connect(button2, &QPushButton::pressed, this, &MainWidget::openFile);
 
     m_layout = new QGridLayout(this);
@@ -60,6 +60,13 @@ void MainWidget::showPainter()
     m_layout->addWidget(m_painter, 2, 0, 1, 2);
     m_editor->hide();
     m_painter->show();
+}
+
+void MainWidget::saveImage()
+{
+    qDebug() << "Save Image";
+    QString filename = QFileDialog::getSaveFileName(this);
+    m_painter->saveImage(filename);
 }
 
 void MainWidget::saveFile()

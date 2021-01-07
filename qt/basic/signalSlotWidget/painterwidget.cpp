@@ -44,3 +44,9 @@ void PainterWidget::showImage(QString str)
     m_pixmap = new QPixmap(str);
     this->setPixmap(m_pixmap->scaled(300,270));
 }
+
+void PainterWidget::saveImage(QString str)
+{
+    bool ret = m_pixmap->save(str,"PNG");
+    qDebug() << ret;
+}
