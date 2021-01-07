@@ -12,7 +12,6 @@ class PainterWidget : public QLabel
     Q_OBJECT
 public:
     explicit PainterWidget(QWidget *parent = nullptr);
-//    void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
@@ -21,6 +20,7 @@ signals:
 private:
     QPainter* m_painter;
     QPainterPath m_path;
+    QPixmap* m_pixmap;
 };
 
 #endif // PAINTERWIDGET_H
