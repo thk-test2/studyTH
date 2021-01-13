@@ -9,7 +9,7 @@ CMakeFiles/
 Makefile
 
 # Qt user cache
-*.pro.user
+*.user
 
 # Qt build files
 build-*
