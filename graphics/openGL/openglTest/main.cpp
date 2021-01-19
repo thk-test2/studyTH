@@ -40,12 +40,18 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
+void error_callback(int code, const char* description)
+{
+    cout << "code:" << code << ", " << description << endl;
+}
+
 int main()
 {
     glfwInit();
+    glfwSetErrorCallback(error_callback);
+
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     GLFWwindow* window = glfwCreateWindow(800, 600, "Learn OpenGL", NULL, NULL);
     if (window == NULL) {
@@ -113,7 +119,8 @@ int main()
 
     //render loop
     while (!glfwWindowShouldClose(window)) {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
 
         glUseProgram(shaderProgram);
         glBindVertexArray(VAO);
