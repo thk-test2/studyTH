@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # and download glad from https://glad.dav1d.de/
 
 add_executable(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/glad/src/glad.c main.cpp
-    Shader.h)
+    Shader.h stb_image.h)
 
 target_include_directories(${PROJECT_NAME}
 PUBLIC

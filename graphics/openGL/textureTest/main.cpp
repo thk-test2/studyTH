@@ -6,6 +6,9 @@
 
 #include "Shader.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 using namespace std;
 
 float vertices[] = {
@@ -45,15 +48,15 @@ int main()
     }
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-//    char cwd[1024];
-//    getcwd(cwd, sizeof(cwd));
-//    string s0(cwd);
-//    string s1(s0+"shader.vs");
-//    string s2(s0+"shader.fs");
-//    cout << s1;
+    char cwd[1024];
+    getcwd(cwd, sizeof(cwd));
+    string s0(cwd);
+    string s1(s0+"/shader.vs");
+    string s2(s0+"/shader.fs");
+    cout << s1 << endl;
+    cout << s2 << endl;
 
-    Shader ourShader("/home/parallels/projects/study/studyTH/graphics/openGL/textureTest/shader.vs",
-                     "/home/parallels/projects/study/studyTH/graphics/openGL/textureTest/shader.fs");
+    Shader ourShader(s1.c_str(), s2.c_str());
 
     unsigned int VAO;
     glGenVertexArrays(1, &VAO);
