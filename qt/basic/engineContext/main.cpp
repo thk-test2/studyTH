@@ -13,16 +13,24 @@ int main(int argc, char *argv[])
 
     QQuickView view;
     view.rootContext()->setContextProperty("currentDateTime", QDateTime::currentDateTime());
-    view.setSource(QUrl("qrc:/MyItem.qml"));
+    view.setSource(QUrl("qrc:/main.qml"));
+    QQmlComponent textComponent(view.engine(), QUrl("qrc:/MyItem.qml"),
+                                QQmlComponent::PreferSynchronous);
+    if(textComponent.isError())
+        qDebug() << textComponent.errors();
+
+    QQuickItem* item = qobject_cast<QQuickItem*>(textComponent.create());
+    item->setParentItem(view.rootObject());
+
     view.show();
 
-//    QQmlEngine* engine = new QQmlEngine;
-//    QQmlComponent component(engine, QUrl("qrc:/main.qml"));
+    /* https://doc.qt.io/qt-5/qqmlcomponent.html#create
+     If the object being created from this component is a visual item, it must
+    have a visual parent, which can be set by calling
+    QQuickItem::setParentItem(). See \l {Concepts - Visual Parent in Qt Quick}
+    for more details.
 
-//    QObject* myObject = component.create();
-//    QQuickItem* item = qobject_cast<QQuickItem*>(myObject);
-//    int width = item->width();
-//    qDebug() << width;
-
+    \sa QQmlEngine::ObjectOwnership
+    */
     return a.exec();
 }
