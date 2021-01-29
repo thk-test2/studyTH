@@ -8,12 +8,18 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # To use GLAD and GLFW3, install libglfw3-dev
 # and download glad from https://glad.dav1d.de/
 
-add_executable(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/glad/src/glad.c main.cpp
-    Shader.h stb_image.h)
+set(OPENGL_LIB ${CMAKE_SOURCE_DIR}/../lib)
+
+add_executable(${PROJECT_NAME}
+    ${OPENGL_LIB}/glad/src/glad.c main.cpp
+    ${OPENGL_LIB}/Shader.h
+    ${OPENGL_LIB}/stb_image.h)
 
 target_include_directories(${PROJECT_NAME}
 PUBLIC
-    ${CMAKE_SOURCE_DIR}/glad/include
+    ${OPENGL_LIB}/
+    ${OPENGL_LIB}/glad/include
+    ${OPENGL_LIB}/glm
 )
 
 target_link_libraries(${PROJECT_NAME} OpenGL glfw dl)
