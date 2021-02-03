@@ -3,5 +3,7 @@
         <file>main.qml</file>
         <file>bug.png</file>
         <file>butterfly.png</file>
+        <file>glass_normal.png</file>
+        <file>fog.png</file>
     </qresource>
 </RCC>
