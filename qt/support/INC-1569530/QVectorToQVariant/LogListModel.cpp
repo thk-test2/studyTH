@@ -1,12 +1,12 @@
-#include "LogListModel.h"
 #include "LogList.h"
+#include "LogListModel.h"
 #include <QCoreApplication>
 #include <qqml.h>
 
-static void registerQmlType() {
-  qmlRegisterType<LogListModel>("com.logModel", 1, 0, "LogListModel");
-}
-Q_COREAPP_STARTUP_FUNCTION(registerQmlType);
+//static void registerQmlType() {
+//  qmlRegisterType<LogListModel>("com.logModel", 1, 0, "LogListModel");
+//}
+//Q_COREAPP_STARTUP_FUNCTION(registerQmlType);
 
 LogListModel::LogListModel(QObject *parent) : QAbstractListModel(parent) {
   mList_ = std::make_unique<LogList>();
@@ -36,7 +36,7 @@ QVariant LogListModel::data(const QModelIndex &index, int role) const {
   case SurgeonIdxRole:
     return QVariant(item.surgeonIdx);
   case ToolListRole:
-    return QVariant(item.toolList);
+    return QVariant::fromValue(*(item.toolList));
   }
   return QVariant();
 }

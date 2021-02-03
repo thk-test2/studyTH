@@ -14,10 +14,13 @@ struct LogItem {
   //    std::vector<UseRemainItem> toolVec;
 };
 
-class LogList : public QObject {
-  Q_OBJECT
+Q_DECLARE_METATYPE(LogItem);
+
+class LogList {
+
 public:
   explicit LogList(QObject *parent = nullptr);
+  LogList(const LogList&) { }
   ~LogList();
 
   QVector<LogItem> *items() const;
@@ -41,5 +44,7 @@ public slots:
 private:
   QVector<LogItem> *items_;
 };
+
+Q_DECLARE_METATYPE(LogList);
 
 #endif // LOGLIST_H

@@ -3,20 +3,22 @@
 
 #include <QObject>
 
-class LogList : public QObject
+struct LogItem {
+    QVector<int>* m_vec;
+};
+
+class LogList
 {
-    Q_OBJECT
 public:
     explicit LogList(QObject *parent = nullptr);
     ~LogList() = default;
     LogList(const LogList&) {}
-
-signals:
+    QVector<LogItem> *items() const { return items_; }
 
 private:
-    QVector<int> m_vec;
+    QVector<LogItem> *items_;
 };
 
-Q_DECLARE_METATYPE(LogList);
+// Q_DECLARE_METATYPE(LogList);
 
 #endif // LOGLIST_H

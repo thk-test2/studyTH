@@ -10,6 +10,7 @@ class LogListModel : public QAbstractListModel {
   Q_OBJECT
 public:
   explicit LogListModel(QObject *parent = nullptr);
+  LogListModel(const LogListModel&) { }
 
   enum {
     LogIdxRole = Qt::UserRole,
@@ -27,5 +28,7 @@ public:
 private:
   std::unique_ptr<LogList> mList_;
 };
+
+Q_DECLARE_METATYPE(LogListModel);
 
 #endif // LOGLISTMODEL_H

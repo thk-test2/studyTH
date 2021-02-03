@@ -1,6 +1,6 @@
 #include "loglist.h"
 
-LogList::LogList(QObject *parent) : QObject(parent)
+LogList::LogList(QObject *parent)
 {
 
 }

@@ -15,7 +15,7 @@ public:
     ~MainWindow();
     QVariant getValue();
 private:
-//    std::unique_ptr<LogList> m_list;
-    LogList* m_list = nullptr;
+    std::unique_ptr<LogList> m_list;
+//    LogList* m_list = nullptr;
 };
 #endif // MAINWINDOW_H

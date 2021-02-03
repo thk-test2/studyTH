@@ -2,12 +2,12 @@
 #include <QCoreApplication>
 #include <qqml.h>
 
-static void registerQmlType() {
-  qmlRegisterType<LogList>("com.logList", 1, 0, "LogList");
-}
-Q_COREAPP_STARTUP_FUNCTION(registerQmlType);
+//static void registerQmlType() {
+//  qmlRegisterType<LogList>("com.logList", 1, 0, "LogList");
+//}
+//Q_COREAPP_STARTUP_FUNCTION(registerQmlType);
 
-LogList::LogList(QObject *parent) : QObject(parent) {
+LogList::LogList(QObject *parent) {
   //    qRegisterMetaType<std::vector<UseRemainItem>>("std::vector<UseRemainItem>");
 }
 
