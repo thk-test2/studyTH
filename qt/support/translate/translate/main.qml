@@ -1,5 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
+import QtQuick.Controls 2.0
+import EnumLanguage 1.0
 
 Window {
     visible: true
@@ -11,14 +13,24 @@ Window {
         anchors.centerIn: parent
         Text {
             text: qsTr("new Text")
+            font.pixelSize: 20
         }
 
         Text {
             text: qsTr("Taehyun")
+            font.pixelSize: 20
         }
     }
 
-    Component.onCompleted: {
-        Qt.uiLanguage = "ko_KR"
+    ComboBox {
+        currentIndex: LanguageManager.language
+        model: ["한국어", "English"]
+        onActivated: {
+            if(index == 0){
+                LanguageManager.language = EnumLanguage.KOR
+            }else{
+                LanguageManager.language = EnumLanguage.ENG
+            }
+        }
     }
 }
