@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>LogTable.qml</file>
+        <file>CustomBorder.qml</file>
+        <file>LogDetailListPopup.qml</file>
+    </qresource>
+</RCC>
