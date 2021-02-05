@@ -54,17 +54,17 @@
 class Animal
 {
 public:
-    Animal(const QString &type, const QString &size, const QString &tool);
+    Animal(const QString &type, const QString &size, const QVector<QVariant> &count);
 //![0]
 
     QString type() const;
     QString size() const;
-    QString tool() const { return m_tool; }
+    QVector<QVariant> count() const { return  m_count; }
 
 private:
     QString m_type;
     QString m_size;
-    QString m_tool;
+    QVector<QVariant> m_count;
 //![1]
 };
 
@@ -75,7 +75,7 @@ public:
     enum AnimalRoles {
         TypeRole = Qt::UserRole + 1,
         SizeRole,
-        ToolRole
+        CountRole,
     };
 
     AnimalModel(QObject *parent = 0);

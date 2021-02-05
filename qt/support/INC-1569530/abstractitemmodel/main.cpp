@@ -62,9 +62,10 @@ int main(int argc, char ** argv)
     QGuiApplication app(argc, argv);
 
     AnimalModel model;
-    model.addAnimal(Animal("Wolf", "Medium", "A"));
-    model.addAnimal(Animal("Polar bear", "Large", "B"));
-    model.addAnimal(Animal("Quoll", "Small", "C"));
+    QVector<QVariant> tempVector = { 1, 2, 3 };
+    model.addAnimal(Animal("Wolf", "Medium", tempVector));
+    model.addAnimal(Animal("Polar bear", "Large", tempVector));
+    model.addAnimal(Animal("Quoll", "Small", tempVector));
 
     QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);

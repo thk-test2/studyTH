@@ -58,9 +58,9 @@ ListView {
     delegate: Text {
         required property string type
         required property string size
-        required property string tool
+        required property int count
 
-        text: "Animal: " + type + ", " + size + ", " + tool
+        text: "Animal: " + type + ", " + size + ", " + count
     }
 }
 //![0]

@@ -49,8 +49,8 @@
 ****************************************************************************/
 #include "model.h"
 
-Animal::Animal(const QString &type, const QString &size, const QString &tool)
-    : m_type(type), m_size(size), m_tool(tool)
+Animal::Animal(const QString &type, const QString &size, const QVector<QVariant> &count)
+    : m_type(type), m_size(size), m_count(count)
 {
 }
 
@@ -90,8 +90,8 @@ QVariant AnimalModel::data(const QModelIndex & index, int role) const {
         return animal.type();
     else if (role == SizeRole)
         return animal.size();
-    else if (role == ToolRole)
-        return animal.tool();
+    else if (role == CountRole)
+        return QList<QVariant>::fromVector(animal.count());
     return QVariant();
 }
 
@@ -100,7 +100,7 @@ QHash<int, QByteArray> AnimalModel::roleNames() const {
     QHash<int, QByteArray> roles;
     roles[TypeRole] = "type";
     roles[SizeRole] = "size";
-    roles[ToolRole] = "tool";
+    roles[CountRole] = "count";
     return roles;
 }
 //![0]
