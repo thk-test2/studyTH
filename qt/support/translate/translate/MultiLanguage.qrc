@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ko_KR.ts</file>
+        <file>ko_KR.qm</file>
+    </qresource>
+</RCC>

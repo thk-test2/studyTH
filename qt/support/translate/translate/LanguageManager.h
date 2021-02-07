@@ -48,7 +48,7 @@ public:
         case Enums::LANGUAGE::KOR:
             //      ret = mTranslator.load("lang_en");
             qDebug() << "KOR";
-            ret = mTranslator.load("translate_ko_KR");
+            ret = mTranslator.load(":/ko_KR.qm");
             qDebug() << ret;
             break;
         case Enums::LANGUAGE::ENG:

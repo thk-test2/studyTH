@@ -16,7 +16,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    MultiLanguage.qrc
 
 TRANSLATIONS += \
     translate_ko_KR.ts
