@@ -24,12 +24,12 @@ Window {
 
     ComboBox {
         currentIndex: LanguageManager.language
-        model: ["한국어", "English"]
+        model: ["English", "한국어"]
         onActivated: {
             if(index == 0){
-                LanguageManager.language = EnumLanguage.KOR
-            }else{
                 LanguageManager.language = EnumLanguage.ENG
+            }else{
+                LanguageManager.language = EnumLanguage.KOR
             }
         }
     }

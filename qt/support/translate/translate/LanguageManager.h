@@ -12,8 +12,8 @@ class Enums: public QObject{
 public:
 
     enum LANGUAGE{
-        KOR,
-        ENG
+        ENG,
+        KOR
     };
 };
 
