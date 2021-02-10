@@ -10,6 +10,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(OPENGL_LIB ${CMAKE_SOURCE_DIR}/../lib)
 
+FILE(COPY
+    ${OPENGL_LIB}/awesomeface.png
+    ${OPENGL_LIB}/container.jpg
+    ${OPENGL_LIB}/wall.jpg
+    ${CMAKE_SOURCE_DIR}/shader.vs
+    ${CMAKE_SOURCE_DIR}/shader.fs
+    DESTINATION ${CMAKE_BINARY_DIR})
+
 add_executable(${PROJECT_NAME}
     ${OPENGL_LIB}/glad/src/glad.c main.cpp
     ${OPENGL_LIB}/Shader.h
