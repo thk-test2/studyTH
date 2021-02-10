@@ -21,6 +21,7 @@ FILE(COPY
 add_executable(${PROJECT_NAME}
     ${OPENGL_LIB}/glad/src/glad.c main.cpp
     ${OPENGL_LIB}/Shader.h
+    ${OPENGL_LIB}/Camera.h
     ${OPENGL_LIB}/stb_image.h)
 
 target_include_directories(${PROJECT_NAME}
