@@ -11,17 +11,9 @@ public:
     public:
         Node(int data) : data_(data) {}
 
-        bool operator==(const Node& obj2) const
-        {
-            if(this->data_ == obj2.data_)
-                return true;
-            else
-                return false;
-        }
-
         int data_;
-        vector<Node> adjacent = {};
-        bool visited = false;
+        vector<int> adjacent = {};
+        bool marked = false;
     };
 
     Graph(int size) {
@@ -34,45 +26,35 @@ public:
         Node& n1 = node_list[i1];
         Node& n2 = node_list[i2];
 
-        vector<Node>::iterator n1_it;
-        vector<Node>::iterator n2_it;
-
-        n1_it = find(n1.adjacent.begin(), n1.adjacent.end(), n2);
-        n2_it = find(n2.adjacent.begin(), n2.adjacent.end(), n1);
-
-        if(n1_it == n1.adjacent.end()) {;
-            n1.adjacent.push_back(n2);
-        }
-        if(n2_it == n2.adjacent.end()) {
-            n2.adjacent.push_back(n1);
-        }
-        print();
+        n1.adjacent.push_back(i2);
+        n2.adjacent.push_back(i1);
     }
     void print() {
         for(const auto& it: node_list) {
+            cout << "Node " << it.data_ <<" :";
             for (const auto& it2 : it.adjacent) {
-                cout << it2.data_ << ", ";
+                cout << node_list[it2].data_ << ", ";
             }
             cout << endl;
         }
     }
     void dfs(int index) {
-        Node root = node_list[index];
+        Node& root = node_list[index];
         stack<Node> node_stack;
-
         node_stack.push(root);
+        root.marked = true;
+
         while(!node_stack.empty()) {
             Node temp = node_stack.top();
             node_stack.pop();
 
-            if (!temp.visited) {
-                temp.visited = true;
-                cout << temp.data_ << ", ";
+            for(auto& it : temp.adjacent) {
+                if (!node_list[it].marked) {
+                    node_list[it].marked = true;
+                    node_stack.push(node_list[it]);
+                }
             }
-            for(const auto& it : temp.adjacent) {
-                if (!it.visited)
-                    node_stack.push(it);
-            }
+            cout << temp.data_ << " ";
         }
     }
     vector<Node> node_list;
@@ -80,12 +62,6 @@ public:
 
 int main()
 {
-    vector<vector<int>> edge;
-    edge.push_back(vector<int>(0, 1));
-    edge.push_back(vector<int>(0, 2));
-    edge.push_back(vector<int>(0, 3));
-    edge.push_back(vector<int>(2, 3));
-
     Graph graph(9);
     graph.addEdge(0, 1);
     graph.addEdge(1, 2);
