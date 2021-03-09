@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>ListViewTumbler.qml</file>
+        <file>CustomTumbler.qml</file>
+        <file>PathViewTumbler.qml</file>
+        <file>MyTumbler.qml</file>
+    </qresource>
+</RCC>
