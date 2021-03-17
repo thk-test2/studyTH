@@ -39,6 +39,7 @@ Tumbler {
 
     contentItem: ListView {
         model: tumbler.model
+        spacing: 10
         delegate: Rectangle {
             rotation: orientation === ListViewTumbler.Vertical ? 0 : 90
             width: 100; height: 100
@@ -54,6 +55,9 @@ Tumbler {
         highlightRangeMode: ListView.StrictlyEnforceRange
         preferredHighlightBegin: height / 2 - (height / tumbler.visibleItemCount / 2)
         preferredHighlightEnd: height / 2 + (height / tumbler.visibleItemCount / 2)
-        clip: true
+//        clip: true
+        onCurrentIndexChanged: {
+            console.log(currentItem.width + ", " + currentItem.height + ", " + currentIndex + ", " + (currentIndex + 2))
+        }
     }
 }

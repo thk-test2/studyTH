@@ -8,24 +8,24 @@ Window {
     height: 480
     title: qsTr("Hello World")
 
-    ListViewTumbler {
+    CustomTumbler {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
-        anchors.leftMargin: 20
+        model: 10
+    }
+
+    ListViewTumbler {
+        anchors.centerIn: parent
         model: 10
         //        orientation: ListViewTumbler.Horizontal
 
     }
 
     MyTumbler {
-        anchors.centerIn: parent
-        model: 10
-    }
-
-    CustomTumbler {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         model: 10
+        visibleItemCount: 5
     }
 
 

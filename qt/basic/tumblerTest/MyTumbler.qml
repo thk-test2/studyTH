@@ -19,8 +19,16 @@ T.Tumbler {
 
     property int delegateWidth: 80
     property int delegateHeight: 300 // What is the principle to decide the height of delegate?
+    spacing: 100
 
     delegate: Rectangle {
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                control.spacing += 10
+            }
+        }
+
         implicitWidth: control.delegateWidth
         implicitHeight: control.delegateHeight
         color: "lightblue"
@@ -44,7 +52,7 @@ T.Tumbler {
         delegate: control.delegate
         path: Path {
             startX: control.contentItem.width / 2 // +100
-            startY: -control.contentItem.delegateHeight / 2 - 50 // spacing
+            startY: -control.contentItem.delegateHeight / 2 - control.spacing // spacing
             PathLine {
                 x: control.contentItem.width / 2
                 y: (control.visibleItemCount + 1) * control.contentItem.delegateHeight - control.contentItem.delegateHeight / 2
