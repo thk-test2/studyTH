@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>LTumbler.qml</file>
+        <file>PTumbler.qml</file>
+    </qresource>
+</RCC>
