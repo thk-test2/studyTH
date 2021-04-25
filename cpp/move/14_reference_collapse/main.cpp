@@ -22,6 +22,4 @@ int main()
 
     int& && r7; // 컴파일 에러
     foo<int&>(n);  // foo(int& & a) => foo(int& a)
-
-    return 0;
 }

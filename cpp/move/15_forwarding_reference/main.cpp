@@ -22,6 +22,4 @@ int main()
     // 사용자가 T 타입을 지정하지 않은 경우
     f3(10);  // error
     f3(n);   // argument 추론으로 T: int. OK
-
-    return 0;
 }

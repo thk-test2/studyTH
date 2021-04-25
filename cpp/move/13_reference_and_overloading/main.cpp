@@ -21,6 +21,4 @@ int main()
     foo(r2);  //1번.    10을 가리키는 이름있는 r2 참조변수는 lvalue이다.
 
     foo(static_cast<int&&>(r2));  // 3번.
-
-    return 0;
 }

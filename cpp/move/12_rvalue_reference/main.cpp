@@ -20,6 +20,4 @@ int main()
     // 규칙 3. rvalue reference는 rvalue만 가리킬 수 있다. C++11 문법
     int&& r5 = n;   // ERROR
     int&& r6 = 10;  // OK
-
-    return 0;
 }

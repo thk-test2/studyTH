@@ -46,6 +46,4 @@ int main()
 
     decltype(++n) d4; // int&
     decltype(n++) d5; // int
-
-    return 0;
 }
