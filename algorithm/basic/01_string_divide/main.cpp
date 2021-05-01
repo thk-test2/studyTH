@@ -6,51 +6,40 @@ using namespace std;
 
 int solution(string &S, int K) {
     // write your code in C++14 (g++ 6.2.0)
-    if (K >= S.length())
+    if(S.length() <= K)
         return 1;
 
-    int previous = 0;
-    int current = 0;
+    int currentIndex = 0;
+    int prevIndex = 0;
 
     int count = 0;
-    string mainStr, temp;
-    while(current != string::npos) {
-        current = S.find(' ', previous);
 
-        temp = S.substr(previous, current - previous);
-        if (mainStr.empty()){
-            if (temp.length() <= K)
-            {
+    string mainStr, temp;
+    while (currentIndex != string::npos)
+    {
+        currentIndex = S.find(" ", prevIndex);
+        temp = S.substr(prevIndex, currentIndex - prevIndex);
+
+        if (mainStr.empty()) {
+            if (temp.length() <= K) {
                 mainStr.append(temp);
                 count++;
             }
         } else {
-            if (mainStr.length()+temp.length() < K)
+            if (mainStr.length() + temp.length() < K)
             {
                 mainStr.append(" ");
                 mainStr.append(temp);
-            } else if (temp.length() <= K) {
+            } else if (temp.length() <= K)
+            {
                 mainStr.clear();
                 mainStr.append(temp);
                 count++;
             }
         }
+        prevIndex = currentIndex + 1;
         cout << mainStr << ", ";
-        previous = current + 1;
-
-//        if (sub.length() <= K) {
-//            if (!mainStr.empty()) {
-//                mainStr.clear();
-//            }
-//            mainStr.append(sub);
-//            count++;
-//        } else if ( mainStr.length() + sub.length() < K) {
-//            mainStr.append(" ");
-//            mainStr.append(sub);
-//        }
-//        cout << mainStr << ", ";
     }
-
     return count;
 }
 
