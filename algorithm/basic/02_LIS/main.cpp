@@ -5,46 +5,71 @@ using namespace std;
 
 int LIS_dp(string& S)
 {
-    int dp[S.length()];
-    for(int i = 0; i < S.length(); i++) {
-        dp[i] = 1;
+    int n = S.length();
+    int dp[n];
+
+    for (auto& it : dp) {
+        it = 1;
     }
 
-    for(int i = 1; i < S.length(); i++) {
-        for(int j = 0; j < i; j++) {
-            if(S[j] <= S[i] && dp[i] < dp[j]+1) {
+    for (int i = 1; i < n; i++)
+    {
+        for (int j = 0; j< i; j++)
+        {
+            // dp[i]를 증가시키는 조건에 대한 고민이 필요하다.
+            // 10 20 10 30 20 50
+            if (S[j] <= S[i] && dp[i] < dp[j]+1)
+            {
                 dp[i] = dp[j]+1;
             }
         }
     }
+    return S.length() - *max_element(dp, dp+n);
+}
 
-    return S.length() - *max_element(dp, dp+S.length());
+int LIS_binary1(string& v)
+{
+    vector<char> lis;
+    lis.push_back(0);
+
+    int length = v.length();
+
+//    for (int i=0; i < length; i++)
+    for(const auto& it : v)
+    {
+        if (lis.back() < it) {
+            lis.push_back(it);
+        } else {
+            auto index = lower_bound(lis.begin(), lis.end(), it);
+            *index = it;
+        }
+    }
+    return length - (lis.size()-1);
 }
 
 // Binary search (note boundaries in the caller)
-int CeilIndex(std::vector<int>& v, int lower, int upper, int key)
+int binarySearch(vector<char>& v, int lower, int upper, char key)
 {
-    while (upper - lower > 1) {
-        int m = lower + (upper - lower) / 2;
-        if (v[m] >= key)
-            upper = m;
-        else
-            lower = m;
+    while (upper > lower+1) {
+        int mid = lower + (upper-lower)/2;
+        if(v[mid] >= key) {
+            upper = mid;
+        } else {
+            lower = mid;
+        }
     }
     return upper;
 }
 
-int LIS_binary(string& v)
+int LIS_binary2(string& v)
 {
-    if (v.size() == 0)
-        return 0;
-
-    std::vector<int> tail(v.size(), 0);
+    vector<char> tail(v.length(), 0);
     int length = 1; // always points empty slot in tail
 
     tail[0] = v[0];
-    for (size_t i = 1; i < v.size(); i++) {
 
+    for (int i = 1; i < v.length() ; i++)
+    {
         // new smallest value
         if (v[i] < tail[0])
             tail[0] = v[i];
@@ -53,16 +78,10 @@ int LIS_binary(string& v)
         else if (v[i] > tail[length - 1])
             tail[length++] = v[i];
 
-        // v[i] will become end candidate of an existing
-        // subsequence or Throw away larger elements in all
-        // LIS, to make room for upcoming grater elements
-        // than v[i] (and also, v[i] would have already
-        // appeared in one of LIS, identify the location
-        // and replace it)
-        else
-            tail[CeilIndex(tail, -1, length - 1, v[i])] = v[i];
+        else {
+            tail[binarySearch(tail, -1, length - 1, v[i])] = v[i];
+        }
     }
-
     return v.length() - length;
 }
 
@@ -80,6 +99,7 @@ int main()
 
     for (auto& it: arr){
         cout << it << ": " << LIS_dp(it) << endl;
-        cout << it << ": " << LIS_binary(it) << endl;
+        cout << it << ": " << LIS_binary1(it) << endl;
+        cout << it << ": " << LIS_binary2(it) << endl;
     }
 }
