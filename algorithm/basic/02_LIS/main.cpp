@@ -22,16 +22,16 @@ int LIS_dp(string& S)
 }
 
 // Binary search (note boundaries in the caller)
-int CeilIndex(std::vector<int>& v, int l, int r, int key)
+int CeilIndex(std::vector<int>& v, int lower, int upper, int key)
 {
-    while (r - l > 1) {
-        int m = l + (r - l) / 2;
+    while (upper - lower > 1) {
+        int m = lower + (upper - lower) / 2;
         if (v[m] >= key)
-            r = m;
+            upper = m;
         else
-            l = m;
+            lower = m;
     }
-    return r;
+    return upper;
 }
 
 int LIS_binary(string& v)
