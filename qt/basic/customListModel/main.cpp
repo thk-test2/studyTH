@@ -20,15 +20,23 @@ int main(int argc, char *argv[])
     QObject * item0 = new QObject();
     item0->setProperty("title", "There's Nothing Holdin' Me Back");
     item0->setProperty("artistName", "Shawn Mendes");
+    item0->setProperty("enable", true);
 
     QObject * item1 = new QObject();
     item1->setProperty("title", "Shape of You");
     item1->setProperty("artistName", "Ed Sheeran");
+    item1->setProperty("enable", false);
+
+    QObject * item2 = new QObject();
+    item2->setProperty("title", "Test Title");
+    item2->setProperty("artistName", "Taehyun");
+    item2->setProperty("enable", true);
     //~ 모델 아이템 생성.
 
     // 모델에 아이템 삽입.
     model->append(item0);
     model->append(item1);
+    model->append(item2);
     //~ 모델에 아이템 삽입.
 
     engine.rootContext()->setContextProperty("myModel", model);

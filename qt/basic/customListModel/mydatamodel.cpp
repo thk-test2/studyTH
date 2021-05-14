@@ -18,6 +18,7 @@ QHash<int, QByteArray> MyDataModel::roleNames() const
     roles[TitleRole] = "title";
     roles[ArtistNameRole] = "artistName";
     roles[DurationRole] = "duration";
+    roles[EnableRole] = "enable";
     return roles;
 }
 
@@ -38,11 +39,27 @@ QVariant MyDataModel::data(const QModelIndex &index, int role) const
     case DurationRole:
         value = m_data[index.row()]->property("duration");
         break;
+    case EnableRole:
+        value = m_data[index.row()]->property("enable");
     default:
         break;
     }
 
     return value;
+}
+
+QVariantMap MyDataModel::get(int row) const {
+    QVariantMap data;
+    const QModelIndex idx = this->index(row, 0);
+    if (!idx.isValid()) {
+        return data;
+    }
+    QHashIterator<int, QByteArray> it(this->roleNames());
+    while (it.hasNext()) {
+        it.next();
+        data[it.value()] = idx.data(it.key());
+    }
+    return data;
 }
 
 void MyDataModel::append(QObject *o)

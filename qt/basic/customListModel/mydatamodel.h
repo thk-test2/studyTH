@@ -11,7 +11,8 @@ public:
     enum ModelRoles {
         TitleRole = Qt::UserRole + 1,
         ArtistNameRole,
-        DurationRole
+        DurationRole,
+        EnableRole
     };
 
     explicit MyDataModel(QObject * parent = nullptr);
@@ -19,13 +20,14 @@ public:
     int rowCount(const QModelIndex &p) const;
     QHash<int, QByteArray> roleNames() const;
     QVariant data(const QModelIndex &index, int role) const;
+    Q_INVOKABLE QVariantMap get(int row) const;
 
     int count() const;
 
 public slots:
     void append(QObject *o);
     void insert(QObject *o, int i);
-    void remove (int idx);
+    void remove(int idx);
 
 signals:
     void countChanged(int count);

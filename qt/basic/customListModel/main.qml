@@ -8,7 +8,7 @@ Window {
     title: qsTr("Hello World")
 
     ListView{
-        id: list_
+        id: control
         anchors.fill: parent
         model: myModel
 
@@ -17,8 +17,12 @@ Window {
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: 30
                 font.bold: true
+                visible: enable
                 text: title + " - " + artistName
             }
         }
+    }
+    Component.onCompleted: {
+        console.log(control.model.get(0).enable)
     }
 }
