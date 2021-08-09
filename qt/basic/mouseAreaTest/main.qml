@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
+import ccOS.GUI.Controls 2.0
 
 Window {
     width: 640
@@ -17,13 +18,19 @@ Window {
 
     Component {
         id: testDelegate
-        Rectangle {
+//        Rectangle {
+//            width: 200
+//            height: 100
+//            border.width: 2
+//            ImageButton {
+//                id: button
+//            }
+//        }
+        HButton {
             width: 200
             height: 100
-            border.width: 2
-            ImageButton {
-                id: button
-            }
+            text: modelData
+            textColor: "white"
         }
     }
 }
