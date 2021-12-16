@@ -1,3 +1,6 @@
+
+#include <QList>
+#include <QDebug>
 #include "mydatamodel.h"
 
 MyDataModel::MyDataModel(QObject * parent)
@@ -62,9 +65,63 @@ QVariantMap MyDataModel::get(int row) const {
     return data;
 }
 
+bool MyDataModel::selectUser(int idx, bool check)
+{
+    if ((rowCount() <= 0) || (idx < 0) || (rowCount() <= idx))
+        return false;
+
+//    UserListItem *p = m_users.at(idx);
+//    p->check = check;
+
+    QModelIndex r1 = index(idx);
+    QModelIndex r2 = index(idx);
+
+    Q_EMIT dataChanged(r1,r2);
+
+    return true;
+}
+
+bool MyDataModel::selectAllUser(bool check)
+{
+    if (rowCount() <= 0)
+        return false;
+
+    for (int i = rowCount() - 1; i >= 0; i--) {
+//        UserListItem *p = m_users.at(i);
+//        p->check = check;
+
+        QModelIndex r1 = index(i);
+        QModelIndex r2 = index(i);
+        Q_EMIT dataChanged(r1,r2);
+    }
+
+    return true;
+}
+
+bool MyDataModel::restoreAllUser()
+{
+    if (rowCount() <= 0)
+        return false;
+
+    for (int i = rowCount() - 1; i >= 0; i--) {
+//        UserListItem *p = m_users.at(i);
+//        p->check = false;
+
+        QModelIndex r1 = index(i);
+        QModelIndex r2 = index(i);
+
+        Q_EMIT dataChanged(r1,r2);
+    }
+
+    return true;
+}
+
 void MyDataModel::append(QObject *o)
 {
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
     m_data.append(o);
+//    m_data << o;
+    endInsertRows();
     emit countChanged(m_data.count());
 }
 
@@ -76,11 +133,26 @@ void MyDataModel::insert(QObject *o, int i)
 
 void MyDataModel::remove(int idx)
 {
+    beginRemoveRows(QModelIndex(), idx, idx);
     m_data.removeAt(idx);
+    endRemoveRows();
     emit countChanged(m_data.count());
 }
 
 int MyDataModel::count() const
 {
     return m_data.count();
+}
+
+void MyDataModel::removeAll()
+{
+    qDebug() << "removeAll()";
+//    QList<QObject *>::iterator i = m_data.begin();
+//    while (i != m_data.end()) {
+//        qDebug() << *i;
+//        i = m_data.erase(i);
+//    }
+    for (int i = rowCount() - 1; i >= 0; i--) {
+        remove(i);
+    }
 }

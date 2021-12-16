@@ -17,10 +17,15 @@ public:
 
     explicit MyDataModel(QObject * parent = nullptr);
 
-    int rowCount(const QModelIndex &p) const;
-    QHash<int, QByteArray> roleNames() const;
-    QVariant data(const QModelIndex &index, int role) const;
+    int rowCount(const QModelIndex &p = QModelIndex()) const override;
+    QHash<int, QByteArray> roleNames() const override;
+    QVariant data(const QModelIndex &index, int role) const override;
     Q_INVOKABLE QVariantMap get(int row) const;
+
+    Q_INVOKABLE bool selectUser(int index, bool check);
+    Q_INVOKABLE bool selectAllUser(bool check);
+    Q_INVOKABLE bool restoreAllUser();
+    Q_INVOKABLE void removeAll();
 
     int count() const;
 
