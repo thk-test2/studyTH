@@ -14,10 +14,10 @@ using namespace std;
 
 bool selected[MAX] = {false};
 int arr[MAX];
-int N = 3;
+int N = 1;
 
 void combi(int index, int cnt) {
-    if (cnt == 3) {
+    if (cnt == N) {
         cout << "{ ";
         for (int i = 0; i < MAX; i++) {
             if (selected[i])

@@ -29,6 +29,10 @@ void permu(int cnt) {
 
 int main()
 {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
     for (int i = 0; i < MAX; i++) {
         arr[i] = i+1;
     }
