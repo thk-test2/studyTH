@@ -1,0 +1,136 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <climits>
+
+using namespace std;
+
+int Select[10];
+int visited[1000] = { false };
+int N, O, M, W;
+int result;
+int minimum = INT_MAX;
+
+int cal_digits(int temp) {
+    int cnt = 0;
+    while (temp) {
+        temp /= 10;
+        cnt++;
+    }
+    return cnt;
+}
+
+void convert_numbers(vector<int>& numbers, vector<int>& converted, int Cnt, int target_Cnt) {
+    if (Cnt == target_Cnt) {
+        int temp = 0;
+        for (int i = 0; i < target_Cnt; i++) {
+            temp += Select[i] * pow(10, target_Cnt - i - 1);
+        }
+        converted.push_back(temp);
+        return;
+    }
+    for (int i = 0; i < N; i++) {
+        Select[Cnt] = numbers[i];
+        convert_numbers(numbers, converted, Cnt + 1, target_Cnt);
+    }
+}
+
+void calc(vector<int>& converted, vector<int>& oper, int Cnt, int temp) {
+    if (temp == W) {
+        minimum = min(minimum, Cnt + 1);
+        return;
+    }
+    else {
+        for (auto& op : oper) {
+            for (int i = 0; i < converted.size(); i++) {
+                int n = converted[i];
+                int cnt = cal_digits(n);
+
+                if (Cnt + cnt + 1 >= M) continue;
+                if (Cnt == 0)
+                    calc(converted, oper, 1, n);
+
+                if (op == 1 && temp + n < 1000) {
+                    if (!visited[temp + n]) {
+                        visited[temp + n] = true;
+                        calc(converted, oper, Cnt + cnt + 1, temp + n);
+                        visited[temp + n] = false;
+                    }
+                }
+                else if (op == 2 && temp - n >= 0) {
+                    if (!visited[temp - n]) {
+                        visited[temp - n] = true;
+                        calc(converted, oper, Cnt + cnt + 1, temp - n);
+                        visited[temp - n] = false;
+                    }
+                }
+                else if (op == 3 && temp * n < 1000) {
+                    if (!visited[temp * n]) {
+                        visited[temp * n] = true;
+                        calc(converted, oper, Cnt + cnt + 1, temp * n);
+                        visited[temp * n] = false;
+                    }
+                }
+                else if (op == 4 && n != 0) {
+                    if (!visited[temp / n]) {
+                        visited[temp / n] = true;
+                        calc(converted, oper, Cnt + cnt + 1, temp / n);
+                        visited[temp / n] = false;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void solution(vector<int>& numbers, vector<int>& oper) {
+    vector<int> converted;
+    for (int i = 0; i < N; i++) {
+        Select[i] = 0;
+    }
+
+    convert_numbers(numbers, converted, 0, 3);
+    auto itr = find(converted.begin(), converted.end(), W);
+    if (itr != converted.end()) {
+        result = cal_digits(*itr);
+    }
+    else {
+        calc(converted, oper, 0, 0);
+    }
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    int T;
+    cin >> T;
+
+    for (int test_case = 1; test_case <= T; test_case++) {
+        cin >> N >> O >> M;
+
+        vector<int> numbers;
+        vector<int> oper;
+        int n, o;
+        for (int i = 0; i < N; i++) {
+            cin >> n;
+            numbers.push_back(n);
+            visited[i] = false;
+        }
+        for (int i = 0; i < O; i++) {
+            cin >> o;
+            oper.push_back(o);
+        }
+        cin >> W;
+
+        result = -1; minimum = INT_MAX;
+        solution(numbers, oper);
+
+        minimum == INT_MAX ? cout << "#" << test_case << " " << result << "\n"
+            : cout << "#" << test_case << " " << minimum << "\n";
+    }
+
+    return 0;
+}

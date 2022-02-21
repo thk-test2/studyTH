@@ -1,0 +1,70 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+
+using namespace std;
+
+int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int T;
+	cin >> T;
+	int N;
+	double g;
+	vector<double> vx;
+	//const double G = 6.67384e-11f;
+	for (int test_case = 1; test_case <= T; test_case++) {
+		cin >> N;
+		for (int i = 0; i < N; i++) {
+			cin >> g;
+			vx.push_back(g);
+		}
+		vector<double> vg;
+		for (int i = 0; i < N; i++) {
+			cin >> g;
+			vg.push_back(g);
+		}
+
+		vector<double> answer;
+		for (int j = 1; j <= vx.size() - 1; j++) {
+			double start = vx[j-1];
+			double finish = vx[j];// vx.back();
+			double target{};
+
+			while (start <= finish) {
+				target = (finish + start) / 2.0;
+				double sum_left = 0.0, sum_right = 0.0;
+				for (int i = 0; i < N; i++) {
+					if (vx[i] < target) {
+						sum_left += vg[i] / ((target - vx[i]) * (target - vx[i]));
+					}
+					else {
+						sum_right += vg[i] / ((target - vx[i]) * (target - vx[i]));
+					}
+				}
+
+				double normal_left = floor(sum_left * 10000000000.f + 0.5) / 10000000000.f;
+				double normal_right = floor(sum_right * 10000000000.f + 0.5) / 10000000000.f;
+				if (normal_left < normal_right) {
+					finish = target;
+				}
+				else if (normal_left > normal_right) {
+					start = target;
+				}
+				else {
+					break;
+				}
+			}
+			answer.push_back(target);
+		}
+		printf("#%d ", test_case);
+		for (auto& itr: answer)
+			printf("%.10f ", itr);
+		printf("\n");
+		answer.clear(); 
+		vg.clear(); vx.clear();
+	}
+	return 0;
+}

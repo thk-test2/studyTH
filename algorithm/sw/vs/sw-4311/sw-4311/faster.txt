@@ -1,0 +1,101 @@
+#include<iostream>
+ 
+#define MAX_NUM 1000
+using namespace std;
+ 
+int N, O, M;
+int target;
+ 
+int calc(int *num, int *op)
+{
+    int arr[MAX_NUM] = { 0 };
+    int check[MAX_NUM] = { 0 };
+    int ret = -1;
+ 
+    for (int i = 0; i < N; i++)
+        arr[num[i]] = 1, check[num[i]] = 1;
+ 
+    for (int i = 1; i < 10; i++){
+        for (int j = 0; j < 10; j++)
+            if (arr[i] && arr[j])
+                arr[i * 10 + j] += 2, check[i * 10 + j] = 1;
+    }
+ 
+    for (int i = 10; i < 100; i++){
+        for (int j = 0; j < 10; j++)
+            if (arr[i] && arr[j])
+                arr[i * 10 + j] += 3, check[i * 10 + j] = 1;
+    }
+ 
+    if (arr[target] != 0)
+        return arr[target];
+ 
+    for (int k = 3; k < M; k++)
+    {
+        for (int i = 1; i < MAX_NUM; i++)
+        {
+            if (!arr[i] || arr[i] + 2 > k)
+                continue;
+            for (int j = 1; j < MAX_NUM; j++)
+            {
+                if (!check[j] || arr[j] + arr[i] + 1 > k)
+                    continue;
+ 
+                if (op[1] && (i + j < MAX_NUM) && !arr[i + j])
+                    arr[i + j] = arr[i] + arr[j] + 1;
+ 
+                if (op[2] && (i - j > 0) && !arr[i - j])
+                    arr[i - j] = arr[i] + arr[j] + 1;
+ 
+                if (op[3] && (i * j < MAX_NUM) && !arr[i * j])
+                    arr[i * j] = arr[i] + arr[j] + 1;
+ 
+                if (op[4] && (i / j > 0) && !arr[i / j])
+                    arr[i / j] = arr[i] + arr[j] + 1;
+         
+                if (arr[target] != 0)
+                    break;
+            }
+            if (arr[target] != 0)
+                break;
+        }
+        if (arr[target] != 0)
+            break;
+    }
+ 
+    if (arr[target] != 0)
+        if (arr[target] < M)
+            ret = arr[target] + 1;
+     
+    return ret;
+}
+ 
+int main(int argc, char** argv)
+{
+    int test_case;
+    int T;
+ 
+    cin >> T;
+     
+    for (test_case = 1; test_case <= T; ++test_case)
+    {
+        int num[10] = { 0 };
+        int op[5] = { 0 };
+ 
+        cin >> N >> O >> M;
+ 
+        for (int i = 0; i < N; i++)
+            cin >> num[i];
+        for (int i = 1; i <= O; i++)
+        {
+            int tmp;
+            cin >> tmp;
+            op[tmp] = 1;
+        }
+ 
+        cin >> target;
+ 
+        cout << "#" << test_case << " " << calc(num, op) << endl;
+    }
+    return 0;//정상종료시 반드시 0을 리턴해야합니다.
+}
