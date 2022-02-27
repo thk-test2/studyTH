@@ -1,0 +1,44 @@
+#include<cstdio>
+#include<queue>
+#include<algorithm>
+using namespace std;
+struct Pair { int x, y; };
+queue<Pair> q;
+int n, m, d, dis[50][50] = { {0} }, nex[] = { -1,-1,-1,0,1,1,1,0 }, ney[] = { -1,0,1,1,1,0,-1,-1 };
+bool map[50][50];
+int BFS()
+{
+    int x, y, nx, ny, d = 0;
+    while (!q.empty())
+    {
+        x = q.front().x; y = q.front().y; q.pop();
+        for (int i = 0; i < 8; ++i)
+        {
+            nx = x + nex[i]; ny = y + ney[i];
+            if (nx < 0 || ny < 0 || nx >= n || ny >= m || map[nx][ny]) continue;
+            map[nx][ny] = 1;
+            dis[nx][ny] = dis[x][y] + 1;
+            d = max(dis[nx][ny], d);
+            q.push({ nx,ny });
+        }
+    }
+    return d;
+}
+int main()
+{
+    scanf("%d %d", &n, &m);
+    for (int i = 0; i < n; ++i)
+    {
+        for (int j = 0; j < m; ++j)
+        {
+            scanf("%d", &d);
+            map[i][j] = d;
+            if (d == 1)
+            {
+                q.push({ i,j });
+            }
+        }
+    }
+    printf("%d\n", BFS());
+    return 0;
+}
