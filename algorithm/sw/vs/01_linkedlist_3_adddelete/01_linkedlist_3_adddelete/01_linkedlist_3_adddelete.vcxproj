@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{1d9fd3a8-ed80-434f-a5eb-c578697c663c}</ProjectGuid>
-    <RootNamespace>linkedlist1basic</RootNamespace>
+    <ProjectGuid>{c0e37153-efd7-49f1-b6de-e3bb892716f5}</ProjectGuid>
+    <RootNamespace>My01linkedlist3adddelete</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
