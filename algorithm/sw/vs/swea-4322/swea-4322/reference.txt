@@ -1,0 +1,83 @@
+#include <iostream>
+using namespace std;
+int test_case;
+ 
+struct node 
+{
+    int t;
+    int len;
+};
+unsigned char memo[1005][11][11][11][11][11];
+node packet[1005];
+int cpulist[5];
+int ncpu;
+bool isPossible;
+int n;
+ 
+void init()
+{
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        int time, len;
+        cin >> time >> len;
+        packet[i] = { time, len };
+    }
+    isPossible = false;
+    ncpu = 1;
+    for (int i = 0; i < 5; i++) cpulist[i] = 0;
+}
+ 
+void dfs(int ncpu, int pidx)
+{
+    if (pidx == n) {
+        isPossible = true;
+        return;
+    }
+    int time = 0;
+    if (pidx == 0) time = packet[pidx].t;
+    else time = packet[pidx].t - packet[pidx - 1].t;
+    int t[5] = { 0, };
+    for (int i = 0; i < ncpu; i++)
+    {
+        if (cpulist[i] > time) t[i] = cpulist[i] - time;
+    }
+    if (memo[pidx][t[0]][t[1]][t[2]][t[3]][t[4]] == test_case * 5 + ncpu) return;
+    memo[pidx][t[0]][t[1]][t[2]][t[3]][t[4]] = test_case * 5 + ncpu;
+    for (int i = 0; i < ncpu; i++)
+    {
+        // 현재 packe t을 index 에넣을 수 잇는지 확인
+        if (t[i] + packet[pidx].len > 10) continue;
+        //있다면 cpulist 에 넣고 backup 만들고
+         
+        for (int j = 0; j < 5; j++) cpulist[j] = t[j];
+        cpulist[i] += packet[pidx].len;
+        //dfs
+        dfs(ncpu, pidx + 1);
+        if (isPossible) return;
+        //backup
+        for (int j = 0; j < 5; j++) cpulist[j] = t[j];
+    }
+    return;
+}
+int main()
+{
+    int T;
+    cin >> T;
+    for (test_case = 1; test_case <= T; test_case++)
+    {
+        init();
+        for (int i = 1; i <= 5; i++)
+        {
+            dfs(i, 0);
+            ncpu = i;
+             
+            for (int j = 0; j < 5; j++) cpulist[j] = 0;
+            if (isPossible == true) break;
+        }
+        isPossible ? ncpu = ncpu : ncpu = -1;
+        cout << '#' << test_case << ' ' << ncpu << '\n';
+    }
+ 
+    return 0;
+}

@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{6ae6181f-8188-4551-a3a9-0c90a273f3fc}</ProjectGuid>
-    <RootNamespace>sw3234</RootNamespace>
+    <ProjectGuid>{6ba8a377-33c1-4618-a2ec-e2fa4d73143a}</ProjectGuid>
+    <RootNamespace>swea_4311</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -142,9 +142,11 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="01_first_try.txt" />
+    <Text Include="02_submitted.txt" />
+    <Text Include="03_faster.txt" />
     <Text Include="input.txt" />
     <Text Include="output.txt" />
-    <Text Include="reference.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

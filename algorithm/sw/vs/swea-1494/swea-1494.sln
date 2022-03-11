@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32126.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "swea-1494", "swea-1494\swea-1494.vcxproj", "{0033158A-4A11-48F9-9DFD-98D5637EEA99}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0033158A-4A11-48F9-9DFD-98D5637EEA99}.Debug|x64.ActiveCfg = Debug|x64
+		{0033158A-4A11-48F9-9DFD-98D5637EEA99}.Debug|x64.Build.0 = Debug|x64
+		{0033158A-4A11-48F9-9DFD-98D5637EEA99}.Debug|x86.ActiveCfg = Debug|Win32
+		{0033158A-4A11-48F9-9DFD-98D5637EEA99}.Debug|x86.Build.0 = Debug|Win32
+		{0033158A-4A11-48F9-9DFD-98D5637EEA99}.Release|x64.ActiveCfg = Release|x64
+		{0033158A-4A11-48F9-9DFD-98D5637EEA99}.Release|x64.Build.0 = Release|x64
+		{0033158A-4A11-48F9-9DFD-98D5637EEA99}.Release|x86.ActiveCfg = Release|Win32
+		{0033158A-4A11-48F9-9DFD-98D5637EEA99}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {886F32C3-6936-4198-A77E-5792A09493AC}
+	EndGlobalSection
+EndGlobal
