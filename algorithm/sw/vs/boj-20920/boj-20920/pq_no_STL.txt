@@ -1,0 +1,50 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node {
+	int cnt = 0;
+	string str;
+};
+
+Node heap[100100];
+int hCnt = 0;
+
+bool isMin(Node a, Node b) {
+	if (a.cnt > b.cnt)	return true;
+	if (a.str.size() > b.str.size()) return true;
+	if (a.str < b.str)	return true;
+	return false;
+}
+
+void push(Node nd) {
+	if (hCnt >= 100000) return;
+
+	heap[++hCnt] = nd;
+	for (int i = hCnt; i > 1; i /= 2) {
+		if (isMin(heap[i / 2], heap[i])) break;
+		swap(heap[i / 2], heap[i]);
+	}
+}
+
+Node pop() {
+	Node ret = heap[1];
+	heap[1] = heap[hCnt--];
+	for (int i = 1; i * 2 <= hCnt;) {
+		int child = isMin(heap[i * 2], heap[i * 2 + 1]) ? i * 2 : i * 2 + 1;
+		if (isMin(heap[i], heap[child])) break;
+		swap(heap[i], heap[child]);
+		i = child;
+	}
+	return ret;
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
+	int N, M;
+	cin >> N >> M;
+
+	return 0;
+}
