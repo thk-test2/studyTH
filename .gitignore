@@ -1,6 +1,10 @@
 
 # vscode 관련 파일 추적제외함
 .vscode/
+Debug/
+.vs
+*.filters
+*.user
 
 # CMake cache 추적 제외
 CMakeCache.txt
