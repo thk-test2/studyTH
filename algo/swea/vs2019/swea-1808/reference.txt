@@ -1,0 +1,67 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int arr[10];
+
+int checking(int number) {
+	int temp = number;
+	int temp1;
+	int counting = 0;
+	while (temp >= 10) {
+		temp1 = temp % 10;
+		temp = temp / 10;
+		if (arr[temp1] == 0)
+			return 0;
+		++counting;
+	}
+	temp1 = temp;
+	if (arr[temp1] == 0)
+		return 0;
+	++counting;
+	return counting;
+}
+
+int calculate(int N) {
+	int cnt = checking(N);
+	if (cnt) return cnt;
+
+	int result = 987654321;
+	for (int i = 2; i < sqrt(N); ++i) {
+		if (N % i != 0) continue;
+
+		int check1 = checking(i);
+		int check2 = calculate(N / i);
+		if (check1 && check2) {
+			if (result > check1 + check2 + 1) {
+				result = check1 + check2 + 1;
+			}
+		}
+	}
+	return result == 987654321 ? 0 : result;
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
+	int T, N;
+	cin >> T;
+	for (int test = 1; test <= T; ++test) {
+		for (int i = 0; i < 10; ++i) {
+			cin >> arr[i];
+		}
+		cin >> N;
+
+		int cnt = calculate(N);
+		if (cnt) {
+			cout << "#" << test << " " << cnt + 1 << "\n";
+		}
+		else {
+			cout << "#" << test << " " << -1 << "\n";
+		}
+	}
+
+	return 0;
+}
