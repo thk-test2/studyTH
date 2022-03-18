@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -83,12 +84,12 @@ void merge(int start, int end) {
 		sortingArr[i] = b[i - start];
 }
 
-void sort(int start, int end) {
+void mergesort(int start, int end) {
 	if (start == end) return;
 
 	int mid = (start + end) / 2;
-	sort(start, mid);
-	sort(mid + 1, end);
+	mergesort(start, mid);
+	mergesort(mid + 1, end);
 	merge(start, end);
 }
 
@@ -113,7 +114,8 @@ int main() {
 			sSize++;
 		}
 	}
-	sort(0, sSize);
+	//mergesort(0, sSize);
+	sort(sortingArr, sortingArr + sSize, isHigerPriority);
 	for (int i = 0; i < sSize; ++i) {
 		cout << sortingArr[i].word << "\n";
 	}

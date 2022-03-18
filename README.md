@@ -19,6 +19,37 @@
     - ``` 코드 ```
     - 지수: 2<sup>n</sup>
 
+## 220318
+1. BOJ 11286: [문제](https://www.acmicpc.net/problem/11286)
+    - Algorithm: 자료구조, 우선순위 큐
+    - Idea
+        - 기본 우선순위 큐 구현 + 커스텀 노드의 우선순위를 판별한다.
+    - Solve
+        1. 문제의 조건에 맞게 비교함수를 구현할 것
+        2. 그 외에는 똑같다. insert()에서는 마지막 노드에서 parent로 올라가며 탐색. <br/> pop()은 1번 노드를 저장하고 마지막 노드를 1번 노드로 옮긴 후 재배치.
+        3. 특정 노드를 갱신하는 **update()**를 연습해야 한다.
+2. 07_bitwise_1_basic
+    - Algorithm: Bitwise 연산 연습
+    - 간단한 정리
+        1. `t1 |= (1 << n)`: t1의 n번째 bit를 1로 바꾼다.
+        2. `t1 &= ~(1 << n)`: t1의 n번째 bit를 0으로 바꾼다.
+        3. `t1 ^= (1 << n)`: t1의 n번째 bit을 토글.
+        4. `(t1 >> n) & 1`: t1의 n번째 bit가 1인지 판별.
+        5. STL bitset을 사용해도 됨. 
+            - `bit.set(2)`: 2번째 bit를 1로 set
+            - `bit.reset(2)`: 2번째 bit를 0으로 set
+            - `bit.flp()`: 모든 bit 반전
+            - `bit.to_ulong()`: unsigned long 값을 반환
+3. SWEA 2112: [문제](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV5V1SYKAaUDFAWu)
+    - Algorithm: 백트래킹, 구현
+    - Idea
+        - 특정 line을 0또는 1로 칠해가며 모든 경우의 수를 탐색
+    - Solve
+        1. check(): 현재 film의 상태가 합격할 수 있는 상태인지 확인하는 함수
+        2. testColumn(): 조합을 재귀로 구현한다. 각 line을 0, 1로 칠하는 경우의 수를 따진다. 
+            - 칠하기 전에 해당 column을 저장해두고 다시 복원한다. 전체 array를 저장하는 것은 낭비.
+            - check()를 호출하여 통과할 수 있는지 확인한다.
+
 ## 220317
 1. SWEA 1808: [문제](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV4yC3pqCegDFAUx)
     - Algorithm: 백트래킹
