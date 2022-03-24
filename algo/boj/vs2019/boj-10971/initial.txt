@@ -1,0 +1,43 @@
+#include <iostream>
+
+using namespace std;
+
+int cost[10][10];
+bool visited[10];
+int minimum = 987654321;
+int N;
+
+void travel(int start, int current, int sum, int cnt) {
+	if (cnt == N-1) {
+		if (cost[current][start]) {
+			minimum = min(minimum, sum + cost[current][start]);
+		}
+		return;
+	}
+
+	for (int i = 0; i < N; ++i) {
+		if (visited[i]) continue;
+		if (cost[current][i] == 0) continue;
+		visited[i] = true;
+		travel(start, i, sum + cost[current][i], cnt + 1);
+		visited[i] = false;
+	}
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
+	cin >> N;
+	for (int i = 0; i < N; ++i) {
+		for (int j = 0; j < N; ++j) {
+			cin >> cost[i][j];
+		}
+	}
+	for (int i = 0; i < N; ++i) {
+		visited[i] = true;
+		travel(i, i, 0, 0);
+	}
+	cout << minimum;
+	return 0;
+}
