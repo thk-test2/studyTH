@@ -1,0 +1,49 @@
+// https://www.acmicpc.net/source/40837969
+
+#include <bits/stdc++.h>
+using namespace std;
+#define N 2'000'000
+map<int, int> cnt;
+priority_queue<int> max_q;
+priority_queue<int, vector<int>, greater<int>> min_q;
+int n;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int T; cin>>T;
+    while (T--) {
+        cin>>n;
+        cnt = {};
+        min_q = {}, max_q = {};
+        int k = 0;
+        for (int i=0; i<n; ++i) {
+            char cmd; int x;
+            cin >> cmd >> x;
+            if (cmd == 'I') {
+                k++;
+                cnt[x]++;
+                min_q.push(x);
+                max_q.push(x);
+            } else {
+                if (k==0) continue;
+                if (x==1) {
+                    while (cnt[max_q.top()]==0) max_q.pop();
+                    cnt[max_q.top()]--;
+                } else {
+                    while (cnt[min_q.top()]==0) min_q.pop();
+                    cnt[min_q.top()]--;
+                }
+                k--;
+            }
+        }
+        if (k==0) cout << "EMPTY\n";
+        else {
+            while (cnt[max_q.top()]==0) max_q.pop();
+            while (cnt[min_q.top()]==0) min_q.pop();
+            cout << max_q.top() << " " << min_q.top() << "\n";
+        }
+    }
+
+    return 0;
+}

@@ -1,0 +1,29 @@
+// https://www.acmicpc.net/source/40944956
+
+#include <iostream>
+#include <set>
+using namespace std;
+
+int main() {
+	cin.tie(0)->ios::sync_with_stdio(0);
+
+	int t;
+	cin >> t;
+	while (t--) {
+		int k;
+		cin >> k;
+		multiset<int> Set;
+		while (k--) {
+			char c;
+			int n;
+			cin >> c >> n;
+			if (c == 'I') Set.insert(n);
+			else if (!Set.empty()) {
+				if (n == 1) Set.erase(--Set.end());
+				else Set.erase(Set.begin());
+			}
+		}
+		if (Set.empty()) cout << "EMPTY\n";
+		else cout << *(--Set.end()) << ' ' << *Set.begin() << '\n';
+	}
+}

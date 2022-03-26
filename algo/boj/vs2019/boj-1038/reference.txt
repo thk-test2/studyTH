@@ -1,0 +1,23 @@
+// https://www.acmicpc.net/source/40872209
+
+#include <bits/stdc++.h>
+#define int long long
+using namespace std;
+int n;
+vector<int> vect;
+void f(int now) {
+	vect.push_back(now);
+	for (int i = 9; i >= 0; i--) {
+		if (now % 10 > i)
+			f(now * 10 + i);
+	}
+}
+signed main() {
+	for (int i = 0; i <= 9; i++)
+		f(i);
+	sort(vect.begin(), vect.end());
+	cin >> n;
+	if (vect.size() - 1 < n) cout << -1;
+	else cout << vect[n];
+	return 0;
+}
