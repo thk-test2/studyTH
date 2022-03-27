@@ -41,7 +41,7 @@
     - Algorithm: Priority Queue
     - Idea: 우선순위 큐 구현에 매몰되지 말고 STL을 잘 활용하자.
     - Solve
-        1. 우선순위 큐 2개(최소 힙과 최대 힙)을 준비한다. 구현을 하거나 굳이 update가 필요없다면 STL을 사용한다.
+        1. 우선순위 큐 2개(최소 힙과 최대 힙)을 준비한다. 구현을 해도 되고, 굳이 update가 필요없다면 STL을 사용한다.
             1. Push 할 때 두개의 힙에 모두 Push 해준다. check 배열을 하나 두고 True로 표기한다.
             2. Pop 할 때 `D 1`이면 최대 힙에서 Pop 연산을 한다. 그 전에, **최대 힙의 front 원소가 invalid**(check 배열이 false) 하면 제거해준다.
             3. `D -1`이면 최소 힙에서 Pop 연산을 하며, 그 전에 invalid 한 값들을 제거해준다.
