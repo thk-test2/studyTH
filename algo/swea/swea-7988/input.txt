@@ -1,0 +1,13 @@
+3
+2
+Alex Tom
+Paul Alex
+4
+A B
+B C
+C D
+D A
+3
+z d
+d u_i
+z u_i

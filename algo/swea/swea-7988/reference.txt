@@ -1,0 +1,73 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+
+#define MAX 210
+
+using namespace std;
+
+int K, idx;
+unordered_map<string, int> m;
+vector<int> v[MAX];
+int visit[MAX];
+string answer;
+
+void init() {
+	idx = 0;
+	m.clear();
+	for (int i = 0; i < MAX; ++i) {
+		v[i].clear();
+		visit[i] = 0;
+	}
+}
+
+void dfs(int cur, int color) {
+	visit[cur] = color;
+	for (int i = 0; i < v[cur].size(); ++i) {
+		int next = v[cur][i];
+		if (visit[next] == 0) dfs(next, 3 - color);
+	}
+}
+
+void simulation() {
+	for (int i = 0; i < idx; ++i) {
+		if (visit[i] == 0) {
+			dfs(i, 1);
+		}
+	}
+	for (int i = 0; i < idx; ++i) {
+		int cur = i;
+		for (int j = 0; j < v[i].size(); ++j) {
+			int next = v[i][j];
+			if (visit[cur] == visit[next]) {
+				answer = "No";
+				return;
+			}
+		}
+	}
+	answer = "Yes";
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
+	int T, K;
+	cin >> T;
+	for (int test = 1; test <= T; ++test) {
+		init();
+		cin >> K;
+		
+		string A, B;
+		for (int i = 0; i < K; ++i) {
+			cin >> A >> B;
+			if (m.count(A) == 0) m[A] = idx++;
+			if (m.count(B) == 0) m[B] = idx++;
+			v[m[A]].push_back(m[B]);
+			v[m[B]].push_back(m[A]);
+		}
+		simulation();
+		cout << "#" << test << " " << answer << "\n";
+	}
+	return 0;
+}

@@ -21,6 +21,31 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220330
+1. SWEA-1227: 미로2 [문제](https://swexpertacademy.com/main/code/problem/problemSolver.do?contestProbId=AV14wL9KAGkCFAYD)
+    - Algorithm: BFS
+    - Idea: 맵을 탐색하여 목표 지점에 도착할 수 있는지 확인하는 문제.
+    - Solve
+        - 일반적인 BFS로 모든 맵을 탐색해주면 된다.
+        - 참고로 공백이 있는 string을 cin으로 입력받는 방법을 알아두자.
+            - `#include <string>` 하여 `getline(cin, str);`을 사용한다.
+        - cin 함수들 알아둘 것
+            - `cin.clear()`: cin 객체의 *내부 상태 플래그* 를 초기화시켜 cin 관련 기능이 정상동작 하도록 함
+            - `cin.fail()`: cin 오류시 1을 반환하고 아니면 0을 반환함
+            - `cin.ignore()`: 입력 버퍼에 있는 모든 내용을 추출해서 버림
+
+2. SWEA-7988: 내전 경기 [문제](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWvQZmdKUoEDFASy)
+    - Algorithm: 이분 그래프, Hash
+    - Idea: 노드를 탐색하며 **이분 그래프** 기법으로 팀을 나누어 본다.
+    - Solve
+        1. 노드의 값이 string이기 때문에 hash를 사용하여 int로 변환해 준다. (string - key)
+            - 인접 노드 벡터를 선언하여 변환된 int에 맞게 입력을 받는다.
+        2. 이분 그래프 탐색을 진행하며 색을 번갈아서 칠한다.
+            - 색을 번갈아 칠한다는 것은 **인접한 노드들을 자신과 반대의 색으로 칠한다는 의미**이다.
+            - visit 배열은 0, 1, 2의 상태를 가져야 하기 때문에 int로 선언해야 한다. 0은 미방문, 1과 2는 다른 팀을 의미.
+            - dfs로 탐색을 진행하며, 자신은 **color**로, 인접 노드들은 **3 - color**로 색칠해 준다. 최초 color 값은 1.
+        3. 색칠을 끝내고 다시 한번 그래프를 탐색하여 인접노드와 자신의 색이 같은 경우가 있는지 검사한다. 없으면 성공.
+
 ## 220328
 1. BOJ 1655: 가운데를 말해요 [문제](https://www.acmicpc.net/problem/1655)
     - Algorithm: Priority Queue
