@@ -21,8 +21,16 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220331
+1. SWEA 7701: 염라대왕의 이름 정렬 [문제](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWqU0zh6rssDFARG)
+    - Algorithm: Hash, Priority Queue
+    - Idea: 우선순위 큐의 우선순위 조정을 할 수 있으면 된다. 
+    - Solve
+        - 우선순위 조정을 위한 struct 선언: 길이가 짧은 것이 우선순위가 높고, 길이가 같으면 사전 순서가 앞인 것이 우선순위가 높다.
+        - Hash를 이용해 중복된 원소가 삽입되지 않도록 한다.
+
 ## 220330
-1. SWEA-1227: 미로2 [문제](https://swexpertacademy.com/main/code/problem/problemSolver.do?contestProbId=AV14wL9KAGkCFAYD)
+1. SWEA 1227: 미로2 [문제](https://swexpertacademy.com/main/code/problem/problemSolver.do?contestProbId=AV14wL9KAGkCFAYD)
     - Algorithm: BFS
     - Idea: 맵을 탐색하여 목표 지점에 도착할 수 있는지 확인하는 문제.
     - Solve
@@ -34,7 +42,7 @@
             - `cin.fail()`: cin 오류시 1을 반환하고 아니면 0을 반환함
             - `cin.ignore()`: 입력 버퍼에 있는 모든 내용을 추출해서 버림
 
-2. SWEA-7988: 내전 경기 [문제](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWvQZmdKUoEDFASy)
+2. SWEA 7988: 내전 경기 [문제](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWvQZmdKUoEDFASy)
     - Algorithm: 이분 그래프, Hash
     - Idea: 노드를 탐색하며 **이분 그래프** 기법으로 팀을 나누어 본다.
     - Solve
