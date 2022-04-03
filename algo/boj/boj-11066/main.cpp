@@ -10,7 +10,7 @@ int K;
 int travel(int start, int end) {
 	if (memo[start][end] != 987654321) return memo[start][end];
 	if (start == end)
-		return 0; // 파일 하나를 합치는 비용은 없다.
+		return 0;
 	if (start == end - 1)
 		return memo[start][end] = arr[start] + arr[end];
 
