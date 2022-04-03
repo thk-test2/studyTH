@@ -4,16 +4,6 @@
 
 using namespace std;
 
-//int getCost(vector<int>& v, int start, int end) {
-//	int cost = 0;
-//
-//	int mid = (start + end) / 2;
-//	for (int i = start; i <= end; ++i) {
-//		cost += abs(v[mid] - v[i]);
-//	}
-//	return cost;
-//}
-
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL); cout.tie(NULL);

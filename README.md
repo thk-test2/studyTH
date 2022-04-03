@@ -24,10 +24,12 @@
 ## 220401
 1. SWEA 6855: 신도시 전기 연결하기 [문제](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWhUBBUqQO0DFAW_)
     - Algorithm: Sort
-    - Idea: 도시 간 거리가 높은 곳부터 발전소를 배치하자.
+    - Idea
+        - 도시 간 거리가 높은 곳부터 발전소를 배치하자.
+        - PS에서 **정렬**이 쓰이는 경우가 많다. 아이디어가 떠오르지 않으면 정렬을 생각해보자.
     - Solve
         1. 도시의 위치를 입력 받은 후, 도시 간 거리를 구해서 배열에 저장한다.
-        2. 도시 간 거리를 정렬한 다음, 뒤에서 K개는 발전소를 배치할 것이기 때문에 N-K 까지의 거리를 합산한다.
+        2. 도시 간 거리를 정렬한 다음, 뒤에서 K개는 발전소를 배치할 것이기 때문에 `N-K` 까지의 거리를 합산한다.
 
 ## 220331
 1. SWEA 7701: 염라대왕의 이름 정렬 [문제](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWqU0zh6rssDFARG)
