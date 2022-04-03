@@ -21,6 +21,55 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220403
+1. SWEA 1798: 범준이의 제주도 여행 계획 [문제](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV4x9oyaCR8DFAUx)
+    - Algorithm: 백트래킹
+    - Idea: 백트래킹 수행 중 따져야 할 것이 많은 문제
+    - Solve
+        1. 관광지와 그 외의 것들로 구분해서 관리하는 것이 편하다.
+        2. 허용된 시간(540분) 안에서 관광지를 최대한 돌고 540이 초과되면 호텔이나 공항을 선택한다.
+            - M번째 날엔 공항을, 그 외에는 호텔을 선택한다.
+        3. 최대 만족도를 계속 갱신해준다.
+
+2. SWEA 8189: 우편함 [문제](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWwtU7XqhL0DFAWU)
+    - Algorithm: 구현
+    - Idea: 시간을 1씩 증가시키면서 문제의 조건에 맞게 구현한다.
+    - Solve
+        1. 메일함을 확인하는 조건은 설정한 메일함의 용량에 도달했을 때, 그리고 메일 수령 이후 특정 시간이 지났을 때이다.
+            - 메일함을 확인할 때는 절반만 확인해준다.
+        2. `while` 문 안에서 시간을 증가시키면서 구현해주자.
+
+3. BOJ 11437: LCA [문제](https://www.acmicpc.net/problem/11437)
+    - Algorithm: Lowest Common Ancestor
+    - Idea: 좀 더 공부를 하고 업데이트 할 것.
+
+4. BOJ 11066: 파일 합치기 [문제](https://www.acmicpc.net/problem/11066)
+    - Algorithm: DP
+    - Idea: `memo` 배열의 인자와 채워나가는 순서를 고민해야 하는 문제
+    - Solve
+        1. memo 배열은 2차원으로, 첫번째는 합치는 범위의 시작 index, 두번째는 종료 index 이다.
+        2. 재귀나 for 문의 기법을 사용해서 가장 작은 단위부터 memo 배열을 채워 나간다.
+            - 가장 작은 단위는 연속된 파일이다. ex) memo[0][1] / memo[3][4]
+            - 연속된 파일을 합치는 것은 더해주기만 하면 된다.
+        3. 합치는 범위를 늘려가면서 하위 범위의 값들을 비교하여 최소값을 선택해준다.
+            - for문이 좀 더 빠르니 하위 범위의 값을 먼저 구하는 기법을 알아두자. 이중 for문을 써서 바깥에서 range를 1씩 늘려가는 것이다.
+                ```c++
+                  // range
+                  for(int r = 1; r < k; r++)
+                    // start
+                    for(int s = 0; s + r < k; s++) {
+                      // end
+                      int e = s + r;
+                      ...
+                      for(int k = s; k < e; k++)
+                        dp[s][e] = min(dp[s][e], ...
+                    }
+                ``` 
+
+5. BOJ 11049: 행렬 곱셈 순서 [문제](https://www.acmicpc.net/problem/11049)
+    - Algorithm: DP
+    - Idea: 위 **파일 합치기** 문제와 비슷함. 더해줘야 하는 offset만 다르다.
+
 ## 220401
 1. SWEA 6855: 신도시 전기 연결하기 [문제](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWhUBBUqQO0DFAW_)
     - Algorithm: Sort
