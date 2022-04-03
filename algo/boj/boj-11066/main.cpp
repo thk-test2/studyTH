@@ -5,53 +5,50 @@ using namespace std;
 
 int memo[501][501];
 int arr[501];
+int K;
 
 int travel(int start, int end) {
-	if (start == end) return memo[start][end] = arr[start];
-	if (memo[start][end] != 0) return memo[start][end];
+	if (memo[start][end] != 987654321) return memo[start][end];
+	if (start == end)
+		return 0; // 파일 하나를 합치는 비용은 없다.
+	if (start == end - 1)
+		return memo[start][end] = arr[start] + arr[end];
 
-	int case1 = travel(start, end - 1);
-	int case2 = travel(start + 1, end);
+	int sum = 0;
+	for (int i = start; i <= end; ++i)
+		sum += arr[i];
 
-	if (start == end - 1) {
-		memo[start][end] = arr[start] + arr[end];
-	}
-	else {
-		int sum1 = 0, sum2 = 0;
-		for (int i = start; i <= end - 1; ++i)
-			sum1 += arr[i];
-		for (int i = start + 1; i <= end; ++i)
-			sum2 += arr[i];
-		memo[start][end] = min(case1 + sum1 + arr[end], case2 + sum2 + arr[start]);
+	for (int i = start; i < end; ++i) {
+		int memo1 = travel(start, i);
+		int memo2 = travel(i + 1, end);
+
+		memo[start][end] = min(memo[start][end], memo1 + memo2 + sum);
 	}
 	return memo[start][end];
+}
+
+void init() {
+	memset(arr, 0, sizeof(arr));
+	for (int i = 0; i < K; ++i) {
+		for (int j = 0; j < K; ++j) {
+			memo[i][j] = 987654321;
+		}
+	}
 }
 
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL); cout.tie(NULL);
 
-	int T, K;
+	int T;
 	cin >> T;
 	for (int test = 1; test <= T; ++test) {
-		memset(memo, 0, sizeof(memo));
-		memset(arr, 0, sizeof(arr));
 		cin >> K;
+		init();
 		for (int i = 0; i < K; ++i) {
 			cin >> arr[i];
 		}
-
-		//for (int i = 0; i < K; ++i)
-		//	memo[i][i] = v[i];
-
-		//for (int i = 0; i < K; ++i) {
-		//	for (int j = 0; j < K; ++j) {
-		//		if (i == j) continue;
-		//		memo[i][j] = min(memo[i][j - 1] + memo[i][j - 1] + v[j],
-		//			memo[i+1][j] + memo[i+1][j] + v[i]);
-		//	}
-		//}
-		cout << "#" << test << " " << travel(0, K-1) << "\n";
+		cout << travel(0, K-1) << "\n";
 	}
 	return 0;
 }
