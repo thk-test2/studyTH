@@ -21,6 +21,32 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220404
+1. BOJ 9252: LCS 2 [문제](https://www.acmicpc.net/problem/9252)
+    - Algorithm: DP
+    - Idea: memo 배열을 만들고 LCS를 어떻게 도출할지 고민해야 하는 문제
+    - Solve
+        1. memo 배열 만들기
+            1. 문자열A, 문자열B의 한글자씩 비교해봅니다.
+            2. 두 문자가 다르다면 LCS[i - 1][j]와 LCS[i][j - 1] 중에 큰값을 표시합니다.
+            3. 두 문자가 같다면 LCS[i - 1][j - 1] 값을 찾아 +1 합니다.
+            4. 위 과정을 반복합니다.
+        2. 최장 공통 부분 문자열 찾기
+            1. LCS 배열의 가장 마지막 값에서 시작합니다. 결과값을 저장할 result 배열을 준비합니다.
+            2. LCS[i - 1][j]와 LCS[i][j - 1] 중 현재 값과 같은 값을 찾습니다.
+                - 만약 같은 값이 있다면 해당 값으로 이동합니다.
+                - 만약 같은 값이 없다면 result배열에 해당 문자를 넣고 LCS[i -1][j - 1]로 이동합니다.
+            3. 2번 과정을 반복하다가 0으로 이동하게 되면 종료합니다. result 배열의 역순이 LCS 입니다.
+        3. 구글에 **그림으로 알아보는 LCS 알고리즘** 설명을 읽어보자.
+
+2. BOJ 1987: 알파벳 [문제](https://www.acmicpc.net/problem/1987)
+    - Algorithm: 백트래킹
+    - Idea: 백트래킹 기본기 점검을 위한 문제.
+    - Solve
+        - 방문한 곳을 다시 방문하지 않도록 visited를 사용하고,
+        - 한번 지나간 알파벳도 다시 사용하지 않도록 alphabet 배열을 추가로 사용한다.
+        - 다시 돌아와서 탐색할 때 visited와 alphabet을 false로 해야 다른 경우의 수를 탐색할 수 있다.
+
 ## 220403
 1. SWEA 1798: 범준이의 제주도 여행 계획 [문제](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV4x9oyaCR8DFAUx)
     - Algorithm: 백트래킹
