@@ -1,0 +1,111 @@
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+int arr[50][50];
+bool visited[50][50][7];
+int dirI[] = { -1, 1, 0, 0 };
+int dirJ[] = { 0, 0, -1, 1 };
+int N;
+int minimum = 987654321;
+
+void travel(int i, int j, int length) {
+	//maximum = max(maximum, length);
+	int current = arr[i][j];
+	
+	//cout << i << ", " << j << ", " << arr[i][j] << ", len:" << length << "\n";
+
+	for (int k = 0; k < 4; ++k) {
+		int nI = i + dirI[k], nJ = j + dirJ[k];
+
+		if (nI < 0 || nI >= N || nJ < 0 || nJ >= N) continue;
+
+		int next = arr[nI][nJ];
+		if (next == 0 || (nI == 0 && nJ == 0)) continue;
+
+		if (nI == N - 1 && nJ == N - 1) {
+			if (next == 1) {
+				if (current == 1 || current == 6) {
+					minimum = min(minimum, length + 1);
+				}
+			}
+			else if (next == 6) {
+				if (current == 2 || current == 4) {
+					minimum = min(minimum, length + 1);
+				}
+			}
+			return;
+		}
+
+		int idx = 0;
+		while (idx < 7 && !visited[nI][nJ][next]) {
+			idx++;
+			if (k == 0) {
+				if (current == 2 || current == 5 || current == 6) {
+					if (next == 2 || next == 3 || next == 4) {
+						visited[nI][nJ][next] = true;
+						travel(nI, nJ, length + 1);
+					}
+				}
+			}
+			else if (k == 1) {
+				if (current == 2 || current == 3 || current == 4) {
+					if (next == 2 || next == 5 || next == 6) {
+						visited[nI][nJ][next] = true;
+						travel(nI, nJ, length + 1);
+					}
+				}
+			}
+			else if (k == 2) {
+				if (current == 1 || current == 4 || current == 5) {
+					if (next == 1 || next == 3 || next == 6) {
+						visited[nI][nJ][next] = true;
+						travel(nI, nJ, length + 1);
+					}
+				}
+			}
+			else {
+				if (current == 1 || current == 3 || current == 6) {
+					if (next == 1 || next == 4 || next == 5) {
+						visited[nI][nJ][next] = true;
+						travel(nI, nJ, length + 1);
+					}
+				}
+			}
+			if (next == 1 || next == 2) {
+				if (++next == 3) next = 1;
+			}
+			else if (next >= 3) {
+				if (++next == 7) next = 3;
+			}
+			arr[nI][nJ] = next;
+		}
+	}
+}
+
+void init() {
+	minimum = 987654321;
+	memset(arr, 0, sizeof(arr));
+	memset(visited, false, sizeof(visited));
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
+	int T;
+	cin >> T;
+	for (int test = 1; test <= T; ++test) {
+		cin >> N;
+		init();
+		for (int i = 0; i < N; ++i) {
+			for (int j = 0; j < N; ++j) {
+				cin >> arr[i][j];
+			}
+		}
+		travel(0, 0, 1);
+		cout << "#" << test << " " << minimum << "\n";
+	}
+	return 0;
+}

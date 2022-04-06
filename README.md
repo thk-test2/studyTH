@@ -21,10 +21,32 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220406
+1. SWEA 4340: 파이프 연결 [문제](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWL6LhM6A60DFAUY)
+    - Algorithm: 백트래킹, DP
+    - Idea
+        - 파이프를 돌릴 수 있다는 것은, 같은 타입의 파이프를 모두 사용할 수 있다는 것을 의미한다.
+        - 들어온 방향에 따라 어떻게 이동이 되는지 생각한다.
+            1. 직선 파이프는 들어온 방향이 유지 된다.
+            2. 구부러진 파이프는 들어온 방향에서 왼쪽이나 오른쪽으로 가게된다.
+    - Solve
+        1. 가지치기 전에 먼저 틀을 구현해준다. 재귀함수의 파라미터는 i와 j좌표, 현재까지의 길이, 들어온 방향이다.
+        2. 들어온 방향과 현재 파이프 타입을 고려하여 다음 방향으로 탐색을 수행한다.
+            - 구부러진 파이프는 좌우로 나갈 수 있다. 방향 배열 또는 enum과 로직을 활용하여 다음 방향을 결정하자.
+            - 목표에 도착하면 최소 길이를 갱신한다.
+        3. 가지치기를 생각해보자.(어렵다..)
+            1. `memo[i][j][inputDir]`: 현재 좌표와 나가는 방향을 인자로 하는 memo 배열 활용하여 현재 길이가 더 크면 리턴.
+                - 이를 위해 지나는 path를 저장하고, 목표에 도달시 지나온 경로의 memo 배열에 기록해줘야 한다.
+            2. 현재까지의 길이와, 기존 최소길이를 비교한다. 그리고 **현재 길이+도달할 수 있는 가장 빠른 길이**가 기존 최소길이보다 크면 더 진행할 필요가 없다.
+                ```C++
+                    int left = N * 2 - i - j + 1;
+                    if (length + left >= minLength) return;
+                ```
+
 ## 220404
 1. BOJ 9252: LCS 2 [문제](https://www.acmicpc.net/problem/9252)
     - Algorithm: DP
-    - Idea: memo 배열을 만들고 LCS를 어떻게 도출할지 고민해야 하는 문제
+    - Idea: memo 배열을 만드는 것도 문제지만, LCS를 어떻게 도출할지 고민해야 함.
     - Solve
         1. memo 배열 만들기
             1. 문자열A, 문자열B의 한글자씩 비교해봅니다.
@@ -118,6 +140,9 @@
 1. SWEA 1227: 미로2 [문제](https://swexpertacademy.com/main/code/problem/problemSolver.do?contestProbId=AV14wL9KAGkCFAYD)
     - Algorithm: BFS
     - Idea: 맵을 탐색하여 목표 지점에 도착할 수 있는지 확인하는 문제.
+        - N이 **10~20** 이면 **DFS나 BFS** 사용 가능
+        - N이 **30~100** 이면 **BFS**일 가능성이 큼
+        - visited 배열 등, 배열 초기화시 memset을 사용하자. for문보다 빠르게 초기화 가능
     - Solve
         - 일반적인 BFS로 모든 맵을 탐색해주면 된다.
         - 참고로 공백이 있는 string을 cin으로 입력받는 방법을 알아두자.
