@@ -21,6 +21,37 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220407
+1. SWEA 1257: K번째 문자열 [문제](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV18KWf6ItECFAZN)
+    - Algorithm: 문자열, 조합
+    - Idea
+        - 모든 문자열 조합을 구하는 방법을 사용했다.
+        - LCP(Longest Common Prefix)를 활용하는 방법이 있다고 한다.
+    - Solve
+        - 모든 문자열 조합을 구해서 set에 넣으면 자동 정렬이 되고 중복도 제거된다. 이후 K번째 문자열을 구한다.
+        - 문자열 조합을 만들 때 재귀말고 **반복문**으로 구현하는 방법도 있다는 것을 알아두자.
+            ```C++
+                for (int i = 0; i < str.size(); ++i) {
+                    string temp = { str[i] };
+                    s.insert(temp);
+                    for (int j = i + 1; j < str.size(); ++j) {
+                        temp += str[j];
+                        s.insert(temp);
+                    }
+                }
+            ```
+
+2. BOJ 9612: Maximum Word Frequency [문제](https://www.acmicpc.net/problem/9612)
+    - Algorithm: Hash
+    - Idea: unordered_map을 활용하거나 직접 구현하여 Hash에 key-value를 저장한다.
+    - Solve
+        1. str을 입력받아서 unordererd_map에 추가하며 value를 증가시켜 준다.
+            - `m[str]++`
+        2. 해당 str의 value가 기존 최대값보다 크고 사전순으로 나중이면 최대값과 정답 str을 갱신해준다.
+        3. 주의할 것은 key가 없어도 m[key]를 하면 해당 pair가 생성된다.
+            - m.count(key)를 써서 검사하고 m[key]로 값을 확인하자.
+            - unordered_map은 중복을 허용하지 않는다. m.count(key)는 해당 key가 존재하면 1을, 없으면 0을 리턴한다.
+
 ## 220406
 1. SWEA 4340: 파이프 연결 [문제](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWL6LhM6A60DFAUY)
     - Algorithm: 백트래킹, DP
