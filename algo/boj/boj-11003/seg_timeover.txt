@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <unordered_map>
+
+using namespace std;
+
+int A[5000001];
+int tree[5000001 * 4];
+int N, L;
+
+int makeTree(int start, int end, int idx) {
+	if (start == end) return tree[idx] = A[start];
+	int mid = (start + end) / 2;
+	int left = makeTree(start, mid, 2 * idx);
+	int right = makeTree(mid + 1, end, 2 * idx + 1);
+	return tree[idx] = min(left, right);
+}
+
+int getVal(int start, int end, int left, int right, int idx) {
+	if (start > right || end < left) return 1000000001;
+	if (start >= left && end <= right) return tree[idx];
+	int mid = (start + end) / 2;
+	int leftVal = getVal(start, mid, left, right, 2 * idx);
+	int rightVal = getVal(mid + 1, end, left, right, 2 * idx + 1);
+	return min(leftVal, rightVal);
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
+	cin >> N >> L;
+	for (int i = 1; i <= N; ++i) {
+		cin >> A[i];
+	}
+	makeTree(1, N, 1);
+	for (int i = 1; i <= N; ++i) {
+		int answer;
+		if (i <= L)
+			answer = getVal(1, N, 1, i, 1);
+		else
+			answer = getVal(1, N, i - L + 1, i, 1);
+		cout << answer << " ";
+	}
+	return 0;
+}

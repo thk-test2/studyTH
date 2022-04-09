@@ -21,6 +21,33 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220409
+1. BOJ 11660: 구간 합 구하기 5 [문제](https://www.acmicpc.net/problem/11660)
+    - Algorithm: Prefix Sum
+    - Idea
+        - Prefix Sum은 누적합을 구해놓고 특정 구간의 합을 빠르게 구하는 유형이다.
+    - Solve
+        1. 2차원 배열의 누적합을 구해 놓는다.<br/>
+        `sum[i][j] = sum[i - 1][j] + sum[i][j - 1] - sum[i - 1][j - 1] + arr[i][j];`
+        2. 특정 구간합을 구하는 수식. 2차원 공간의 면적을 구하는 것과 동일하다.<br/>
+        `answer = sum[x2][y2] - sum[x1 - 1][y2] - sum[x2][y1 - 1] + sum[x1 - 1][y1 - 1];`
+
+2. BOJ 11003: 최솟값 찾기 [문제](https://www.acmicpc.net/problem/11003)
+    - Algorithm: O(N):Deque / O(NlogN): Priority Queue, Seg Tree
+    - Idea
+        - O(N*logN)이면 아슬아슬하고 O(N)이어야 넉넉히 풀리는 문제
+        - O(N*logN)이 왜 안 될 수 있는지 [다음 글](https://www.acmicpc.net/board/view/36198)을 읽어보자.
+        - 개인적으로 PQ 문제들이 다양한 접근방식을 고민하기에 좋은것 같다.
+    - Solve
+        - PQ방식
+            1. 큐에 값과 index를 같이 넣는다.
+            2. top()의 index가 윈도우를 벗어나있으면 pop()하고 다음걸 확인한다.
+        - Deque 방식
+            1. PQ 방식처럼 큐에 값과 index를 같이 넣는다.
+            2. front()의 index가 윈도우를 벗어나있으면 들어올 때까지 pop() 해준다.
+            3. back()의 값이 새로 들어온 쿼리보다 크면 작을 때 까지 pop()하고 새 쿼리를 넣는다.
+            4. front()의 값이 최소값이 된다.
+
 ## 220407
 1. SWEA 1257: K번째 문자열 [문제](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV18KWf6ItECFAZN)
     - Algorithm: 문자열, 조합
