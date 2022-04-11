@@ -1,0 +1,52 @@
+
+// https://www.acmicpc.net/source/41738715
+// 68 ms
+
+#include <iostream>
+#include <list>
+#include <algorithm>
+
+using namespace std;
+
+int main(){
+    ios::sync_with_stdio(NULL);
+    cin.tie(NULL);
+    list<char> List;
+    string init;
+
+    cin >> init;
+    
+    for(char  c  : init) List.push_back(c);
+
+    auto cursor = List.end();
+
+    int n ;
+    cin >> n;
+
+    while (n--) {
+        char Commend;
+        cin >> Commend;
+
+        if (Commend == 'P') {
+            char elem;
+            cin >> elem ;
+
+            List.insert(cursor, elem);
+        } else if (Commend == 'L') {
+            if(cursor != List.begin()) cursor--;
+        }
+        else if(Commend =='D'){
+            if(cursor != List.end()) cursor++;
+        }
+        else {
+            if (cursor != List.begin()) {
+                cursor--;
+                cursor = List.erase(cursor);
+            }
+        }
+    }
+
+    for (auto c: List) {
+        printf("%c", c);
+    }
+}

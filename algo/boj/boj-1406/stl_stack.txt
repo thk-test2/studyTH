@@ -1,0 +1,71 @@
+
+// https://www.acmicpc.net/source/41788107
+// 44 ms
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <unordered_set>
+#include <list>
+#include <set>
+#include <algorithm>
+#include <queue>
+#include <cstring>
+#include <map>
+#include <cmath>
+#include <stack>
+#include <sstream>
+using namespace std;
+typedef long long ll;
+void init() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+}
+
+int main() {
+    init();
+
+    string s;
+    stack<char> left;
+    stack<char> right;
+    cin >> s;
+    for(int i=0; i<s.length(); i++)
+        left.push(s[i]);
+
+    int n;
+    char c;
+    cin >> n;
+    for(int i=0; i<n; i++) {
+        cin >> c;
+        if(c=='L') {
+            if(!left.empty()) {
+                right.push(left.top());
+                left.pop();
+            }
+        }
+        else if(c=='D') {
+            if(!right.empty()) {
+                left.push(right.top());
+                right.pop();
+            }
+        }
+        else if(c=='B') {
+            if(!left.empty()) {
+                left.pop();
+            }
+        }
+        else {
+            cin >> c;
+            left.push(c);
+        } 
+    }
+    while(!left.empty()) {
+        right.push(left.top());
+        left.pop();
+    }
+    while(!right.empty()) {
+        cout << right.top();
+        right.pop();
+    }
+}
