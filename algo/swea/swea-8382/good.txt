@@ -1,0 +1,24 @@
+
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+ 
+int main(int argc, char** argv)
+{
+    int T, x1, y1, x2, y2, row, col, big, small;
+ 
+    scanf("%d", &T);
+    for (int test_case = 1; test_case <= T; ++test_case)
+    {
+        scanf("%d %d %d %d", &x1, &y1, &x2, &y2);
+        row = max(x1, x2) - min(x1, x2);
+        col = max(y1, y2) - min(y1, y2);
+        big = max(row, col);
+        small = min(row, col);
+ 
+        while (big - small > 1)  small += 2;
+ 
+        printf("#%d %d\n", test_case, big + small);
+    }
+    return 0;
+}

@@ -21,7 +21,59 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220410
+1. BOJ 15829: Hashing [문제](https://www.acmicpc.net/problem/15829)
+    - Algorithm: 문자열, 해싱
+    - Idea: hash 값을 구하는 문제
+    - Solve: 문자열에 31을 곱해 더해나갈때 매번 modular 연산으로 overflow가 나지 않도록 한다.
+
+2. BOJ 3033: 가장 긴 문자열 [문제](https://www.acmicpc.net/problem/3033)
+    - Algorithm: 문자열, 해싱, 라빈-카프
+    - Idea
+        1. 2번 이상 등장하는 부분 문자열의 길이를 이분탐색으로 찾는다.
+        2. 시간 복잡도: 이분탐색: O(L*logL) + 2번 이상 등장하는지 check: O(L)
+    - Solve
+        1. low = 0, high = L-1 에서 시작하여 이분 탐색을 수행한다.
+        2. 현재 mid(부분 문자열의 길이)에 대해 문자열 전체를 순회한다.
+            - 한 글자씩 이동하면서 Hash에 없으면 추가하고, 이전 것을 발견하면 2번 이상 등장하는 것이므로 True를 리턴
+            - 여기서 라빈-카프 알고리즘의 Rolling Hash 기법을 사용한다. 라빈-카프 설명은 [링크](https://m.blog.naver.com/ndb796/221240679247)를 참고.
+        3. 이분 탐색을 계속 수행하여 가능한 mid의 최대 값을 구한다.
+        4. **Note**
+            - 가능한 부분 문자열이 많기 때문에 string을 hash에 담으면 메모리가 overflow 된다.(unordered_map도 마찬가지)
+            - 문자열을 char 배열로 입력받고, hash에 해당 문자열 주소를 담는 방식을 사용하였다.
+
+3. SWEA 8382: 방향 전환 [문제](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWyNQrCahHcDFAVP)
+    - Algorithm: BFS 또는 계산
+    - Idea: BFS로 구현하거나, 규칙을 찾아 계산을 해주면 된다.
+    - Solve
+        - BFS
+            1. x좌표, y좌표, 이동방향, 이동횟수를 관리하는 node를 선언한다.
+            2. BFS로 진행하는데 항상 목표지점으로 다가가도록 가지치기 한다.
+                - 현재 좌표와 목표 좌표를 비교하여 진행 방향을 결정한다.
+        - 규칙을 찾아서 계산
+            1. 제약 조건: 이전에 가로 이동을 했으면 이번에는 세로 이동을 해야 한다. 반대도 마찬가지.
+            2. 가로-세로 이동을 번갈아 해야하기 때문에 다음 규칙이 생긴다.
+                - 현재 좌표와 목표 좌표를 연결했을 때, 기울기가 1이면 일반 BFS와 다를 것이 없다.<br/>
+                  가로-세로 또는 세로-가로 반복해서 가면 되기 때문.
+                - 기울기가 1이 아니라면 해당 좌표로 가기위해 다른 방향으로 2번씩 이동이 추가된다.<br/>
+                  기울기 1과의 격차를 계산해서 격차 * 2 만큼 더해준다.
+
 ## 220409
+1. BOJ 11000
+    - Algorithm: 정렬, PQ
+    - Idea
+        - 정렬과 PQ를 이용한 문제
+        - 시간 복잡도: O(N*logN) = vector에 데이터 삽입 O(1*N) + vector 정렬 O(N*logN) + PQ를 이용한 쿼리 처리 O(N*logN)
+    - Solve ([풀이 참고](https://velog.io/@soosungp33/BOJ-11000%EB%B2%88-%EA%B0%95%EC%9D%98%EC%8B%A4-%EB%B0%B0%EC%A0%95C))
+        1. 시작 시간을 기준으로 오름차순으로 정렬해준다.
+        2. PQ를 오름차순으로 설정해주고, 첫 강의가 끝나는 시간을 넣어준다.
+        3. 나머지 강의를 확인하면서 조건에 따라 PQ를 컨트롤한다.
+            - 모든 강의실 중에 가장 빨리 끝나는 강의실을 선택한다. (**q.top()**)
+            - 해당 강의실이 끝나기 전에 현재 강의가 시작되면(q.top()>s), 강의실을 하나 늘려준다. (**q.push(t)**)
+            - 해당 강의실이 끝난 후에 강의가 시작되면(q.top()<=s), 강의실을 늘릴 필요 없이 그 강의실에서 강의를 시작한다. (**q.pop(), q.push(t)**)
+        4. 최종적으로 남아있는 강의실의 개수를 출력한다.(**q.size()**)
+
+## 220408
 1. BOJ 11660: 구간 합 구하기 5 [문제](https://www.acmicpc.net/problem/11660)
     - Algorithm: Prefix Sum
     - Idea
@@ -38,6 +90,7 @@
         - O(N*logN)이면 아슬아슬하고 O(N)이어야 넉넉히 풀리는 문제
         - O(N*logN)이 왜 안 될 수 있는지 [다음 글](https://www.acmicpc.net/board/view/36198)을 읽어보자.
         - 개인적으로 PQ 문제들이 다양한 접근방식을 고민하기에 좋은것 같다.
+        - PQ, Multi PQ, Seg Tree, Deque, Hash 등 다양하게 생각해보자.
     - Solve
         - PQ방식
             1. 큐에 값과 index를 같이 넣는다.
