@@ -12,7 +12,7 @@
 - 마크다운 [문법](https://gist.github.com/ihoneymon/652be052a0727ad59601)
     - *기울이기*
     - **강조**
-    - ~~cancelline~
+    - ~~cancelline~~
     - [링크](https://google.com)
     - `quote`
     - > BlockQuote
@@ -22,6 +22,16 @@
     - 지수: 2<sup>n</sup>
 
 ## 220412
+1. BOJ 2075: N번째 큰 수 [문제](https://www.acmicpc.net/problem/2075)
+    - Algorithm: 자료 구조, 정렬, 우선순위 큐
+    - Idea
+        - 최대 힙에 다 때려넣고 N번 pop을 해서 찾으면 된다고 생각함. 그러나 메모리 초과
+    - Solve
+        1. 최소 힙에 넣으면서 힙의 사이즈가 N 이상이면, 새로 들어온 숫자와 top()을 비교
+        2. top() 보다 크면 pop() 을 수행하고 새로 들어온 숫자를 삽입
+        3. 배열 순회 완료후에 최소 힙의 top()이 N번째 큰 숫자가 된다.
+
+## 220411
 1. BOJ 19236: 청소년 상어 [문제](https://www.acmicpc.net/problem/19236)
     - Algorithm: 시뮬레이션, 백트래킹
     - Idea
@@ -118,7 +128,7 @@
     - Idea
         - O(N*logN)이면 아슬아슬하고 O(N)이어야 넉넉히 풀리는 문제
         - O(N*logN)이 왜 안 될 수 있는지 [다음 글](https://www.acmicpc.net/board/view/36198)을 읽어보자.
-        - 개인적으로 PQ 문제들이 다양한 접근방식을 고민하기에 좋은것 같다.
+        - 개인적으로 PQ 문제들이 다양한 접근방식을 고민하기에 좋은것 같다.<br/>
         - PQ, Multi PQ, Seg Tree, Deque, Hash 등 다양하게 생각해보자.
     - Solve
         - PQ방식
