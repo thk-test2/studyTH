@@ -1,0 +1,53 @@
+#include <iostream>
+#include <queue>
+#include <unordered_map>
+
+using namespace std;
+
+struct Data {
+	int num;
+	int idx;
+};
+
+struct isPrior {
+	bool operator() (Data& a, Data& b) {
+		if (a.num == b.num) {
+			return a.idx > b.idx;
+		}
+		return a.num > b.num;
+	}
+};
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
+	priority_queue<Data, vector<Data>, isPrior> pq;
+	unordered_map<int, int> um;
+	int N, M, t;
+	cin >> N;
+	for (int i = 1; i <= N; ++i) {
+		cin >> t;
+		pq.push({ t, i });
+		um[i] = t;
+	}
+
+	cin >> M;
+	int cmd, idx, v;
+	for (int i = 0; i < M; ++i) {
+		cin >> cmd;
+		if (cmd == 1) {
+			cin >> idx >> v;
+			um[idx] = v;
+			pq.push({ v, idx });
+		}
+		else if (cmd == 2) {
+			if (pq.empty()) continue;
+			while (pq.top().num != um[pq.top().idx]) {
+				pq.pop();
+			}
+			cout << pq.top().idx << "\n";
+		}
+	}
+	return 0;
+}

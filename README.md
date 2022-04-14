@@ -21,6 +21,9 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220413
+1. BOJ 2606: 바이러스 [문제](https://www.acmicpc.net/problem/2606)
+
 ## 220412
 1. BOJ 2075: N번째 큰 수 [문제](https://www.acmicpc.net/problem/2075)
     - Algorithm: 자료 구조, 정렬, 우선순위 큐
