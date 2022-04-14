@@ -23,12 +23,58 @@
 
 ## 220413
 1. BOJ 2606: 바이러스 [문제](https://www.acmicpc.net/problem/2606)
+    - Algorithm: 연결 리스트, BFS
+    - Idea: Adjacency matrix를 vector로 많이 표현하지만, 연습을 위해 연결 리스트로 구현하였다.
+    - Solve
+        1. 연결 리스트를 구현 후 adjacency matrix를 입력함.
+        2. 일반적인 BFS로 탐색해주며 노드를 하나 탐색할 때마다 cnt++하여 답을 구한다.
+
+2. BOJ 1707: 이분 그래프 [문제](https://www.acmicpc.net/problem/1707)
+    - Algorithm: 연결 리스트, DFS
+    - Idea
+        - 이 문제도 연결 리스트 연습을 위해 구현해 주었다.
+        - 이분 그래프의 핵심 아이디어는 인접 노드를 탐색(DFS)하면서 다른 color로 칠해주는 것이다.
+    - Solve
+        1. visited 배열의 값을 1, 2, 1, 2... 로 번갈아 입력하여 다른 color로 칠하는 것을 구현한다.
+            - DFS 함수 인자로 3 - currentColor 를 넘겨주면 된다.
+            - visited가 0이 아니면 방문한 노드이므로 건너뛴다.
+        2. 연결이 안 된 노드가 있을 수 있으므로 모든 노드를 확인하여 DFS를 수행한다.
+        3. 색칠이 끝난 후, 다시 모든 노드를 탐색하며 인접 노드와 color가 같은 것이 있는지 탐색한다. 있으면 이분 그래프가 아니다.
+
+3. BOJ 1764: 듣보잡 [문제](https://www.acmicpc.net/problem/1764)
+    - Algorithm: 문자열, 정렬, 해시
+    - Idea
+        - unordered_map을 사용해도 되지만 해시 연습을 위해 구현해 주었다.
+        - 시간 복잡도: O(N*logN) = 해시 테이블 넣기 O(1*N) + set에 추가하기 O(N*logN) + set 데이터 가져오기 O(N*logN)
+    - Solve
+        1. 듣지 못한 사람들을 해시 테이블에 넣는다.
+        2. 보지 못한 사람들을 입력받을 때, 해시 테이블을 탐색하여 이미 있으면 set에 추가한다.
+            - set은 중복을 제거하며 자동으로 사전 순으로 정렬시킨다.
+        3. 끝난 후 set의 원소들을 출력한다.
+
+4. BOJ 14427: 수열과 쿼리 15 [문제](https://www.acmicpc.net/problem/14427)
+    - Algorithm: 우선순위 큐 or 세그먼트 트리
+    - Idea
+        - 우선순위 큐의 데이터를 업데이트 해주거나, 세그먼트 트리로 구현할 수 있다.
+    - Solve (우선순위 큐)
+        1. 우선순위 조건대로 비교 struct를 만들어서 데이터들을 입력 받는다.
+            - 입력받을 때 해당 index의 데이터가 heap의 몇 번째에 들어가는지 heapIdx 배열에 기록한다.
+            - 이렇게 하면 heapIdx 배열을 확인해 바로 특정 index의 값을 바꿀 수 있다.
+        2. heap의 insert / update 연산시 노드만 바꾸는 것이 아니라 heapIdx 배열도 swap을 해준다.
+            - update시 위쪽(부모쪽) 방향과 아래쪽 방향을 모두 확인하여 적절한 위치로 이동시켜준다.
+        3. 시간 복잡도: O(N*logN) = 입력 O(N*logN) + 업데이트 O(1*N*logN)
+    - Solve (세그먼트 트리) [해설 참고](https://kyu9341.github.io/algorithm/2020/04/04/algorithm14427/)
+        1. 세그먼트 트리 노드에는 자식 노드 중 더 작은 index를 저장한다.
+            - 기존 세그먼트 트리처럼, leaf node는 원본 arr의 index를 갖는다.
+            - 두 Node를 비교하여 더 작은 value의 index를 리턴하는 minIndex() 함수를 이용했다. 우선순위 큐의 우선순위 판별 함수와 용도가 비슷하다.
+        2. 가장 작은 값의 index는 tree[1] 이다.
+        3. update시 leaf node에 해당하는 원본 arr의 value를 업데이트 하고, 역으로 올라오면서 tree의 index를 업데이트 해준다.
 
 ## 220412
 1. BOJ 2075: N번째 큰 수 [문제](https://www.acmicpc.net/problem/2075)
     - Algorithm: 자료 구조, 정렬, 우선순위 큐
     - Idea
-        - 최대 힙에 다 때려넣고 N번 pop을 해서 찾으면 된다고 생각함. 그러나 메모리 초과
+        - 최대 힙에 다 넣어놓고 N번 pop을 해서 찾으면 된다고 생각함. 그러나 메모리 초과
     - Solve
         1. 최소 힙에 넣으면서 힙의 사이즈가 N 이상이면, 새로 들어온 숫자와 top()을 비교
         2. top() 보다 크면 pop() 을 수행하고 새로 들어온 숫자를 삽입

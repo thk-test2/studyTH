@@ -3,73 +3,67 @@
 using namespace std;
 constexpr auto SIZE = 100010;
 
-struct Data {
-	int num;
-	int idx;
+struct Node {
+	int val;
+	int id;
 };
 
-bool isPrior(Data& a, Data& b) {
-	if (a.num == b.num) {
-		return a.idx < b.idx;
-	}
-	return a.num < b.num;
+Node arr[SIZE];
+int tree[SIZE * 4];
+int N, M;
+
+int minIndex(Node a, Node b) {
+	if (a.val < b.val)
+		return a.id;
+	else if (a.val == b.val)
+		return min(a.id, b.id);
+	else
+		return b.id;
 }
 
-Data heap[SIZE];
-int heapIdx[SIZE];
-int hSize = 0;
-
-void insert(Data temp) {
-	heap[++hSize] = temp;
-	heapIdx[hSize] = hSize;
-
-	for (int i = hSize; i > 1; i /= 2) {
-		if (isPrior(heap[i / 2], heap[i])) return;
-		swap(heap[i / 2], heap[i]);
-		swap(heapIdx[heap[i / 2].idx], heapIdx[heap[i].idx]);
+int initTree(int idx, int start, int end) {
+	if (start == end) {
+		return tree[idx] = arr[start].id;
 	}
+	int mid = (start + end) / 2;
+	return tree[idx] = minIndex(arr[initTree(idx * 2, start, mid)],
+		arr[initTree(idx * 2 + 1, mid + 1, end)]);
 }
 
-void update(int idx, int val) {
-	int i = heapIdx[idx];
-	heap[i].num = val;
-
-	for (; i > 1; i /= 2) {
-		if (isPrior(heap[i / 2], heap[i])) break;
-		swap(heap[i / 2], heap[i]);
-		swap(heapIdx[heap[i / 2].idx], heapIdx[heap[i].idx]);
+void update(int idx, int start, int end, int target, int val) {
+	if (end < target || start > target) return;
+	if (start == end) {	
+		arr[start].val = val;
+		tree[idx] = arr[start].id;
+		return;
 	}
-
-	for (; i * 2 + 1 <= hSize; ) {
-		int child = isPrior(heap[i * 2], heap[i * 2 + 1]) ? i * 2 : i * 2 + 1;
-		if (isPrior(heap[i], heap[child])) break;
-		swap(heap[i], heap[child]);
-		swap(heapIdx[heap[i].idx], heapIdx[heap[child].idx]);
-		i = child;
-	}
+	int mid = (start + end) / 2;
+	update(idx * 2, start, mid, target, val);
+	update(idx * 2 + 1, mid + 1, end, target, val);
+	tree[idx] = minIndex(arr[tree[idx * 2]], arr[tree[idx * 2 + 1]]);
 }
 
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL); cout.tie(NULL);
 
-	int N, M, t;
+	int t;
 	cin >> N;
 	for (int i = 1; i <= N; ++i) {
 		cin >> t;
-		insert({ t, i });
+		arr[i] = { t, i };
 	}
-
+	initTree(1, 1, N);
 	cin >> M;
 	int cmd, idx, v;
 	for (int i = 0; i < M; ++i) {
 		cin >> cmd;
 		if (cmd == 1) {
 			cin >> idx >> v;
-			update(idx, v);
+			update(1, 1, N, idx, v);
 		}
 		else if (cmd == 2) {
-			cout << heap[1].idx << "\n";
+			cout << tree[1] << "\n";
 		}
 	}
 	return 0;
