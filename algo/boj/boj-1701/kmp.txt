@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+string str;
+
+vector<int> makeTable(string pattern) {
+	int patternSize = pattern.size();
+	vector<int> table(patternSize, 0);
+	int j = 0;
+	for (int i = 1; i < patternSize; ++i) {
+		while (j > 0 && pattern[i] != pattern[j]) {
+			j = table[j - 1];
+		}
+		if (pattern[i] == pattern[j]) {
+			table[i] = ++j;
+		}
+	}
+	return table;
+}
+
+int check_kmp() {
+	int strSize = str.size();
+	int answer = 0;
+	for (int i = 0; i < strSize; ++i) {
+		vector<int> table = makeTable(str.substr(i));
+		answer = max(answer, *max_element(table.begin(), table.end()));
+	}
+	return answer;
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
+	cin >> str;
+
+	int start = 0, end = str.size() - 1;
+	cout << check_kmp();
+	return 0;
+}

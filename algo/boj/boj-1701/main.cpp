@@ -1,0 +1,55 @@
+#include <iostream>
+#include <unordered_map>
+
+using namespace std;
+
+constexpr auto MOD = 1234567891;
+
+using ull = unsigned long long;
+
+ull wei[5001];
+string str;
+
+bool check(int len) {
+	unordered_map<string, int> um;
+	int strSize = str.size();
+
+	ull hash = 0;
+	for (int i = 0; i < strSize; ++i) {
+		hash = (hash * 31 + str[i]) % MOD;
+		if (i >= len - 1) {
+			hash -= wei[len - 1] * str[i - len + 1];
+			hash %= MOD;
+			string target = str.substr(i - len + 1, len);
+			if (um.count(target) != 0) return true;
+			um[target]++;
+		}
+	}
+	return false;
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
+	cin >> str;
+	wei[0] = 1;
+	for (int i = 1; i <= str.size(); ++i) {
+		wei[i] = wei[i - 1] * 33;
+	}
+
+	int start = 0, end = str.size() - 1;
+	int answer = 0;
+	while (start <= end) {
+		int mid = (start + end) / 2;
+		if (check(mid)) {
+			answer = mid;
+			start = mid + 1;
+		}
+		else {
+			end = mid - 1;
+		}
+	}
+	cout << answer;
+	return 0;
+}
