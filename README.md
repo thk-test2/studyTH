@@ -21,6 +21,19 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220420
+1. I plan to upload in **English** for a while to study.
+2. BOJ 1238: 파티 [Problem](https://www.acmicpc.net/problem/1238)
+    - Algorithm: Graph theory, Dijkstra
+    - Idea
+        - This is a normal Dijkstra problem, but needs a little modification.
+        - Time complexity: Using priority queue O(N*logN)
+    - Solve
+        1. Check all the following distances for the all nodes.
+            1. Phase1: the longest distance from 'start' to 'end'.
+            2. Phase2: the longest distance from 'end' to 'start'.
+        2. Find the maximum value of Phase1 + Phase2.
+
 ## 220415
 1. BOJ 1701: Cubeditor [문제](https://www.acmicpc.net/problem/1701)
     - Algorithm: 문자열, KMP, 라빈-카프
