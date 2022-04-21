@@ -1,5 +1,6 @@
 ### 목적
 - 공부한 내용, 문제 해결방법 등 기록하기
+- I plan to upload in **English** for a while to study.
 
 ### 공부 주제
 - 알고리즘 문제
@@ -20,6 +21,21 @@
         코드 
        ```
     - 지수: 2<sup>n</sup>
+
+## 220421
+1. BOJ 1261: 알고스팟 [Problem](https://www.acmicpc.net/problem/1261)
+    - Algorithm: Graph theory, Dijkstra, BFS
+    - Idea: This is a BFS problem that combines memoization(Dijkstra array).
+    - Solve
+        1. Prepare 2 arrays.
+            - Map[][]: Save the given map.
+            - Dist[][]: Save the minimum count of passing doors. Memoization
+        2. If a door is in the path, the formula should be
+            - `dist[nx][ny] = min(dist[nx][ny], dist[x][y] + 1);`
+        3. If a door is not exist, the formula should be
+            - `dist[nx][ny] = min(dist[nx][ny], dist[x][y]);`
+        4. Insert the next position to Queue only if the Dist array was updated.
+        5. Finally, print dist[N-1][M-1] as the answer.
 
 ## 220420
 1. I plan to upload in **English** for a while to study.
