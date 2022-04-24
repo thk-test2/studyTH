@@ -22,6 +22,54 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220424
+1. BOJ 4485: 녹색 옷 입은 애가 젤다지? [Problem](https://www.acmicpc.net/problem/4485)
+    - Algorithm: Graph theory, Dijkstra
+    - Idea: This is a BFS problem that combines memoization(Dijkstra array). Similar with BOJ 1261.
+
+2. BOJ 11779: 최소비용 구하기 2 [Problem](https://www.acmicpc.net/problem/11779)
+    - Algorithm: Graph theory, Dijkstra
+    - Idea
+        - Dijkstra + Print the visited nodes of the shortest path.
+        - Time complexity: Using priority queue O(N*logN)
+    - Solve
+        1. General dijkstra algorithm
+            1. Find a node that has the smallest cost from the current node.
+            2. Update the minimum distance array by going to a specific node through the smallest cost node.
+            3. Repeat the above process.
+        2. How to save the path
+            - Additional **Before[N]** array is needed. It saves the shortest neighbor to reach that node.
+            - We can trace back from the end node to the start node using that array.
+
+3. Sort
+    1. Bubble
+        - Concept
+            1. Starting from the first node.
+            2. Continue to compare and swap the neighbor nodes.
+            3. This algorithm needs 2 for loops.
+        - Time Complexity
+            1. Best: O(N^2)
+            2. Average: O(N^2)
+            3. Worst: O(N^2)
+        - Space Complexity: O(N)
+    2. Insertion
+        - Concept
+            1. Select ith node as a target.
+            2. Trace back the elements & find the position to be inserted.
+        - Time Complexity
+            1. Best: **O(N)**
+            2. Average: O(N^2)
+            3. Worst: O(N^2)
+        - Space Complexity: O(N)
+    3. Merge
+        - Concept
+            1. Continue to disassemble the array by using recursive function.
+            2. After that, compare and merge the divided elements.
+        - Time Complexity
+            1. Average case: O(N*logN)
+            2. Worst case: O(N*logN)
+        - Space Complexity: O(N). But it needs an additional array.
+
 ## 220421
 1. BOJ 1261: 알고스팟 [Problem](https://www.acmicpc.net/problem/1261)
     - Algorithm: Graph theory, Dijkstra, BFS
