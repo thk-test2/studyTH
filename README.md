@@ -22,6 +22,34 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220426
+1. Leetcode 121: Best Time to Buy and Sell Stock [Problem](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
+    - Algorithm: Array, Dynamic Programming
+    - Idea
+        1. Save the maximum difference
+        2. If the next value is bigger than the current minimum, check the maximum difference and update it.
+
+## 220425
+1. Quick Sort
+     - It is a Divide and Conquer algorithm like Merge sort.
+     - It picks an element and partitions the given array around the picked pivot.
+     - The key process in Quick Sort is partition().
+         - Target of partitions is, given an array and an element x of array as pivot.
+         - Put x at its position in sorted array and put all smaller elements before x,
+         - and put all greater elements after x. All this should be done in linear time.
+     - Complexity
+         - Time: Best O(N LogN) / Average O(N LogN) / Worst O(N^2)
+         - Space: Worst O(log(n))
+
+2. BOJ 1715: 카드 정렬하기 [Problem](https://www.acmicpc.net/problem/1715)
+    - Algorithm: Data structure, Greedy, Priority queue
+    - Idea: The key rule is that combining the 2 lowest values first.
+    - Solve
+        1. Insert all the numbers to a minimum heap.
+        2. Combine the 2 values on the top of the heap.
+        3. Before inserting the result back, save it to 'sum' variable.
+        4. Repeat 2 & 3 till the comparing done.
+
 ## 220424
 1. BOJ 4485: 녹색 옷 입은 애가 젤다지? [Problem](https://www.acmicpc.net/problem/4485)
     - Algorithm: Graph theory, Dijkstra
@@ -41,7 +69,7 @@
             - Additional **Before[N]** array is needed. It saves the shortest neighbor to reach that node.
             - We can trace back from the end node to the start node using that array.
 
-3. Sort
+3. Studying Sort
     1. Bubble
         - Concept
             1. Starting from the first node.

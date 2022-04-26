@@ -1,0 +1,31 @@
+
+class Solution {
+public:
+	int maxProfit(vector<int>& prices) {
+		pair<int, int> maximum, minimum;
+		maximum = { 0, 0 };
+		minimum = { 100001, 0 };
+
+		int temp = 0;
+		int pricesSize = prices.size();
+		for (int i = 0; i < pricesSize; ++i) {
+			if (maximum.first > minimum.first && maximum.second > minimum.second) {
+				temp = max(temp, maximum.first - minimum.first);
+			}
+
+			if (prices[i] > maximum.first) {
+				maximum = { prices[i], i };
+				if (prices[i] < minimum.first)
+					minimum = { prices[i], i };
+			}
+			else if (prices[i] < minimum.first) {
+				minimum = { prices[i], i };
+			}
+			else if (prices[i] > minimum.first && maximum.second < minimum.second) {
+				maximum = { prices[i], i };
+			}
+		}
+		return (minimum.second < maximum.second)
+			? max(maximum.first - minimum.first, temp) : temp;
+	}
+};

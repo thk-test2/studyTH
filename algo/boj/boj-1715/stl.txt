@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
+	int N, n;
+	cin >> N;
+
+	priority_queue<int, vector<int>, greater<int>> pq;
+	for (int i = 0; i < N; ++i) {
+		cin >> n;
+		pq.push(n);
+	}
+
+	int t1, t2;
+	int sum = 0;
+	int prev_sum = sum;
+	int cnt = 0;
+	while (true) {
+		if (cnt == N - 1) break;
+		t1 = pq.top(); pq.pop();
+		t2 = pq.top(); pq.pop();
+		prev_sum = sum;
+		sum += (t1 + t2);
+
+		pq.push(sum - prev_sum);
+		cnt++;
+	}
+	cout << sum;
+	return 0;
+}
