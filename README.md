@@ -22,6 +22,25 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220427
+1. Leetcode 206: Reverse Linked List [Problem](https://leetcode.com/problems/reverse-linked-list/)
+    - Algorithm: Linked List, Recursion
+    - Idea: Find a simple rule to reverse the Linked List.
+    - Solve
+        1. When creating a ListNode, give the current head as the next node. 
+            - This means the created ListNode is pointing the current node.
+        2. Move the head to point the created one.
+        3. In short, `head = new ListNode(node->val, head)`
+
+2. Leetcode 3: Longest Substring Without Repeating Characters [Problem](https://leetcode.com/problems/longest-substring-without-repeating-characters/)
+    - Algirothm: Hash Table, String, Sliding Window / Two Pointers
+    - Idea: Using Two pointers, the time complexity could be O(N).
+    - Solve
+        1. If the current number doesn't exist in the hash:
+            - Increase `cnt` and add the number to the hash. Then increase `end`.
+        2. If the current number exists in the hash:
+            - Decrease `cnt` and remove the number from the hash. Then decrease `start`.
+
 ## 220426
 1. Leetcode 121: Best Time to Buy and Sell Stock [Problem](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
     - Algorithm: Array, Dynamic Programming
