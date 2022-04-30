@@ -22,6 +22,43 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220430
+1. BOJ 1766: 문제집 [Problem](https://www.acmicpc.net/problem/1766)
+    - Algorithm: Graph Theory, Topological Sort, Priority Queue
+    - Idea: Adopt topological sort with priority queue.
+    - Solve
+        1. Prepare an adjacency matrix and an entry array.
+            - Entry array records the number of entry points for each problem.
+        2. Topological Sort sequence
+            1. Select nodes that have zero entry points.
+                - Insert them to the priority queue.
+            2. Print the top of the priority queue and remove it from the queue.
+                - Remove entry points from the node.
+            3. Repeat the step 1 & 2.
+    - Complexity
+        - Time: O(N*LogN) = Searching N elements in a priority queue.
+        - Space: O(N) = N elements in a list
+
+## 220428
+1. Leetcode 104: Maximum Depth of Binary Tree [Problem](https://leetcode.com/problems/maximum-depth-of-binary-tree/)
+    - Algorithm: Depth-First Search, Binary Tree
+    - Solve
+        1. Travel the tree by preorder search with 'level' parameter.
+        2. Increase the level when travel into the child node.
+        3. Update the maximum depth by comparing the current level.
+   
+2. Leetcode 23: Merge k Sorted Lists [Problem](https://leetcode.com/problems/merge-k-sorted-lists/)
+    - Algorithm: Linked List, Priority Queue, Divide and Conquer, Merge Sort
+    - Solve
+        1. Insert all the list elements into a maximum heap.
+        2. Make a ListNode using the top value of the heap.
+            - Set the `head` as the next, and assign the new node to the head.
+            - This mechanism inserts the value to in front of the list.
+        3. Repeat step 1 & 2 until the priority queue is empty.
+    - Complexity
+        - Time: O(N logN) = Searching N elements in a priority Queue. (Inserting the value to the list O(1*N))
+        - Space: O(N) = Linked List O(N) + Priority Queue O(N)
+
 ## 220427
 1. Leetcode 206: Reverse Linked List [Problem](https://leetcode.com/problems/reverse-linked-list/)
     - Algorithm: Linked List, Recursion
