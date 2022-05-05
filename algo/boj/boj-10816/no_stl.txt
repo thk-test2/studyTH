@@ -1,0 +1,56 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int search(vector<int>& A, int t) {
+	int start = 0, end = A.size() - 1, mid;
+
+	while (start <= end) {
+		mid = (start + end) / 2;
+		if (A[mid] < t) {
+			start = mid + 1;
+		}
+		else {
+			end = mid - 1;
+		}
+	}
+
+	int temp = start;
+	if (A[temp] != t) return 0;
+
+	start = 0, end = A.size() - 1;
+	while (start <= end) {
+		mid = (start + end) / 2;
+		if (A[mid] <= t) {
+			start = mid + 1;
+		}
+		else {
+			end = mid - 1;
+		}
+	}
+	return end - temp + 1;
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
+	int N;
+	cin >> N;
+	vector<int> A(N, 0);
+	for (int i = 0; i < N; ++i) {
+		cin >> A[i];
+	}
+	sort(begin(A), end(A));
+	int M;
+	cin >> M;
+
+	int t;
+	for (int i = 0; i < M; ++i) {
+		cin >> t;
+		cout << search(A, t) << " ";
+	}
+	return 0;
+}

@@ -22,6 +22,38 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220505
+1. BOJ 1920: 수 찾기 [Problem](https://www.acmicpc.net/problem/1920)
+
+2. BOJ 10815: 숫자 카드 [Problem](https://www.acmicpc.net/problem/10815)
+
+3. BOJ 10816: 숫자 카드2 [Problem](https://www.acmicpc.net/problem/10816)
+
+4. BOJ 10868: 최솟값 [Problem](https://www.acmicpc.net/problem/10868)
+
+5. Leetcode 21: Merge Two Sorted Lists [Problem](https://leetcode.com/problems/merge-two-sorted-lists/)
+
+## 220504
+1. BOJ 2665: 미로만들기 [Problem](https://www.acmicpc.net/problem/2665)
+
+2. Leetcode 100: Same Tree [Problem](https://leetcode.com/problems/same-tree/)
+
+## 220503
+1. BOJ 1202: 보석 도둑 [Problem](https://www.acmicpc.net/problem/1202)
+
+2. Leetcode 200: Number of Islands [Problem](https://leetcode.com/problems/number-of-islands/)
+
+3. Leetcode 141: Linked List Cycle [Problem](https://leetcode.com/problems/linked-list-cycle/)
+
+4. Leetcode 70: Climbing Stairs [Problem](https://leetcode.com/problems/climbing-stairs/)
+
+## 220502
+1. SWEA 3143
+
+2. SWEA 2983
+
+3. BOJ 15903
+
 ## 220430
 1. BOJ 1766: 문제집 [Problem](https://www.acmicpc.net/problem/1766)
     - Algorithm: Graph Theory, Topological Sort, Priority Queue
@@ -38,6 +70,16 @@
     - Complexity
         - Time: O(N*LogN) = Searching N elements in a priority queue.
         - Space: O(N) = N elements in a list
+
+2. Leetcode 133: Clone Graph [Problem](https://leetcode.com/problems/clone-graph/)
+    - Algorithm: Hash Table, Graph, BFS, DFS
+    - Idea
+    - Solve
+
+3. BOJ 7579: 앱 [Problem](https://www.acmicpc.net/problem/7579)
+    - Algorithm: Dynamic Programming(knapsack)
+    - Idea
+    - Solve
 
 ## 220428
 1. Leetcode 104: Maximum Depth of Binary Tree [Problem](https://leetcode.com/problems/maximum-depth-of-binary-tree/)
