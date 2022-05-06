@@ -21,6 +21,22 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220506
+1. BOJ 1753: 최단경로 [Problem](https://www.acmicpc.net/problem/1753)
+    - Algorithm: Dijkstra
+    - Idea: 우선순위 큐를 이용해 가장 낮은 가중치를 가진 간선을 O(1)으로 찾는다.
+    - Solve
+        1. 간선정보를 adjacency vector에 담는다.
+        2. 다익스트라를 위한 dp 배열과 우선순위 큐를 준비하고 start 값을 지정한다.
+            - 다음과 같은 vector 선언은 알아두자. `vector<int> dp(V + 1, INF);`
+            - 구조체 또는 pair를 우선순위 큐에 담는 방법은 기본적으로 알아야 한다.
+        3. while문 안에서 현재 가장 작은 가중치를 가진 노드를 바탕으로 dp 배열을 업데이트 한다.
+            - 더 이상 업데이트가 일어나지 않으면 PQ에 추가가 안 되므로 while 문이 종료된다.
+        4. dp 배열 값을 출력한다.
+    - Complexity
+        1. Time: O(E * logE) = E 개의 간선을 검사하고 PQ에 추가하는 작업
+        2. Space: O(V+E) 인접리스트
+
 ## 220505
 1. 내일부터 다시 한글로 작성할 것이다. 영어로 하니 공부한거 찾기도 힘들고 잘 안 올리게 된다.. 나중에 다시 시도할 수 있다.
 2. BOJ 1920: 수 찾기 [Problem](https://www.acmicpc.net/problem/1920)
