@@ -1,6 +1,5 @@
 ### 목적
 - 공부한 내용, 문제 해결방법 등 기록하기
-- I plan to upload in **English** for a while to study.
 
 ### 공부 주제
 - 알고리즘 문제
@@ -23,36 +22,110 @@
     - 지수: 2<sup>n</sup>
 
 ## 220505
-1. BOJ 1920: 수 찾기 [Problem](https://www.acmicpc.net/problem/1920)
+1. 내일부터 다시 한글로 작성할 것이다. 영어로 하니 공부한거 찾기도 힘들고 잘 안 올리게 된다.. 나중에 다시 시도할 수 있다.
+2. BOJ 1920: 수 찾기 [Problem](https://www.acmicpc.net/problem/1920)
+    - Algorithm: Binary search
+    - Idea: A basic binary search problem
 
-2. BOJ 10815: 숫자 카드 [Problem](https://www.acmicpc.net/problem/10815)
+3. BOJ 10815: 숫자 카드 [Problem](https://www.acmicpc.net/problem/10815)
+    - Algorithm: Binary search
+    - Idea: A basic binary search problem
 
-3. BOJ 10816: 숫자 카드2 [Problem](https://www.acmicpc.net/problem/10816)
+4. BOJ 10816: 숫자 카드2 [Problem](https://www.acmicpc.net/problem/10816)
+    - Algorithm: Binary search
+    - Idea: An advanced binary search problem
+    - Solve
+        1. Find the target value by binary search.
+        2. Find lower and upper bound of the same value.
+            - You can use STL to find the bounds.
+        3. Return the distance of the bounds.
+    - Complexity
+        1. Time: O(N logN) = O(logN) with N elements
+        2. Space: O(N)
 
-4. BOJ 10868: 최솟값 [Problem](https://www.acmicpc.net/problem/10868)
+5. BOJ 10868: 최솟값 [Problem](https://www.acmicpc.net/problem/10868)
+    - Algorithm: Segment Tree
+    - Idea: A basic segment tree problem
 
-5. Leetcode 21: Merge Two Sorted Lists [Problem](https://leetcode.com/problems/merge-two-sorted-lists/)
+6. Leetcode 21: Merge Two Sorted Lists [Problem](https://leetcode.com/problems/merge-two-sorted-lists/)
+    - Algorithm: Linked List
+    - Solve
+        1. Maintain a head and a tail pointer on the merged linked list.
+        2. Then choose the head of the merged linked list by comparing the first node of both linked lists.
+        3. For all subsequent nodes in both lists, choose the smaller current node and link it to the tail of the merged list.
+            - and moving the current pointer of that list one step forward
+        4. You keep doing this while there are some remaining elements in both the lists.
+        5. If there are still some elements in only one of the lists, link this remaining list to the tail of the merged list.
+            - Initially, the merged linked list is NULL.
+        6. Compare the value of the first two nodes and make the node with the smaller value the head node of the merged linked list.
+            - Since it's the first and only node in the merged list, it will also be the tail.
+        7. Then move head 1 one step forward.
 
 ## 220504
 1. BOJ 2665: 미로만들기 [Problem](https://www.acmicpc.net/problem/2665)
 
 2. Leetcode 100: Same Tree [Problem](https://leetcode.com/problems/same-tree/)
+    - Algorithm: Binary Tree, DFS
+    - Solve
+        - Compare the two tree by preoder traversal(DFS).
+        - Check all the unmatched conditions.
 
 ## 220503
 1. BOJ 1202: 보석 도둑 [Problem](https://www.acmicpc.net/problem/1202)
 
 2. Leetcode 200: Number of Islands [Problem](https://leetcode.com/problems/number-of-islands/)
+    - Algorithm: BFS
+    - Solve
+        1. Find a unvisited node inside a for loop.
+        2. Traverse all the adjacent nodes from the unvisited node, and mark them as visited.
+            - Increase count after finishing the travel.
+        3. Repeat 1 & 2 for the entire map.
+    - Complexity
+        1. Time: BFS O(N+E)
+        2. Space: O(N*N)
 
 3. Leetcode 141: Linked List Cycle [Problem](https://leetcode.com/problems/linked-list-cycle/)
+    - Algorithm: Linked List, Two Pointers
+    - Idea: Traverse linked list using two pointers.
+    - Solve
+        1. Move one pointer(slow_p) by one and another pointer(fast_p) by two.
+        2. If these pointers meet at the same node then there is a loop.
+            - If pointers do not meet then linked list doesn't have a loop.
+    - Complexity
+        1. Time: O(N) - for traversing
+        2. Space: O(1) - nothing stored
 
 4. Leetcode 70: Climbing Stairs [Problem](https://leetcode.com/problems/climbing-stairs/)
+    - Algorithm: Dynamic Programming
+    - Solve: Same with the Fibonacci problem
 
 ## 220502
-1. SWEA 3143
+1. SWEA 3143: 가장 빠른 문자열 타이핑 [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV_65wkqsb4DFAWS)
+    - Algorithm: String
+    - Solve
+        1. Using a loop, search if the target text has the pattern string.
+        2. If the pattern string is found, jump the index as the pattern size.
+        3. Increase the typing count while repeating 1 & 2.
+    - Complexity
+        1. Time: O(N)
+        2. Space: O(N)
 
-2. SWEA 2983
+2. SWEA 2983: 두 번 이상 등장하는 문자열 [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV-eALvKRnsDFAXr)
+    - Algorithm: String, Ravin-Karp
+    - Idea: Find the longest substring occurs more than once.
+    - Solve
+        1. Use binary search to find the maximum length occurs more than once.
+        2. To search the string in O(N), use a rolling hash(Ravin-Karp) technic.
+        3. Please note that I used a single character array to contain the string.
+            - And insert the address to a hash table to check the duplication.
+            - If you use string type for each substring, memory will overflow.
+    - Complexity
+        1. Time: O(N logN) = Binary search O(logN) * Find string O(N)
+        2. Space: O(N)
 
-3. BOJ 15903
+3. BOJ 15903: 카드 합체 놀이 [Problem](https://www.acmicpc.net/problem/15903)
+    - Algorithm: Greedy, Priority Queue
+    - Solve: Using a priority queue, continuously merge the least two values.
 
 ## 220430
 1. BOJ 1766: 문제집 [Problem](https://www.acmicpc.net/problem/1766)
@@ -73,13 +146,21 @@
 
 2. Leetcode 133: Clone Graph [Problem](https://leetcode.com/problems/clone-graph/)
     - Algorithm: Hash Table, Graph, BFS, DFS
-    - Idea
+    - Idea: Use a Hash Table to contain the cloned graph.
     - Solve
+        1. Declare a hash table: `unordered_map<Node*, Node*> m;
+        2. Use DFS(or BFS) to make & connect the cloned nodes.
+    - Complexity
+        1. Time: O(N+E) - DFS, BFS same
+        2. Space: O(N*E)
 
 3. BOJ 7579: 앱 [Problem](https://www.acmicpc.net/problem/7579)
     - Algorithm: Dynamic Programming(knapsack)
-    - Idea
     - Solve
+        1. `dp[j] = max(dp[j], dp[j-cost[i]] + memory[i])`
+            - memory gained by cost j = max(memory when disabling ith app, memory when enabling ith app)
+        2. Disable & enable N apps to find the maximum memory using same cost
+        3. Search the dp array to find the cost offering M memory.
 
 ## 220428
 1. Leetcode 104: Maximum Depth of Binary Tree [Problem](https://leetcode.com/problems/maximum-depth-of-binary-tree/)

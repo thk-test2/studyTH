@@ -142,6 +142,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="dfs.txt" />
     <Text Include="input.txt" />
     <Text Include="output.txt" />
   </ItemGroup>
