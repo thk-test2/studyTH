@@ -21,6 +21,29 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220507
+1. BOJ 20920: 영단어 암기는 괴로워 [Problem](https://www.acmicpc.net/problem/20920)
+    - Algorithm: Hash, Sort
+    - Idea
+        - String과 cnt의 쌍으로 hash에 저장한 다음, 조건에 맞게 정렬한다. 연습을 위해 Hash를 직접 구현해 주었다.
+        - Priority Queue를 갱신하는 방법도 있는데, update 구현이 어렵고 연습이 필요하다.
+    - Complexity
+        1. Time: O(NlogN) = Hashing O(1*N) + Sorting O(NlogN)
+        2. Space: O(N) = O(N) + O(N)
+
+2. BOJ 9251: LCS [Problem](https://www.acmicpc.net/problem/9251)
+    - Algorithm: DP
+    - Idea: 2차원 dp 배열을 활용하여 가장 긴 subsequence를 찾는다.
+    - Solve
+        - LCS 배열을 만드는 과정. subsequence의 길이는 이 단계만 진행해도 찾을 수 있다.
+            1. 문자열 A, 문자열 B를 한글자씩 비교해본다.
+            2. 두 문자가 다르다면 LCS[i-1][j]와 LCS[i][j-1] 중에 큰 값을 표시한다.
+            3. 두 문자가 같다면 LCS[i-1][j-1] 값을 찾아 +1 한다.
+            4. 위 과정을 반복한다.
+        - 이 후 다시 반복문을 통해 거꾸로 추적하면서 가장 긴 subsequence를 찾을 수 있다.
+    - Complexity
+        1. Time & Space: O(N^2)
+
 ## 220506
 1. BOJ 1753: 최단경로 [Problem](https://www.acmicpc.net/problem/1753)
     - Algorithm: Dijkstra
