@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+vector<int> makeTable(string text) {
+	int textSize = text.size();
+	vector<int> table(textSize, 0);
+	int j = 0;
+	for (int i = 1; i < textSize; ++i) {
+		while (j > 0 && text[i] != text[j]) {
+			j = table[j - 1];
+		}
+		if (text[i] == text[j]) {
+			table[i] = ++j;
+		}
+	}
+	return table;
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
+	int N;
+	string text;
+	cin >> N;
+	cin >> text;
+
+	int answer = 0;
+	for (int i = 0; i < text.size(); ++i) {
+		vector<int> table = makeTable(text.substr(i));
+		answer = max(answer, *max_element(table.begin(), table.end()));
+	}
+	cout << answer;
+	return 0;
+}

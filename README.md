@@ -21,6 +21,43 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220508
+1. BOJ 1605: 반복 부분문자열 [Problem](https://www.acmicpc.net/problem/1605)
+    - Algorithm: Hashing, Ravin-Karp
+    - Idea: 롤링 해쉬를 이용해 문자열을 탐색한다. BOJ 3033(가장 긴 문자열)과 같은 문제이다.
+    - Solve
+        1. 롤링 해쉬를 이용해 문자열을 탐색한다.
+            - 부분 문자열의 길이는 binary search을 통해 최적의 값을 찾아 나간다.
+            - 롤링 해쉬를 계산하는 기법을 알아두자.
+        2. Table에서 해당 해쉬값이 있으면 연결된 리스트를 탐색하여 같은 문자열이 있는지 검사한다.
+            - unordered_map에 substring 자체를 담으면 메모리 overflow되므로 탐색 문자열 버퍼의 포인터를 value로 저장하였다.
+        3. 2에서 같은 문자열이 있으면 true를 리턴한다.
+
+2. BOJ 1405: 미친 로봇 [Problem](https://www.acmicpc.net/problem/1405)
+    - Algorithm: 백트래킹, 수학
+    - Idea: 일반적인 백트래킹에 확률 계산을 더한 문제
+    - Solve
+        1. 확률을 입력받을 때 double 형 percent로 변환하여 입력받는다.
+        2. 2차원 visited 배열을 이용해 방문한 곳이면 가지 않는다.
+            - 최대 14번씩 동서남북으로 갈 수 있기 때문에 배열의 크기는 30 x 30으로 했다.
+            - 시작점은 (14, 14)이다.
+        3. 재귀함수로 백트래킹을 수행하며 정상적으로 N번째에 도달하면 1.0을 리턴한다.
+            - 이 1.0은 이전 재귀함수에서 percent와 곱해져서 성공 확률에 추가된다.
+        4. 주어진 N에 대해 동서남북으로 DFS를 진행하며 모든 성공확률을 더한다.
+
+3. BOJ 14427: 수열과 쿼리 15 [Problem](https://www.acmicpc.net/problem/14427)
+    - Algorithm: 우선순위 큐, 세그먼트 트리
+    - Idea: 두번째 풀이. 우선순위 큐 업데이트에 익숙해지기 위해
+
+4. SWEA 5432: 쇠막대기 자르기 [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWVl47b6DGMDFAXm)
+    - Algorithm: 스택
+    - Idea: 스택을 활용하여 쇠막대기를 자르는 타이밍을 확인하고 개수를 더해 나간다.
+    - Solve
+        1. input이 `(` 이면 스택에 넣는다.
+        2. input이 `)` 이면 두 가지 경우가 생긴다.
+            - 바로 이전 input이 `(`이면 레이저를 쓰는 것이다. stack element 개수만큼 더해주면 된다.
+            - 아니면 쇠막대기 하나의 종료 지점이므로 1개만 더해준다.
+
 ## 220507
 1. BOJ 20920: 영단어 암기는 괴로워 [Problem](https://www.acmicpc.net/problem/20920)
     - Algorithm: Hash, Sort
