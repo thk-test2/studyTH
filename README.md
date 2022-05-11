@@ -21,6 +21,20 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220511
+1. LeetCode 347: Top K Frequent Elements [Problem](https://leetcode.com/problems/top-k-frequent-elements/)
+    - Algorithm: Hash Table, Heap, Sorting
+    - Idea: 빈도수가 가장 높은 순으로 숫자를 정렬하는 문제. 몇 가지 자료구조를 조합하여 구현함
+    - Solve
+        1. 전달받은 nums 배열을 순회하며 hash table에 빈도수를 저장한다.
+        2. 숫자와 빈도수를 pair로 보관하는 priority queue를 준비한다.
+            - 빈도수가 높은 순으로 정렬하도록 Compare struct를 비교 functor로 전달한다.
+        3. 숫자와 빈도를 hash에서 꺼내어 priority queue에 저장한다.
+        4. priority queue 앞에서 k개 만큼 꺼내어 리턴한다.
+    - Complexity
+        1. Time: O(NlogN) = Hash O(1*N) + PQ O(NlogN)
+        2. Space: O(N) = Hash O(E) + Used vector O(E) + PQ O(N) + Return vector O(K)
+
 ## 220508
 1. BOJ 1605: 반복 부분문자열 [Problem](https://www.acmicpc.net/problem/1605)
     - Algorithm: Hashing, Ravin-Karp
@@ -123,7 +137,7 @@
     - Algorithm: Segment Tree
     - Idea: A basic segment tree problem
 
-6. Leetcode 21: Merge Two Sorted Lists [Problem](https://leetcode.com/problems/merge-two-sorted-lists/)
+6. LeetCode 21: Merge Two Sorted Lists [Problem](https://leetcode.com/problems/merge-two-sorted-lists/)
     - Algorithm: Linked List
     - Solve
         1. Maintain a head and a tail pointer on the merged linked list.
@@ -140,7 +154,7 @@
 ## 220504
 1. BOJ 2665: 미로만들기 [Problem](https://www.acmicpc.net/problem/2665)
 
-2. Leetcode 100: Same Tree [Problem](https://leetcode.com/problems/same-tree/)
+2. LeetCode 100: Same Tree [Problem](https://leetcode.com/problems/same-tree/)
     - Algorithm: Binary Tree, DFS
     - Solve
         - Compare the two tree by preoder traversal(DFS).
@@ -149,7 +163,7 @@
 ## 220503
 1. BOJ 1202: 보석 도둑 [Problem](https://www.acmicpc.net/problem/1202)
 
-2. Leetcode 200: Number of Islands [Problem](https://leetcode.com/problems/number-of-islands/)
+2. LeetCode 200: Number of Islands [Problem](https://leetcode.com/problems/number-of-islands/)
     - Algorithm: BFS
     - Solve
         1. Find a unvisited node inside a for loop.
@@ -160,7 +174,7 @@
         1. Time: BFS O(N+E)
         2. Space: O(N*N)
 
-3. Leetcode 141: Linked List Cycle [Problem](https://leetcode.com/problems/linked-list-cycle/)
+3. LeetCode 141: Linked List Cycle [Problem](https://leetcode.com/problems/linked-list-cycle/)
     - Algorithm: Linked List, Two Pointers
     - Idea: Traverse linked list using two pointers.
     - Solve
@@ -171,7 +185,7 @@
         1. Time: O(N) - for traversing
         2. Space: O(1) - nothing stored
 
-4. Leetcode 70: Climbing Stairs [Problem](https://leetcode.com/problems/climbing-stairs/)
+4. LeetCode 70: Climbing Stairs [Problem](https://leetcode.com/problems/climbing-stairs/)
     - Algorithm: Dynamic Programming
     - Solve: Same with the Fibonacci problem
 
@@ -220,7 +234,7 @@
         - Time: O(N*LogN) = Searching N elements in a priority queue.
         - Space: O(N) = N elements in a list
 
-2. Leetcode 133: Clone Graph [Problem](https://leetcode.com/problems/clone-graph/)
+2. LeetCode 133: Clone Graph [Problem](https://leetcode.com/problems/clone-graph/)
     - Algorithm: Hash Table, Graph, BFS, DFS
     - Idea: Use a Hash Table to contain the cloned graph.
     - Solve
@@ -239,14 +253,14 @@
         3. Search the dp array to find the cost offering M memory.
 
 ## 220428
-1. Leetcode 104: Maximum Depth of Binary Tree [Problem](https://leetcode.com/problems/maximum-depth-of-binary-tree/)
+1. LeetCode 104: Maximum Depth of Binary Tree [Problem](https://leetcode.com/problems/maximum-depth-of-binary-tree/)
     - Algorithm: Depth-First Search, Binary Tree
     - Solve
         1. Travel the tree by preorder search with 'level' parameter.
         2. Increase the level when travel into the child node.
         3. Update the maximum depth by comparing the current level.
    
-2. Leetcode 23: Merge k Sorted Lists [Problem](https://leetcode.com/problems/merge-k-sorted-lists/)
+2. LeetCode 23: Merge k Sorted Lists [Problem](https://leetcode.com/problems/merge-k-sorted-lists/)
     - Algorithm: Linked List, Priority Queue, Divide and Conquer, Merge Sort
     - Solve
         1. Insert all the list elements into a maximum heap.
@@ -259,7 +273,7 @@
         - Space: O(N) = Linked List O(N) + Priority Queue O(N)
 
 ## 220427
-1. Leetcode 206: Reverse Linked List [Problem](https://leetcode.com/problems/reverse-linked-list/)
+1. LeetCode 206: Reverse Linked List [Problem](https://leetcode.com/problems/reverse-linked-list/)
     - Algorithm: Linked List, Recursion
     - Idea: Find a simple rule to reverse the Linked List.
     - Solve
@@ -268,7 +282,7 @@
         2. Move the head to point the created one.
         3. In short, `head = new ListNode(node->val, head)`
 
-2. Leetcode 3: Longest Substring Without Repeating Characters [Problem](https://leetcode.com/problems/longest-substring-without-repeating-characters/)
+2. LeetCode 3: Longest Substring Without Repeating Characters [Problem](https://leetcode.com/problems/longest-substring-without-repeating-characters/)
     - Algirothm: Hash Table, String, Sliding Window / Two Pointers
     - Idea: Using Two pointers, the time complexity could be O(N).
     - Solve
@@ -278,7 +292,7 @@
             - Decrease `cnt` and remove the number from the hash. Then decrease `start`.
 
 ## 220426
-1. Leetcode 121: Best Time to Buy and Sell Stock [Problem](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
+1. LeetCode 121: Best Time to Buy and Sell Stock [Problem](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
     - Algorithm: Array, Dynamic Programming
     - Idea
         1. Save the maximum difference
