@@ -21,6 +21,23 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220512
+1. SWEA 7088: 은기의 송아지 세기 [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWkIeU76A9cDFAXC)
+    - Algorithm: Prefix Sum, 이진 탐색, 세그먼트 트리
+    - Idea: 다양한 방법이 가능하다.
+        - Prefix Sum: `Count[a][1] = b` 의 의미는 a번 index까지 1번 품종인 송아지는 b마리가 있다.
+        - 이진탐색:  각 품종의 벡터에 넣고 upper/lower_bound를 찾음
+        - 세그먼트 트리를 이용한 풀이도 가능
+    - Complexity: 세그먼트 트리
+        1. Time: O(NlogN) = 삽입 O(NlogN) + 쿼리 O(QlogQ)
+        2. Space: O(N) = 배열 O(N) + 트리 O(4*N)
+
+2. LeetCode 322: Coin Change [Problem](https://leetcode.com/problems/coin-change/)
+    - Algorithm: DP
+
+3. LeetCode 295: Find Median from Data Stream [Problem](https://leetcode.com/problems/find-median-from-data-stream/)
+    - Algorithm: Priority Queue
+
 ## 220511
 1. LeetCode 347: Top K Frequent Elements [Problem](https://leetcode.com/problems/top-k-frequent-elements/)
     - Algorithm: Hash Table, Heap, Sorting

@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+using namespace std;
+ 
+int main() {
+    int test_case;
+    int T;
+    scanf("%d", &T);
+    for(test_case = 1; test_case <= T; ++test_case) {
+        int n, q, k;
+        vector<int> Cow[4];
+        scanf("%d %d", &n, &q);
+        for(int i=0; i<n; i++) {
+            scanf("%d", &k);
+            Cow[k].push_back(i+1);
+        }
+ 
+        printf("#%d\n", test_case);
+        for(int i=0; i<q; i++) {
+            int s, e;
+            scanf("%d %d", &s, &e);
+ 
+            int x1=upper_bound(Cow[1].begin(), Cow[1].end(), e)-lower_bound(Cow[1].begin(), Cow[1].end(), s);
+            int x2=upper_bound(Cow[2].begin(), Cow[2].end(), e)-lower_bound(Cow[2].begin(), Cow[2].end(), s);
+            int x3=upper_bound(Cow[3].begin(), Cow[3].end(), e)-lower_bound(Cow[3].begin(), Cow[3].end(), s);
+            printf("%d %d %d\n", x1, x2, x3);
+        }
+    }
+ 
+    return 0;
+}
