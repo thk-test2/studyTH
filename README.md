@@ -21,10 +21,89 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220515
+1. Binary Search의 lower_bound, upper_bound 구현 연습
+
+2. BOJ 10814: 나이순 정렬 [Problem](https://www.acmicpc.net/problem/10814)
+    - Algorithm: Sorting
+    - Idea: struct에 대한 sorting을 연습한 문제. 
+    - Solve: Struct compare 함수와 merge sort를 구현하였다.
+
+3. BOJ 2167: 2차원 배열의 합 [Problem](https://www.acmicpc.net/problem/2167)
+    - Algorithm: Prefix Sum
+    - Idea: 기본적인 2차원 prefix sum 문제
+
+4. BOJ 10282: 해킹 [Problem](https://www.acmicpc.net/problem/10282)
+    - Algorithm: 다익스트라
+    - Idea: adjacency vector로 단방향 그래프를 구성하고 다익스트라 알고리즘을 적용한다.
+    - Complexity
+        1. Time: O(E logE) = 간선 검사 O(E) * 우선순위 큐 추가 O(logE)
+        2. Space: O(N+E) = adjacency vector O(N+E) + 우선순위 큐 O(E)
+
+## 220514
+1. BOJ 9465: 스티커 [Problem](https://www.acmicpc.net/problem/9465)
+    - Algorithm: DP
+    - Idea: 스티커를 떼어낼 수 있는 조건이 있을 때, 뗀 스티커들의 최대 가치합 찾기
+    - Solve
+        - 조건: 스티커를 떼면 상하좌우의 스티커는 뗄 수 없다.
+        - 점화식
+            1. 윗줄: `memo[1][i] = max(memo[2][i-1] + arr[1][i], memo[2][i-2] + arr[1][i]);`
+            2. 아랫줄: `memo[2][i] = max(memo[1][i-1] + arr[2][i], memo[1][i-2] + arr[2][i]);`
+        - 1부터 N까지 memo 배열을 계산하여 최대값을 찾는다.
+
+2. BOJ 11057: 오르막 수 [Problem](https://www.acmicpc.net/problem/11057)
+    - Algorithm: DP
+    - Idea: 각 자리수가 크거나 같은 수를 오르막 수라고 하며, 그것의 개수를 찾는 문제
+    - Solve
+        1. DP 배열 정의: `memo[i][j]` i번째 자리수가 j로 끝나는 경우의 수
+        2. 오르막 수의 특성대로 이전 자리수보다 크거나 같은 경우의 수를 모두 더해준다.
+
+3. BOJ 11054: 가장 긴 바이토닉 부분 수열 [Problem](https://www.acmicpc.net/problem/11054)
+    - Algorithm: DP
+    - Idea: 가장 긴 증가하는 부분 수열과 가장 긴 감소하는 부분 수열을 조합하는 문제
+    - Solve
+        1. 배열을 앞에서부터 탐색하여 가장 긴 증가하는 부분 수열의 길이를 찾는다.
+        2. 배열을 뒤에서부터 탐색하여 가장 긴 감소하는 부분 수열의 길이를 찾는다.
+        3. 만들어진 두 DP 배열을 탐색하여 어느 index에서 가장 긴 바이토닉 부분 수열이 되는지 찾는다.
+
+4. SWEA 4311: 오래된 스마트폰 [Problem](https://swexpertacademy.com/main/code/problem/problemSolver.do?contestProbId=AWL2vlPKMlQDFAUE&)
+    - Algorithm: 백트래킹, DP
+    - Idea: 계산기에서 원하는 숫자를 만들고자 할 때, 최소 터치 횟수를 찾아라. 누를 수 없는 버튼들이 있다.
+    - Solve
+        1. best[1000] 배열은 해당 숫자를 몇 번 터치로 만들 수 있는지 값을 저장하는 배열이다.
+            - 조합을 이용해 주어진 숫자로 만들 수 있는 것들을 미리 만든다. 가지치기를 위해 정렬해둔다.
+        2. 재귀 함수에서 가능한 숫자들과 연산자로 계산을 수행한다.
+            - 가능한 가지치기를 모두 적용한다. 예를 들어 더하기 중 999를 초과하였을 때 이후 숫자를 더해도 초과할 것이므로 가지치기를 수행한다.
+        3. 백트래킹 종료 후 타겟 넘버를 몇 번 터치로 만들 수 있는지 출력한다.
+
+## 220513
+1. SWEA 8191: 만화책 정렬하기 [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWwtYmX6hvsDFAWU)
+    - Algorithm: Array
+    - Idea: 뒤섞인 만화책을 몇 번 탐색해야 순서대로 정렬되는지 확인하는 문제
+    - Solve
+        - 배열에 만화책 번호의 위치를 기록한다.
+        - 연속된 만화책이 앞선 위치에 있다면 재탐색이 필요한 것이다. 재탐색이 필요한 개수를 세어준다.
+    - Complexity
+        1. Time: O(N) 연속된 책 간에 비교수행
+        2. Space: O(N) 번호 배열
+
+2. BOJ 11052: 카드 구매하기 [Problem](https://www.acmicpc.net/problem/11052)
+    - Algorithm: DP
+    - Idea: N장의 카드를 구매할 때, 지불해야 하는 최대금액을 구해야 하는 문제
+    - Solve
+        1. DP 배열 정의: `DP[A] = B` A장의 카드를 사는데 지불해야 하는 최대 금액은 B원 이다.
+        2. 점화식 정의: `DP[N] = Card[1] + DP[N-1]`, `DP[N] = Card[2] + DP[N-2]`, ... ,`DP[N] = Card[N] + DP[0]`
+            - 위 값중 최대값을 저장한다.
+        3. N을 증가시키면서 최종 결과를 찾는다.
+    - Complexity
+        1. Time: O(N^2)
+        2. Space: O(N) = O(N) 카드 정보 + O(N) memo 배열
+
 ## 220512
 1. SWEA 7088: 은기의 송아지 세기 [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWkIeU76A9cDFAXC)
     - Algorithm: Prefix Sum, 이진 탐색, 세그먼트 트리
-    - Idea: 다양한 방법이 가능하다.
+    - Idea: 주어진 범위 내에서 각 품종이 몇 마리씩 있는지 값을 찾는 문제
+    - Solve: 다양한 방법이 가능하다.
         - Prefix Sum: `Count[a][1] = b` 의 의미는 a번 index까지 1번 품종인 송아지는 b마리가 있다.
         - 이진탐색:  각 품종의 벡터에 넣고 upper/lower_bound를 찾음
         - 세그먼트 트리를 이용한 풀이도 가능
@@ -37,6 +116,7 @@
 
 3. LeetCode 295: Find Median from Data Stream [Problem](https://leetcode.com/problems/find-median-from-data-stream/)
     - Algorithm: Priority Queue
+    - Idea: 가운데를 말해요(BOJ 1655)와 유사한 문제
 
 ## 220511
 1. LeetCode 347: Top K Frequent Elements [Problem](https://leetcode.com/problems/top-k-frequent-elements/)

@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+#include <cstring>
+
+using namespace std;
+
+int arr[1001];
+int memo[1001];
+
+int search(vector<int>& sub, int key) {
+	int start = 0, end = sub.size() - 1;
+	int mid;
+	while (start < end) {
+		mid = (start + end) / 2;
+		if (key <= sub[mid]) {
+			end = mid;
+		}
+		else {
+			start = mid + 1;
+		}
+	}
+	return end;
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
+	int N;
+	cin >> N;
+	for (int i = 0; i < N; ++i) {
+		cin >> arr[i];
+	}
+
+	unsigned int answer = 1;
+	vector<int> sub;
+	sub.push_back(arr[0]);
+	for (int k = 1; k < N; ++k) {
+		if (arr[k] > sub.back()) {
+			sub.push_back(arr[k]);
+		}
+		else {
+			int idx = search(sub, arr[k]);
+			sub[idx] = arr[k];
+
+			int maximum = 0;
+			for (int i = k; i < N; ++i) {
+				for (int j = 0; j < i; ++j) {
+					if (arr[i] < arr[j]) {
+						memo[i] = max(memo[i], memo[j] + 1);
+					}
+				}
+				maximum = max(maximum, memo[i]);
+			}
+			unsigned int temp = sub.size() + maximum;
+			answer = max(answer, temp);
+			memset(memo, 0, 4 * N);
+		}
+	}
+	cout << answer;
+	return 0;
+}
