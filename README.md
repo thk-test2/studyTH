@@ -21,6 +21,24 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220516
+1. BOJ 9249: 최장 공통 부분 문자열 [Problem](https://www.acmicpc.net/problem/9249)
+    - 라빈 카프를 응용해서 풀어보려 했으나 실패.
+    - Longest Common Prefix로 풀어야 한다고 한다. 공부하고 다시 풀어보자.
+
+2. BOJ 12865: 평범한 배낭 [Problem](https://www.acmicpc.net/problem/12865)
+    - Algorithm: DP
+    - Idea: 배낭문제 개념을 공부하기 위해 다시 풀었음
+    - Solve
+        1. DP 배열을 정의하는 것이 중요하다. `memo[A][B] = C` 의 의미는 A번째 물건까지 왔고 B의 무게를 가질때 C의 가치가 있다.
+        2. for문 두개를 활용한다.
+            - 바깥 for문은 물건을 0번부터 탐색한다.
+            - 안쪽 for문은 1부터 한계 무게까지 탐색한다.
+        3. 안쪽 for문에서 i번째 물건을 넣거나 넣지 않을 때의 최대값을 찾는다.
+            - `memo[i][j] = max(memo[i-1][j], memo[i-1][j-W[i]] + V[i])`
+            - memo[i-1][j]의 의미는 i-1까지의 물건으로 이미 무게 j를 만든 것이다.
+            - memo[i-1][j-W[i]] + V[i]의 의미는 i번째 물건으로 무게 j를 만든 것이다.
+
 ## 220515
 1. Binary Search의 lower_bound, upper_bound 구현 연습
 
