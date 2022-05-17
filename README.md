@@ -21,6 +21,36 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220517
+1. LeetCode 19: Remove Nth Node From End of List [Problem](https://leetcode.com/problems/remove-nth-node-from-end-of-list/)
+    - Algorithm: Linked List
+    - Idea: 끝에서 n번째 Element를 삭제하는 문제
+    - Solve
+        1. head 부터 끝까지 탐색하여 element count를 계산한다.
+        2. 다시 처음부터 탐색하여 N-1번째에 prev pointer를 기록하고, N번째로 넘어가서 prev pointer가 그 다음 element를 가리키게 한다.
+    - Compexity
+        1. Time: O(N) = 최초 탐색 O(N) + 이후 탐색 O(N)
+        2. Space: O(N)
+
+2. BOJ 1976: 여행 가자 [Problem](https://www.acmicpc.net/problem/1976)
+    - Algorithm: 그래프 이론, 유니온 파인드
+    - Idea: 유니온 파인드 기본개념 문제.
+    - Solve
+        - **Note**: 일반적인 unionParent 함수 구현을 보면 parent 값을 갱신할 때 자신의 부모, 또는 부모의 부모를 갱신하고 넘어간다.
+            - 즉, `parent[b] = pa` 또는 `parent[pb] = pa` 으로 한 번 assign 하고 넘어간다.
+        - 그러나 재귀적으로 모든 부모를 업데이트 하지 않으면 제대로 union이 되었다고 보기 어렵다.
+            - 두 개의 집합을 union 했을 때 parent 배열을 검사하면 업데이트 되지 않은 요소가 있을 수 있다.
+            - 따라서 setParent() 함수를 추가하여 재귀적으로 모든 부모를 업데이트 해주었다.
+        - parent 배열이 업데이트 되지 않은 상황은 다음 반례로 확인할 수 있다. union까지 진행한 후 breakpoint를 걸어 확인가능.
+            - [출처](https://www.acmicpc.net/board/view/61137)
+            ``` 4
+               4
+               0 0 0 1
+               0 0 1 0
+               0 1 0 1
+               1 0 1 0
+               3 1 2 4
+
 ## 220516
 1. BOJ 9249: 최장 공통 부분 문자열 [Problem](https://www.acmicpc.net/problem/9249)
     - 라빈 카프를 응용해서 풀어보려 했으나 실패.
