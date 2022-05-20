@@ -1,0 +1,117 @@
+#include <iostream>
+
+using namespace std;
+using ull = unsigned long long;
+constexpr auto SIZE = 100100;
+
+struct Node {
+	long long val;
+	int cnt;
+	Node* next;
+};
+
+Node Pool[SIZE];
+int pSize;
+Node* bucket[SIZE];
+
+struct SortNode {
+	long long val;
+	int cnt;
+};
+
+SortNode sortarr[SIZE];
+SortNode temp[SIZE];
+int sSize;
+
+long long usedNum[SIZE];
+int uSize;
+
+Node* myAlloc(long long val, Node* next) {
+	Pool[pSize] = { val, 1, next };
+	return &Pool[pSize++];
+}
+
+bool compare(SortNode a, SortNode b) {
+	if (a.cnt == b.cnt)
+		return a.val < b.val;
+	return a.cnt > b.cnt;
+}
+
+ull myhash(unsigned long long c) {
+	ull hash = 5381;
+	hash = ((((hash) << 5) + hash) + c) % SIZE;
+	return hash;
+}
+
+void insert(long long val) {
+	ull hash = myhash(val);
+	Node* node = bucket[hash];
+	for (; node; node = node->next) {
+		if (node->val == val) {
+			node->cnt++;
+			return;
+		}
+	}
+	bucket[hash] = myAlloc(val, bucket[hash]);
+	usedNum[uSize++] = val;
+	return;
+}
+
+void merge(int start, int mid, int end) {
+	int l = start, r = mid + 1, k = start;
+	while (l <= mid && r <= end) {
+		if (compare(sortarr[l], sortarr[r])) {
+			temp[k++] = { sortarr[l].val, sortarr[l].cnt };
+			l++;
+		}
+		else {
+			temp[k++] = { sortarr[r].val, sortarr[r].cnt };
+			r++;
+		}
+	}
+
+	while (l <= mid) {
+		temp[k++] = { sortarr[l].val, sortarr[l].cnt };
+		l++;
+	}
+	while (r <= end) {
+		temp[k++] = { sortarr[r].val, sortarr[r].cnt };
+		r++;
+	}
+
+	for (int i = start; i <= end; ++i) {
+		sortarr[i] = temp[i];
+	}
+}
+
+void merge_sort(int start, int end) {
+	if (start >= end) return;
+
+	int mid = (start + end) / 2;
+	merge_sort(start, mid);
+	merge_sort(mid + 1, end);
+	merge(start, mid, end);
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
+	int N;
+	long long n;
+	cin >> N;
+	for (int i = 0; i < N; ++i) {
+		cin >> n;
+		insert(n);
+	}
+
+	for (int k = 0; k < uSize; ++k) {
+		ull hash = myhash(usedNum[k]);
+		for (Node* node = bucket[hash]; node; node = node->next) {
+			sortarr[sSize++] = { node->val, node->cnt };
+		}
+	}
+	merge_sort(0, sSize);
+	cout << sortarr[0].val;
+	return 0;
+}

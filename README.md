@@ -21,6 +21,67 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220520
+1. BOJ 2357: 최솟값과 최댓값 [Problem](https://www.acmicpc.net/problem/2357)
+    - Algorithm: 세그먼트 트리
+    - Idea: 최소값 세그먼트 트리와 최대값 세그먼트 트리를 구현한다.
+    - Complexity
+        - Time: O(NlogN) = 삽입 O(NlogN) + 쿼리 O(NlogN)
+        - Space: O(N) = Array O(N) + 트리 O(4*N)
+
+2. BOJ 6443: 애너그램 [Problem](https://www.acmicpc.net/problem/6443)
+    - Algorithm: 백트래킹
+    - Idea: 주어진 알파벳으로 가능한 모든 조합을 구하는 문제
+    - Solve
+        1. 처음에는 주어진 string을 정렬하고 string size 내에서 조합을 구하며, 중복은 hashing으로 하려고 했다.
+            - 그런데 메모리와 시간 초과가 났다. hashing을 하지 않고도 중복없이 출력해야 하는것 같았다.
+        2. 아이디어가 떠오르지 않아 구글의 도움을 받았다.
+            - string을 입력받을 때 각 alphabet의 개수를 세어 저장한다.
+            - 재귀 함수 내에서 alphabet 개수(26개) 만큼 for문을 돌며 alphabet[i]가 0보다 클 때 이후 단계를 진행한다.
+            - 이렇게 하면 모든 단계를 진행하고 hashing으로 중복을 제거하는 것이 아니라, 필요없는 단계를 진행하지 않는다.
+
+3. BOJ 1697: 숨바꼭질 [Problem](https://www.acmicpc.net/problem/1697)
+    - Algorithm: BFS
+    - Idea
+        - 일직선 상에서 수빈이와 동생의 위치가 주어졌을 때, 동생을 찾을 수 있는 가장 빠른 시간을 구하는 문제
+        - Queue를 이용한 일반적인 BFS 문제이다.
+
+4. BOJ 5525: IOIOI [Problem](https://www.acmicpc.net/problem/5525)
+    - Algorithm: 문자열, KMP, 라빈-카프
+    - Idea: 몇 개의 풀이가 있는데, 나는 KMP로 직접 개수를 세어 주었다.
+    - Solve
+        1. N을 입력받고 찾고자 하는 패턴(IOI...)를 만든다.
+        2. KMP로 개수를 세어준다.
+    - Complexity
+        1. Time: O(N) = 패턴 만들기 O(N) + KMP 탐색 O(N)
+        2. Space: O(N) = KMP 테이블 O(N)
+
+5. BOJ 1446: 지름길 [Problem](https://www.acmicpc.net/problem/1446)
+    - Algorithm: DP, 그래프 이론, 다익스트라
+    - Idea: 브루트 포스로 0부터 D까지 dist[] 배열을 탐색하면서 지름길을 이용해 거리를 갱신해준다.
+    - Solve
+        1. 인접 리스트로 지름길의 출발점, 도착점 그리고 길이정보들을 간선과 해당 비용으로 저장한다.
+            - 지름길이 도착점 - 출발점 사이보다 크다면 저장할 필요가 없다.
+            - 또한 역주행을 할 수 없으므로 D를 넘어가면 저장하지 않는다.
+        2. dist 배열에 i에 도착하기 위한 최소 운전 길이를 저장한다.
+            - 지름길을 탔을 때와 이전 경로에서 그냥 운전했을 때를 비교해 최소값을 dist[i]에 저장한다.
+            - 지름길을 탔을 경우 다음 출발점에 도달할 때까지 계속 갱신하게 된다.
+        3. 탐색 완료 후 dist[D]를 출력한다.
+     - Complexity
+        1. Time O(D) = dist 배열 탐색 O(D) (+ i번째에서 출발하는 지름길 탐색 O(D*N): N은 최대 12이므로 무시할 정도이다.)
+        2. Space O(D*N) = dist 배열 O(D) + 인접 리스트 O(D*N)
+
+## 220519
+1. BOJ 11652: 카드 [Problem](https://www.acmicpc.net/problem/11652)
+    - Algorithm: Hash, Sorting
+    - Idea: 여러 카드가 주었졌을 때 가장 많이 갖고 있는 정수를 구하는 문제
+    - Solve
+        1. Hash 테이블에 카드와 카드의 개수를 저장한다.
+        2. 개수에 따라 정렬할 수 있도록 array에 옮기고, 정렬을 수행한다.
+    - Complexity
+        1. Time: O(NlogN) = Hashing O(1*N) + Sorting O(NlogN)
+        2. Space: O(N) = Hashing O(N) + Array O(N)
+
 ## 220517
 1. LeetCode 19: Remove Nth Node From End of List [Problem](https://leetcode.com/problems/remove-nth-node-from-end-of-list/)
     - Algorithm: Linked List
