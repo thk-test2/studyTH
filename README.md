@@ -21,6 +21,14 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220523
+1. LeetCode 242: Valid Anagram [Problem](https://leetcode.com/problems/valid-anagram/)
+    - Algorithm: Hashing
+    - Idea: unordered_map을 활용해서 anagram을 판별하는 문제.
+    - Solve
+        - Note: find()를 써서 키가 있는지 먼저 확인을 하자. um[key] 를 하면 자동으로 Entry가 생성이 된다.
+        - 즉 다음과 같이 활용. `if (um.find(t[i]) != um.end() && um[t[i]] > 0)`
+
 ## 220520
 1. BOJ 2357: 최솟값과 최댓값 [Problem](https://www.acmicpc.net/problem/2357)
     - Algorithm: 세그먼트 트리
