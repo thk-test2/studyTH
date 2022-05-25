@@ -21,6 +21,15 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220525
+1. BOJ 14002: 가장 긴 증가하는 부분 수열 4 [Problem](https://www.acmicpc.net/problem/14002)
+    - Algorithm: DP
+    - Idea: 부분 수열 길이를 계산할 때 가장 큰 부분수열도 같이 기록한다.
+    - Solve
+        1. DP 배열을 선언해서 동일하게 가장 긴 부분수열의 길이를 계산한다.
+        2. vector<int> LIS[1001] 배열을 선언하여, DP 배열이 갱신될 때 LIS를 저장한다.
+        3. LIS를 answer에 계속 갱신시켜 최대 LIS를 출력한다.
+
 ## 220523
 1. LeetCode 242: Valid Anagram [Problem](https://leetcode.com/problems/valid-anagram/)
     - Algorithm: Hashing
