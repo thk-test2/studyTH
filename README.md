@@ -21,6 +21,30 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220526
+1. LeetCode 300: Longest Increasing Subsequence[Problem](https://leetcode.com/problems/longest-increasing-subsequence/)
+    - Algorithm: DP
+    - Idea: 일반적인 LIS 문제.
+    - Solve
+        1. for문 2개를 이용하면 O(N^2)의 시간이 걸린다.
+        2. 이분탐색을 이용하면 O(N*logN)의 복잡도를 가진다.
+
+2. BOJ 1135: 뉴스 전하기 [Problem](https://www.acmicpc.net/problem/1135)
+    - Algorithm: Greedy, DFS
+    - Idea
+    - Solve
+        1. 처음에 현재 자식의 수가 가장 많은 노드부터 dfs를 시작하도록 하였다. 그러나 답이 아니었다. 다음 [링크](https://www.acmicpc.net/board/view/760) 설명을 읽어보자.
+            1. 그러나 많은 자식을 가지고 있다고 해서 가장 먼저 뉴스를 전하는 것이 올바른 선택이 아닐 수 있다.
+            2. 노드 1, 2가 있다고 가정하자. 노드 1의 자식노드의 수는 노드 2보다 많다.
+            3. 하지만 노드 1의 자식들은 균형이 잘 맞춰져 있어서 깊이가 별로 깊지 않다.
+            4. 노드 2는 노드 1보다 자식의 수가 적지만 한 쪽으로 치우쳐져 링크드 리스트 같은 형식을 이루고 있다.
+            5. 이런 경우 노드 1에 먼저 준다고 항상 더 빠르게 전파할 수 있는 것은 아니다.
+        2. 그럼 어떻게 선택해야 할까?
+            - 가장 많은 시간이 걸리는 자식을 선택해야 한다. 이는 재귀와 분할정복으로 구현한다.
+            - 설명을 읽어보자. [링크](https://kibbomi.tistory.com/232)
+                - 설명에서는 가장 오래 걸리는 자식을 선택한다고 되어있는데, 구현은 반대로 되어있다.
+                - 나는 Max PQ를 사용하여 가장 오래 걸리는 자식을 선택하도록 하였다.
+
 ## 220525
 1. BOJ 14002: 가장 긴 증가하는 부분 수열 4 [Problem](https://www.acmicpc.net/problem/14002)
     - Algorithm: DP
@@ -29,6 +53,7 @@
         1. DP 배열을 선언해서 동일하게 가장 긴 부분수열의 길이를 계산한다.
         2. vector<int> LIS[1001] 배열을 선언하여, DP 배열이 갱신될 때 LIS를 저장한다.
         3. LIS를 answer에 계속 갱신시켜 최대 LIS를 출력한다.
+    - Note: LIS 길이를 찾을 때 이분탐색을 사용하기도 하는데, 이 때 vector에 만들어지는 수열은 LIS가 아닐 수 있다. [링크 참고](https://www.acmicpc.net/board/view/75744)
 
 ## 220523
 1. LeetCode 242: Valid Anagram [Problem](https://leetcode.com/problems/valid-anagram/)
