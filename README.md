@@ -21,6 +21,14 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220601
+1. BOJ 15656: N과 M (7) [Problem](https://www.acmicpc.net/problem/15656)
+    - Algorithm: 백트래킹, 정렬
+    - Idea: 일반적인 백트래킹 문제. 연습을 위해 merge sort를 구현하였다.
+    - Complexity
+        1. Time: O(NlogN) = Merge Sort O(NlogN)
+        2. Space: O(N) = Merge Sort O(2*N)
+
 ## 220526
 1. LeetCode 300: Longest Increasing Subsequence[Problem](https://leetcode.com/problems/longest-increasing-subsequence/)
     - Algorithm: DP
