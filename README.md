@@ -21,6 +21,19 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220602
+1. BOJ 5557: 1학년 [Problem](https://www.acmicpc.net/problem/5557)
+    - Algorithm: DP
+    - Idea: 마지막 숫자를 만들 수 있는 경우의 수를 구하는 문제. Top down 또는 bottom up 방식으로 풀 수 있다.
+    - Solve
+        1. Top down 방식은 백트래킹에 dp(memo) 를 조합하는 방식으로 구현한다.
+            - 최초 함수 호출시 인자로 (0, 0)을 전달하면 틀리고 (1, arr[0])를 전달해야 통과되었다. 반례를 모르겠다.
+            - SWEA의 백트래킹 문제로 자주 보이는 유형이다.
+        2. 이중 for문을 이용한 bottom up 방식도 알아두도록 하자.
+    - Complexity (Bottom up)
+        1. Time: O(N*E) = N개 x 가능한 합의 범위 20
+        2. Space: O(N*E) = N개 x 가능한 합의 범위 20
+
 ## 220601
 1. BOJ 15656: N과 M (7) [Problem](https://www.acmicpc.net/problem/15656)
     - Algorithm: 백트래킹, 정렬
