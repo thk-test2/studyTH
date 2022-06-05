@@ -21,6 +21,47 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220604
+1. BOJ 2616: 소형기관차 [Problem](https://www.acmicpc.net/problem/2616)
+    - Algorithm: DP, 누적합
+    - Idea
+        - 소형 기관차 3개를 썼을 때 가장 많은 손님을 끌 수 있는 경우를 찾기.
+        - 누적합을 이용해서 구간의 합을 빠르게 구할 수 있다. 여기에 DP 요소를 결합해야 한다.
+    - Solve
+        1. DP 배열 memo[4][50001]에서 첫째 parameter는 소형 기관차의 개수이며 두번째는 객실 번호이다.
+        2. for문 2개를 사용하는데 i는 0부터 3까지 사용하는 소형 기관차의 개수만큼 반복한다.
+            - j의 시작점은 i * S 이고 종료지점은 N이다. (S: 소형 기관차가 끌 수 있는 개수, N: 객차의 수)
+        3. 다음 점화식을 수행하며 마지막 배열의 원소가 찾고자 하는 값이다.
+            - `memo[i][j] = max(memo[i][j-1], memo[i-1][j-S] + presum[j] - presum[j-S]);
+            - 첫번째 값의 의미는 바로 전 값이다.
+            - 둘째 값은 소형기관차를 1개 덜 쓸때의 최대값 + 그 이후 j까지의 객차 손님수의 합(기관차 1개 더 사용)이다.
+            - 가장 큰 값으로 갱신되며 그 값이 유지가 될 것이다.
+
+2. BOJ 13904: 과제 [Problem](https://www.acmicpc.net/problem/13904)
+    - Algorithm: 그리디, 정렬
+    - Idea: 하루에 한 과제를 할 수 있다고 할 때, 과제 duedate을 감안하여 가장 높은 점수를 받을 수 있는 경우 찾기.
+    - Solve
+        1. duedate와 point를 vector에 담고 다음 조건대로 정렬한다.
+            1. 과제 점수가 높은 순
+            2. 마감일이 적게 남은 순
+        2. for문 2개를 이용하여 가장 우선순위가 높은 것부터 탐색한다.
+            - 두번째 for문에서는 가장 우선순위가 높은 것의 duedate부터 1씩 감소시키며 해당날짜에 과제를 수행했는지 확인한다.
+            - visited 배열을 두면 해당 날짜에 과제를 수행했는지 확인할 수 있다.
+        3. 과제 점수가 높은 순으로 정렬했기 때문에 visited 배열이 false이면 바로 sum에 더해주면 된다.
+            - 점수가 높은데 visited 배열이 true여서 당장 더하지 못하면, j(day)를 1씩 감소시키며 빈 slot을 찾는다.
+            - 이것의 의미는 과제 duedate대로 수행하는 것이 아니라, duedate가 여유있더라도 점수가 높은 것을 선택한다는 것이다.
+
+3. BOJ 11559: Puyo Puyo [Problem](https://www.acmicpc.net/problem/11559)
+    - Algorithm: 구현, BFS
+    - Idea: 
+        - 현재 Puyo의 배치에서 몇 연쇄가 일어날 수 있는지 판단하는 문제.
+        - 현재 상태에서 터질 수 있는 애들이 다 터진다음 이동시키는 것이 1연쇄이다.
+    - Solve
+        1. 구현한 method
+            - scan_arr(): simulation main()에 해당한다. 현재 map 전체를 스캔하고, 가능한 덩어리들을 터트린 다음, puyo들을 이동시킨다.
+            - bfs(): Puyo가 터질 수 있는 조건(4개 이상 연결)은 BFS로 탐색하도록 했다.
+            - move_puyos(): 터질 수 있는 뭉탱이들을 다 터뜨린 후 중력의 방향으로 이동시킨다. 
+
 ## 220602
 1. BOJ 5557: 1학년 [Problem](https://www.acmicpc.net/problem/5557)
     - Algorithm: DP
