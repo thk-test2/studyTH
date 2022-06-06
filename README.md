@@ -21,12 +21,32 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220606
+1. BOJ 10422: 괄호 [Problem](https://www.acmicpc.net/problem/10422)
+    - Algorithm: DP, 카탈란수
+    - Idea
+        - 올바른 괄호수의 개수를 구하는 문제.
+        - O(N^2)의 DP 풀이 또는 카탈란 수로 O(N)으로 풀 수 있다고 한다. 여기서는 DP 풀이를 소개한다.
+        - 카탈란 수를 공부하고 다시 풀어보자.
+    - Solve
+        1. 늘 그렇듯 먼저 DP 배열을 정의한다.
+            - `memo[2501][2501]`: 현재 왼쪽 괄호와 오른쪽 괄호의 상태가 다음과 같을 때 괄호수의 개수
+            - Top down 방식이고 최종 값에만 의미가 있다. L = 2이면 memo[1][1], L = 4이면 memo[2][2]에 해당한다.
+        2. 처음에 왼쪽 괄호와 오른쪽 괄호의 개수는 동일한 점을 이용한다.
+            - 재귀함수를 돌며 왼쪽 괄호와 오른쪽 괄호를 1씩 감소시키고, 모두 0이되면 1을 리턴하여 이전 memo에 더해준다.
+        3. 이 [링크](https://kth990303.tistory.com/265)의 설명을 참고했다.
+            - 그런데 이 풀이는 L이 5000인 경우 내 컴퓨터에서 함수 stack overflow가 발생했다. dp(2500, 2500)
+            - 로컬 PC의 stack memory는 1MB인데 백준은 스택, 힙, 정적 메모리를 모두 합쳐서 제한한다고 한다. 따라서 1MB 이상 쓸 수 있다.
+    - Complexity
+        1. Time: O(N^2) = N/2번 탐색 * N/2번 탐색
+        2. Space: O(N^2) = O(N/2) * O(N/2)
+
 ## 220605
 1. BOJ 12869: 뮤탈리스크 [Problem](https://www.acmicpc.net/problem/12869)
     - Algorithm: DP, 백트래킹
     - Idea
         - SCV 3기의 체력이 주어질 때 뮤탈리스크가 공격해야 하는 횟수의 최대값 구하기.
-        - DP문제 해결과정은 [다음 책](http://www.kyobobook.co.kr/product/detailViewKor.laf?mallGb=KOR&ejkGb=KOR&barcode=9788931586053)에서 말하는 수학적 사고의 과정과 닮은것 같다.
+        - DP문제 해결과정은 [다음책]((http://www.kyobobook.co.kr/product/detailViewKor.laf?mallGb=KOR&ejkGb=KOR&barcode=9788931586053))에서 말하는 수학적 사고의 과정과 닮은것 같다.
             - 수학적 사고는 정의, 분석, 체계화의 과정으로 진행된다.
             - DP 문제 해결도 dp 배열의 정의, 요소 분석, 관계를 파악하여 점화식 세우기의 과정을 거친다.
             - 수학적 사고 연습을 위해 DP 문제를 많이 풀어봐야 겠다.
