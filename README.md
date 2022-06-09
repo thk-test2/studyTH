@@ -21,6 +21,47 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220609
+1. LeetCode 62: Unique Paths [Problem](https://leetcode.com/problems/unique-paths/)
+    - Algorithm: DP
+    - Idea:
+        - M*N 행렬의 오른쪽 끝에 도달할 수 있는 유니크 경로의 개수 구하기. 
+        - 오른쪽 또는 아래쪽으로만 이동할 수 있다.
+    - Solve
+        1. memo[m][n]의 의미는 해당 위치에 도달할 수 있는 고유한 경로의 개수이다.
+        2. 오른쪽 또는 아래로만 움직일 수 있으므로 memo 배열의 관계, 즉 점화식은 다음과 같다.
+            - `memo[i][j] = memo[i-1][j] + memo[i][j-1]`
+        3. for문 두개를 이용해 답을 구한다.
+    - Complexity
+        1. Time: O(M*N) = M열 N행
+        2. Space: O(M*N) = M열 N행
+
+2. LeetCode 143: Reorder List [Problem](https://leetcode.com/problems/reorder-list/)
+    - Algorithm: Linked List
+    - Idea
+        - 링크드 리스트 항목들의 순서를 바꾸는 문제. 첫번째 노드가 마지막을, 두번째 노드가 마지막에서 두번째 것을 가리키게 한다.
+        - Ex) 1 -> 2 -> 3 -> 4  => 1 -> 4 -> 2 -> 3
+    - Solve
+        1. `vector<ListNode*> v` 를 하나 선언해서 순서대로 담았다.
+        2. for문을 전체 개수의 절반까지만 반복하며 주어진 규칙대로 연결해준다.
+            - 새로운 마지막 노드의 next를 nullptr로 바꿔주는 것이 필요하다. 해당 조건을 잘 생각해보자.
+    - Complexity
+        1. Time: O(N) = vector 담기 O(N) + for문 순회 O(N/2)
+        2. Space: O(N) = vector O(N)
+
+3. BOJ 16197: 두 동전 [Problem](https://www.acmicpc.net/problem/16197)
+    - Algorithm: 백트래킹, 시뮬레이션
+    - Idea
+        - 두 개의 동전 중 하나만 떨어지게 하는 최소의 이동횟수 구하기.
+        - 둘 다 떨어지거나 이동횟수가 10을 초과하면 리턴.
+    - Solve
+        1. 백트래킹(DFS)로 접근하였다. 동전 2개의 위치를 주의해서 체크해주면 된다.
+            - 동전이 하나만 떨어졌는지, 둘 다 떨어졌는지 체크하는 함수를 구현해주었다.
+        2. 하나만 떨어졌으면 기존 answer와 비교하여 answer를 갱신해준다.
+    - Complexity
+        1. Time: 버튼이 4방향이고 최대 10번까지 누르므로 최대 4^10 경우의 수를 가진다. 그러나 가지치기가 이루어지므로 정확한 복잡도는 모르겠다.
+        2. Space: O(N*M) = map 배열
+
 ## 220606
 1. BOJ 10422: 괄호 [Problem](https://www.acmicpc.net/problem/10422)
     - Algorithm: DP, 카탈란수
