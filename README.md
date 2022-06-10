@@ -21,6 +21,27 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220610
+1. LeetCode 55: Jump Game [Problem](https://leetcode.com/problems/jump-game/)
+    - Algorithm: DP, 백트래킹
+    - Idea
+        - 주어진 숫자 array의 끝에 도달할 수 있는지 확인하는 문제
+    - Solve
+        1. 내가 푼 방법
+            1. 재귀를 이용해서 점프할 수 있는 가장 큰 값부터 탐색하며, visited 배열을 이용해 기록한다.
+            2. 마지막 element에 도달하였다면 return 해준다.
+        2. for문 하나로 푸는 방법
+            1. int 변수(reachable)를 하나 선언한다.
+            2. for문을 돌며 reachable과 nums[i]+i 를 비교하여 더 큰 값으로 갱신해준다.
+            3. i가 reachable보다 크면 마지막에 도달할 수 없는 것이다.
+    - Complexity
+        1. Time
+            - 백트래킹: O(N^2)
+            - for문 1개: O(N)
+        2. Space
+            - 백트래킹: O(N) = nums 배열 O(N) + visited 배열 O(N)
+            - for문 1개: O(N) = nums 배열 O(N)
+
 ## 220609
 1. LeetCode 62: Unique Paths [Problem](https://leetcode.com/problems/unique-paths/)
     - Algorithm: DP
