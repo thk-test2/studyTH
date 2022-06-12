@@ -21,6 +21,67 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220611
+1. LeetCode 15. 3Sum :[Problem](https://leetcode.com/problems/3sum/)
+    - Algorithm: Arrays, Two Pointers, Sorting
+    - Idea
+        - 배열의 3개 요소의 합이 0이 되는 경우 찾기. 중복된 set이 없도록 한다.
+        - 3중 for문으로는 시간 초과가 발생한다. O(N^2)로 해결할 수 있는 방법이 필요
+    - Solve
+        1. for루프 1개와 2포인터를 조합하여 푼다.
+            - 바깥쪽 for문은 i를 0부터 size-2 이전까지 탐색한다. 여기까지는 동일
+            - 2포인터는 l은 i+1, h는 size-1부터 감소시키며 nums[i] = nums[l] + nums[k]인 경우를 찾는다.
+        2. 중복을 피하기 위해 nums는 정렬하며, 2포인터 내에서 같은 값을 건너뛰도록 한다.
+            - nums[l] == nums[l+1]이면 l++
+            - nums[h] == nums[h-1]이면 h--
+    - Complexity
+        1. Time: O(N^2) = for루프 O(N) * 2포인터 O(2N)
+        2. Space: O(N^2) = vector<vector<int>> answer
+
+2. LeetCode 49. Group Anagrams :[Problem](https://leetcode.com/problems/group-anagrams/)
+    - Algorithm: Array, Hash Table, String, Sorting
+    - Idea
+        - 주어진 string 배열에서 anagram들을 그룹으로 묶어서 리턴하기
+    - Solve
+        1. string 배열을 처음부터 순회하면서 각 string을 검사한다.
+            - string을 sort하여 hash map에 없으면 추가, 있으면 기존 그룹에 추가한다.
+        2. 최종 그룹들을 리턴한다.
+    - Complexity
+        1. Time: O(N) = For문 1개 O(N) * Hash map O(1)
+        2. Space: O(N^2) = vector<vector<string>> answer + Hash map O(N)
+
+3. LeetCode 3. Longest Substring Without Repeating Characters :[Problem](https://leetcode.com/problems/longest-substring-without-repeating-characters/)
+    - Algorithm: Hash Table, String, Sliding Window
+    - Idea
+        - 중복된 요소를 포함하지 않는 가장 긴 연속수열 구하기
+        - 중복된 요소는 hash table로 검사하면 된다.
+    - Solve
+        1. for문으로 처음부터 순회하면서 hash table에 없으면 추가하고 뒤의 포인터를 증가시킨다.
+        2. 있으면 맨 앞 값을 hash table에서 제거하고 앞의 포인터를 증가시킨다.
+        3. 매번 반복마다 수열의 최대 길이를 검사하여 저장한다.
+    - Complexity
+        1. Time O(N) = 2 pointer O(2*N) + hash O(N)
+        2. Space O(N) = hash O(N)
+
+4. LeetCode 94. Binary Tree Inorder Traversal :[Problem](https://leetcode.com/problems/binary-tree-inorder-traversal/)
+    - Algorithm: DFS, Binary Tree
+    - Idea: inorder로 출력하는 문제
+    - Solve:
+        - left 탐색 전 출력을 하면 preorder 이다. 
+        - left 탐색을 마치고 right 탐색 전에 출력을 하면 inorder 가 된다.
+        - right 탐색까지 마치고 출력하면 postorder 이다.
+    - Complexity
+        1. O(N) 특정 값을 찾는 것이 아니라 그냥 나열이므로.
+
+5. LeetCode 103. Binary Tree Zigzag Level Order Traversal :[Problem](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/)
+    - Algorithm: BFS, Binary Tree
+    - Idea
+        - level이 짝수이면 왼쪽부터, 홀수이면 오른쪽부터 그룹으로 만들어서 벡터에 담는 문제.
+    - Solve
+        1. 나는 먼저 maximum depth를 구한 다음 빈 vector들을 삽입해 놓았다.
+            - preorder traversal을 하며 각 벡터에 level이 짝수면 앞에, 홀수면 뒤에 삽입하였다.
+        2. 다른 방법으로 level order traversal을 응용하면 된다고 한다. 공부해 볼 것.
+
 ## 220610
 1. LeetCode 55: Jump Game [Problem](https://leetcode.com/problems/jump-game/)
     - Algorithm: DP, 백트래킹
