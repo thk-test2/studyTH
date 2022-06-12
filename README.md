@@ -21,8 +21,41 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220612
+1. BOJ 9470. Strahler 순서: [Problem](https://www.acmicpc.net/problem/9470)
+    - Algorithm: 그래프 이론
+    - Idea
+        - Strahler 순서를 구하는 문제. Strahler 순서는 유입되는 하천의 S 순서와 개수에 따라 결정된다.
+    - Solve
+        1. 주어진 간선 정보들을 adjacency 벡터에 저장한다.
+        2. for문으로 노드 1번부터 순회하며 BFS로 연결된 노드의 S순서를 갱신한다.
+            - 다른 노드에 연결되어 BFS로 갱신된 것들은 for문에서 자기 차례가 되었을때 중복으로 검사하지 않도록 한다.
+            - visited 배열로 중복 검사를 막아주었다.
+        - 위상 정렬로 풀 수도 있다고 한다. [참고](https://www.acmicpc.net/source/44295799)
+    - Complexity
+        1. Time: O(M * P) = main for문 O(M) x 간선 BFS O(P) 
+        2. Space: O(M * P) = adjacency vector O(MxP) + Straheler 구조체배열 O(M x 50) + visited O(M)
+
+2. SWEA 4335. 무인도 탈출: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWL6HGz6Ai4DFAUY)
+    - Algorithm: 백트래킹, DP 
+    - Idea: 엄청난 구현량의 백트래킹 문제. 못 풀었음. 다시 도전해 볼 것..
+
+3. BOJ 1927. 최소 힙: [Problem](https://www.acmicpc.net/problem/1927)
+    - Algorithm: 우선순위 큐
+    - Idea: 기본적인 최소 힙을 구현하였다.
+    - Complexity
+        1. Time O(NlogN) = N개 * 삽입 O(logN)
+        2. Space O(N) = N개 element
+
+4. BOJ 2042. 구간 합 구하기: [Problem](https://www.acmicpc.net/problem/2042)
+    - Algorithm: 세그먼트 트리
+    - Idea: 기본적인 세그먼트 트리를 구현하였다.
+    - Complexity
+        1. Time O(NlogN) = N개 * 삽입 O(logN)
+        2. Space O(N) = 트리 element O(4N)
+
 ## 220611
-1. LeetCode 15. 3Sum :[Problem](https://leetcode.com/problems/3sum/)
+1. LeetCode 15. 3Sum: [Problem](https://leetcode.com/problems/3sum/)
     - Algorithm: Arrays, Two Pointers, Sorting
     - Idea
         - 배열의 3개 요소의 합이 0이 되는 경우 찾기. 중복된 set이 없도록 한다.
@@ -38,7 +71,7 @@
         1. Time: O(N^2) = for루프 O(N) * 2포인터 O(2N)
         2. Space: O(N^2) = vector<vector<int>> answer
 
-2. LeetCode 49. Group Anagrams :[Problem](https://leetcode.com/problems/group-anagrams/)
+2. LeetCode 49. Group Anagrams: [Problem](https://leetcode.com/problems/group-anagrams/)
     - Algorithm: Array, Hash Table, String, Sorting
     - Idea
         - 주어진 string 배열에서 anagram들을 그룹으로 묶어서 리턴하기
@@ -50,7 +83,7 @@
         1. Time: O(N) = For문 1개 O(N) * Hash map O(1)
         2. Space: O(N^2) = vector<vector<string>> answer + Hash map O(N)
 
-3. LeetCode 3. Longest Substring Without Repeating Characters :[Problem](https://leetcode.com/problems/longest-substring-without-repeating-characters/)
+3. LeetCode 3. Longest Substring Without Repeating Characters: [Problem](https://leetcode.com/problems/longest-substring-without-repeating-characters/)
     - Algorithm: Hash Table, String, Sliding Window
     - Idea
         - 중복된 요소를 포함하지 않는 가장 긴 연속수열 구하기
@@ -63,7 +96,7 @@
         1. Time O(N) = 2 pointer O(2*N) + hash O(N)
         2. Space O(N) = hash O(N)
 
-4. LeetCode 94. Binary Tree Inorder Traversal :[Problem](https://leetcode.com/problems/binary-tree-inorder-traversal/)
+4. LeetCode 94. Binary Tree Inorder Traversal: [Problem](https://leetcode.com/problems/binary-tree-inorder-traversal/)
     - Algorithm: DFS, Binary Tree
     - Idea: inorder로 출력하는 문제
     - Solve:
@@ -73,7 +106,7 @@
     - Complexity
         1. O(N) 특정 값을 찾는 것이 아니라 그냥 나열이므로.
 
-5. LeetCode 103. Binary Tree Zigzag Level Order Traversal :[Problem](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/)
+5. LeetCode 103. Binary Tree Zigzag Level Order Traversal: [Problem](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/)
     - Algorithm: BFS, Binary Tree
     - Idea
         - level이 짝수이면 왼쪽부터, 홀수이면 오른쪽부터 그룹으로 만들어서 벡터에 담는 문제.
