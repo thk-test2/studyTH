@@ -21,6 +21,28 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220613
+1. BOJ 14938. 서강그라운드: [Problem](https://www.acmicpc.net/problem/14938)
+    - Algorithm: 그래프 이론, 다익스트라
+    - Idea
+        - 허용되는 거리(M) 내에서 얻을 수 있는 최대 아이템 개수 구하기.
+        - 처음에는 전체 노드를 순회 + BFS로 시도했으나 실패. BFS 경로 탐색이 최소 경로가 아닐 수 있기 때문이다.
+            - 안 되는 이유는 [이 글](https://www.acmicpc.net/board/view/48932)을 읽어보자.
+    - Solve
+        1. 모든 노드를 순회하며 각각 다익스트라 알고리즘으로 다른 노드까지의 최소 거리를 구한다.
+        2. 최소 거리 배열을 순회하며 M 이하면 sum에 누적하여 더해준다.
+        3. 누적 sum 중의 최대값이 찾고자 하는 값이다.
+    - Complexity
+        1. Time: O(NxElogN) = for문 O(N) x 다익스트라 O(ElogN)
+            - N은 노드의 개수, E는 Edge의 수 이다.
+    - **Note**: 다익스트라 시간 복잡도 O(ElogV) [참고](https://gamedevlog.tistory.com/98)
+        - 우선순위 큐에서 꺼낸 현재 노드에 연결된 간선 모두 확인 - 간선의 개수(E) 만큼 확인
+        - 우선순위 큐에 간선을 넣고 빼는 과정 - logE
+            - 모든 간선을 우선순위 큐에 넣고 뺀다고 했을 때 O(ElogE) 의 시간 복잡도를 갖는다.
+        - 이때, 중복 간선을 포함하지 않는 경우, E는 항상 V^2 이하이다. (모든 노드가 연결 되어 있는 경우 V * (V-1))
+        - logE < log(V^2)이다. log(V^2)은 2logV이기 때문에 O(logV)로 표현할 수 있다.
+            - 따라서, 다익스트라 알고리즘 전체 시간 복잡도를 O(ElogV) 로 표현할 수 있다. (ElogE)
+
 ## 220612
 1. BOJ 9470. Strahler 순서: [Problem](https://www.acmicpc.net/problem/9470)
     - Algorithm: 그래프 이론
