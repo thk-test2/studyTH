@@ -21,6 +21,21 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220614
+1. LeetCode 139. Word Break: [Problem](https://leetcode.com/problems/word-break/)
+    - Algorithm: Hash Table, DP
+    - Idea
+        - string S가 주어진 단어들로 구성될 수 있는지 확인하는 문제. 단어들이 겹치면 안 된다.
+    - Solve
+        1. 단어들은 unique하므로 hash table에 보관하여 검색 속도를 높일 수 있다.
+        2. dp[s.size()+1] 배열을 정의한다. dp[i]는 i-1까지의 substring이 hash table에 존재한다는 의미이다.
+            - i는 1부터 N까지 순회하고 j는 i-1에서 0까지 감소시키며 탐색한다.
+            - dp[j] == true이면 j-1까지는 hash table에 있다는 의미이므로, s.substr(j, i-j)가 hash에 있는지 확인한다.
+        3. 최종 dp[N] 값을 리턴한다.
+    - Complexity
+        1. Time O(N^2) = for loop O(N) x for loop O(N) x hash table O(1)
+        2. Space O(N) = hash table O(N) + dp O(N)
+
 ## 220613
 1. BOJ 14938. 서강그라운드: [Problem](https://www.acmicpc.net/problem/14938)
     - Algorithm: 그래프 이론, 다익스트라
