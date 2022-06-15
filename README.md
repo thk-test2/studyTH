@@ -21,6 +21,36 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220615
+1. LeetCode 17. Letter Combinations of a Phone Number: [Problem](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)
+    - Algorithm: 백트래킹
+    - Idea
+        - 숫자와 문자가 적힌 다이얼과 누를 수 있는 버튼이 주어질 때 가능한 문자 조합 구하기.
+    - Solve
+        1. 지금까지 접한 다이얼 문제와 다르게 각 숫자에 해당하는 문자 그룹이 있는 것이 새로웠다.
+            - Ex) 2 = "abc", 3 = "def", 4 = "ghi"
+        2. 큰 줄기에서는 기존 접근방식과 비슷하다.
+            - 재귀에 level과 만들고 있는 string을 넘겨준다.
+            - 현재 level 그룹에서 loop를 돌며 string을 만든다.
+            - 재귀 단계가 digits size에 도달하면 answer vector에 추가한다.
+    - Complexity
+        1. Time O(N^2): 재귀 O(N) * 버튼 루프 O(N)
+            - 가지치기가 없으므로 O(N^2)으로 보인다.
+        2. Space O(N)
+
+2. BOJ 11047. 동전 0: [Problem](https://www.acmicpc.net/problem/11047)
+    - Algorithm: 그리디
+    - Idea
+        - 동전의 종류가 주어질 때, 가치의 합을 K로 만들 수 있는 최소 동전의 개수 구하기.
+        - 그리디 라는 것을 알고 풀어서 어렵지 않았다.
+    - Solve
+        1. K 보다 작거나 같은 동전을 찾는다. 이 때 upper_bound를 써서 logN의 시간으로 찾게 하였다.
+        2. K에서 해당 동전을 쓴 금액을 빼서 K를 갱신한다. 이 때 쓰인 동전의 개수를 누적하여 기록한다.
+        3. K가 0이 될 때까지 1~2번을 반복한다.
+    - Complexity
+        1. Time O(NlogN) = 동전 N개를 logN으로 탐색
+        2. Space O(N) = vector의 공간
+
 ## 220614
 1. LeetCode 139. Word Break: [Problem](https://leetcode.com/problems/word-break/)
     - Algorithm: Hash Table, DP
