@@ -21,6 +21,20 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220616
+1. LeetCode 5. Longest Palindromic Substring: [Problem](https://leetcode.com/problems/longest-palindromic-substring/)
+    - Algorithm: DP(?), 2 포인터
+    - Idea
+        - Substring 중 가장 긴 Palindrome을 찾는 문제.
+        - DP라고 분류되어 있는데 어떤 부분이 DP인지 모르겠다. 2 포인터로 좌우 문자를 비교해가며 풀 수 있다.
+    - Solve
+        1. 메인 for 루프에서 i를 0부터 N-1까지 탐색한다.
+        2. 주어진 string size가 짝수와 홀수인 경우를 나누어 palindrome 여부를 판별한다.
+        3. 좌우 문자가 같으면 2 포인터를 확장시켜가며 가장 긴 palindrome을 찾는다.
+    - Complexity
+        1. Time: O(N^2) = 메인 for 루프 O(N) * 2 포인터 O(N)
+        2. Space: O(N) = N개의 문자
+
 ## 220615
 1. LeetCode 17. Letter Combinations of a Phone Number: [Problem](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)
     - Algorithm: 백트래킹
