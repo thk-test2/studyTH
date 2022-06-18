@@ -21,6 +21,64 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220618
+### BOJ 14238. 출근 기록: [Problem](https://www.acmicpc.net/problem/14238)
+- Algorithm: 백트래킹, DP
+- Idea
+    - 출근할 수 있는 조건이 주어질 때, 가능한 조합 하나 구하여 출력하기.
+    - DP가 어려워질수록 DP 배열에 대한 정의가 까다로워 지는 것 같다.
+- Solve
+    1. DP 배열의 정의
+        - `memo[a][b][c][p1][p2]`: a, b, c 일자 만큼 출근했고 전날에 p1이, 전전날에 p2가 출근했을 때 출근가능 여부이다.
+    2. 재귀를 돌면서 조건에 맞추어 가지치기를 해준다.
+        - A는 항상 출근할 수 있고, B는 전날에 근무했으면(p1 == B) 근무를 하지 못한다. C는 전날과 전전날에 근무했으면 할 수가 없다.
+    3. 어제 본 BOJ 12996. Acka 문제처럼 memo 배열의 초기값은 -1로 셋팅해준다. 0으로 하면 중복 계산이 일어날 수 있기 때문.
+- Complexity
+    1. Time: 백트래킹 + DP는 가지치기와 memo 때문에시간 복잡도를 말하기가 어렵다.
+        - 굳이 따져보면 중복 계산이 일어나지 않으므로 3^n이 아닐까.
+    2. Space: O(S^3) = memo[S][S][S][3][3] 이므로.
+
+### BOJ 16236. 아기 상어: [Problem](https://www.acmicpc.net/problem/16236)
+- Algorithm: 구현, DFS/BFS
+- Idea
+    - 유명한 아기 상어 시리즈. DP 없는 DFS/BFS 문제 중에서 구현량이 많아 어려운 유형인 것 같다.
+    - 필요한 데이터 구조와 method를 잘 정의하여 하나하나 구현해 나가야 한다.
+- Solve
+    1. 구현한 method
+        - travel(): main loop에 해당된다. 재귀적으로 다음 단계로 진행한다.
+        - eatableFishes(): 먹을 수 있는 물고기들의 index를 구한다.
+        - calDistance(): 먹을 수 있는 물고기까지의 거리를 계산한다.
+        - selectTarget(): 조건에 맞게 먹을 물고기를 선택한다.
+        - eatFish(): 선택된 물고기 위치로 상어를 이동시키고 먹는다.
+    2. 주의해야 할 반례
+        - 다음 반례는 먹을 수 있는 물고기는 있지만, 상어보다 크기가 큰 물고기로 둘러싸여 있어서 갈 수 없다.
+        ```
+            3
+            9 2 2
+            2 2 3
+            1 3 1
+            answer : 2
+        ```
+
+### LeetCode 73. Set Matrix Zeroes: [Problem](https://leetcode.com/problems/set-matrix-zeroes/)
+- Algorithm: Array, Matrix, Hash Table
+- Idea
+    - 주어진 matrix에서 element가 0인 것이 있으면, 해당 row와 column을 모두 0으로 만들어야 한다.
+    - in place, 즉 추가 저장공간 없이 수행해야 한다.
+- Solve
+    1. 처음에 이중 for문을 돌며 element가 0이면 해당 row의 가장 첫번째와 해당 column의 가장 첫번째 것에 0으로 표시를 한다.
+        - 즉 다음과 같다. `matrix[0][j] = matrix[i][0] = 0`
+        - 이렇게 하는 이유는 추가공간 없이 나중에 모든 row와 column을 바꾸기 위해서이다.
+    2. 그런데 표시를 한 해당 row의 가장 첫번째나 column의 가장 첫번째가 0인지 여부도 판별해야 한다.
+        - 이것은 flag를 두어 기록을 하면 된다. `if (i == 0) row = true; if (j == 0) column = true`
+        - 1번에서 해당 element가 바뀌게 되면 기존 값을 알 수 없기 때문에 flag로 미리 기록을 하는 것이다.
+    3. 다시 이중 for문을 돌며 첫 element가 0으로 표시되어 있으면 해당 row와 column을 전부 0으로 바꿔준다.
+        - 이 때 i와 j는 1부터 시작한다. i와 j가 0인 경우는 다음에 flag에 의해서 처리할 것이다.
+    4. 이제 flag를 보고 i와 j가 0일 때의 작업을 수행한다.
+- Complexity
+    1. Time: O(N^2) = 최초 O(N^2) + 0으로 바꾸기 O(N^2)
+    2. Space: O(M*N) = no extra space
+
 ## 220617
 ### LeetCode 12. Generate Parentheses: [Problem](https://leetcode.com/problems/generate-parentheses/)
 - Algorithm: 백트래킹
@@ -90,9 +148,9 @@
         - 현재 level 그룹에서 loop를 돌며 string을 만든다.
         - 재귀 단계가 digits size에 도달하면 answer vector에 추가한다.
 - Complexity
-    1. Time O(N^2): 재귀 O(N) * 버튼 루프 O(N)
+    1. Time: O(N^2): 재귀 O(N) * 버튼 루프 O(N)
         - 가지치기가 없으므로 O(N^2)으로 보인다.
-    2. Space O(N)
+    2. Space: O(N)
 
 ### BOJ 11047. 동전 0: [Problem](https://www.acmicpc.net/problem/11047)
 - Algorithm: 그리디
@@ -104,8 +162,8 @@
     2. K에서 해당 동전을 쓴 금액을 빼서 K를 갱신한다. 이 때 쓰인 동전의 개수를 누적하여 기록한다.
     3. K가 0이 될 때까지 1~2번을 반복한다.
 - Complexity
-    1. Time O(NlogN) = 동전 N개를 logN으로 탐색
-    2. Space O(N) = vector의 공간
+    1. Time: O(NlogN) = 동전 N개를 logN으로 탐색
+    2. Space: O(N) = vector의 공간
 
 ## 220614
 ### LeetCode 139. Word Break: [Problem](https://leetcode.com/problems/word-break/)
@@ -119,8 +177,8 @@
         - dp[j] == true이면 j-1까지는 hash table에 있다는 의미이므로, s.substr(j, i-j)가 hash에 있는지 확인한다.
     3. 최종 dp[N] 값을 리턴한다.
 - Complexity
-    1. Time O(N^2) = for loop O(N) x for loop O(N) x hash table O(1)
-    2. Space O(N) = hash table O(N) + dp O(N)
+    1. Time: O(N^2) = for loop O(N) x for loop O(N) x hash table O(1)
+    2. Space: O(N) = hash table O(N) + dp O(N)
 
 ## 220613
 ### BOJ 14938. 서강그라운드: [Problem](https://www.acmicpc.net/problem/14938)
@@ -167,15 +225,15 @@
 - Algorithm: 우선순위 큐
 - Idea: 기본적인 최소 힙을 구현하였다.
 - Complexity
-    1. Time O(NlogN) = N개 * 삽입 O(logN)
-    2. Space O(N) = N개 element
+    1. Time: O(NlogN) = N개 * 삽입 O(logN)
+    2. Space: O(N) = N개 element
 
 ### BOJ 2042. 구간 합 구하기: [Problem](https://www.acmicpc.net/problem/2042)
 - Algorithm: 세그먼트 트리
 - Idea: 기본적인 세그먼트 트리를 구현하였다.
 - Complexity
-    1. Time O(NlogN) = N개 * 삽입 O(logN)
-    2. Space O(N) = 트리 element O(4N)
+    1. Time: O(NlogN) = N개 * 삽입 O(logN)
+    2. Space: O(N) = 트리 element O(4N)
 
 ## 220611
 ### LeetCode 15. 3Sum: [Problem](https://leetcode.com/problems/3sum/)
@@ -216,8 +274,8 @@
     2. 있으면 맨 앞 값을 hash table에서 제거하고 앞의 포인터를 증가시킨다.
     3. 매번 반복마다 수열의 최대 길이를 검사하여 저장한다.
 - Complexity
-    1. Time O(N) = 2 pointer O(2*N) + hash O(N)
-    2. Space O(N) = hash O(N)
+    1. Time: O(N) = 2 pointer O(2*N) + hash O(N)
+    2. Space: O(N) = hash O(N)
 
 ### LeetCode 94. Binary Tree Inorder Traversal: [Problem](https://leetcode.com/problems/binary-tree-inorder-traversal/)
 - Algorithm: DFS, Binary Tree
