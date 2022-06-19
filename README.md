@@ -21,6 +21,58 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220619
+### LeetCode 33. Search in Rotated Sorted Array: [Problem](https://leetcode.com/problems/search-in-rotated-sorted-array/)
+- Algorithm: Binary Search, 정렬
+- Idea
+    - 어떤 int 배열이 오름차순으로 정렬되어 있다. 이 때 O(logN) 시간복잡도 안에서 특정 target을 찾는 문제.
+    - 단, 이 배열은 특정 index에서(pivot) 로테이션 되어 있을 수 있다.
+    - 예를 들어 [0,1,2,4,5,6,7] 배열이 pivot index=3으로 로테이션 된다면 [4,5,6,7,0,1,2]가 된다.
+- Solve
+    1. 먼저 pivot index를 찾도록 했다.
+        - `target >= nums[pivot] && target <= nums[nums.size()-1]`
+        - 위 수식을 만족하면 target은 pivot부터 마지막 요소 사이에 있다고 볼 수 있다.
+    2. 따라서 pivot을 찾고 pivot 기준 왼쪽과 오른쪽을 결정한 뒤, 해당 구간에서 binary search를 하면 된다.
+        - pivot을 찾는 함수도 binary search를 응용하여 O(logN)의 시간복잡도를 지킬 수 있게 하였다.
+- Complexity
+    1. Time: O(logN) = findPivot O(logN) + 구간 search O(logN)
+    2. Space: O(N) = 추가 공간 없음
+
+### LeetCode 56. Merge Intervals: [Problem](https://leetcode.com/problems/merge-intervals/)
+- Algorithm: Array, 정렬
+- Idea
+    - 구간들이 주어질 때 겹치는 구간들을 merge하여 리턴하기.
+- Solve
+    1. 먼저 `vector<vector<int>> intervals`를 다음 기준으로 정렬하였다.
+        - 시작점이 빠른 순서. 시작점이 같으면 종료지점이 더 먼 순서.
+    2. 이제 for 루프를 돌며 다음 기준으로 merge하여 정답 vector에 push하였다.
+        - 초기값 s와 e를 첫번째 구간값으로 셋팅한다.
+        - 다음 구간 시작점이 첫번째 구간 안에 포함되고(겹치고), 종료지점이 더 멀면 e를 다음 구간 종료지점으로 갱신한다.
+        - 겹치지 않으면 정답 vector에 push한다.
+- Complexity
+    1. Time: O(NlogN) = 구간 정렬 O(NlogN) + merge O(N)
+    2. Space: O(N^2) = 최초 구간들 O(N^2) + 정답 배열 O(N^2)
+- **Note**: [참고](https://leetcode.com/problems/merge-intervals/discuss/874757/help-please-line-1052-char-9-runtime-error-reference-binding-to-null-pointer-of-type)
+    - 구간을 정렬하기 위한 Compare() 함수에서 우선순위를 판별할 수 없을 때 UndefinedBehaviorSanitizer 에러가 발생한다.
+        - 즉 Compare(a, b)도 true이고 Compare(b, a)도 true인 경우이다.
+    - 이런 경우가 발생하지 않도록 a와 b의 요소가 같을 때 주의해서 return 값을 명시하도록 하자.
+    
+### LeetCode 240. Search a 2D Matrix II: [Problem](https://leetcode.com/problems/search-a-2d-matrix-ii/)
+- Algorithm: Array, 정렬, 이분 탐색, 매트릭스
+- Idea
+    - 2차원 배열이 주어진다. 각 행은 오름차순으로 정렬되어 있고, 각 열도 오름차순으로 정렬되어 있다.
+    - 이 때 target을 찾는 효율적인 알고리즘을 구하는 문제.
+- Solve
+    1. Brute force
+        - 0번째 행부터 마지막 행까지 순회하며 stl find()를 써서 target을 찾는다.
+        - 시간 복잡도: O(N^2). 1452ms 소요됨
+    2. Brute force + binary search
+        - 0번째 행부터 마지막 행까지 순회 + 각 행에서 binary search를 써서 target을 찾는다.
+        - 시간 복잡도: O(NlogN). 509ms 소요됨
+    3. 더 빠른 방법(?)
+        - 0번째 행부터 순서대로 탐색하는 것이 아니라, 유망한 행을 먼저 탐색하면 더 빠르게 답을 구할 수 있을 것이다.
+        - 내일 좀 더 해보자.
+
 ## 220618
 ### BOJ 14238. 출근 기록: [Problem](https://www.acmicpc.net/problem/14238)
 - Algorithm: 백트래킹, DP
