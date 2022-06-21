@@ -21,6 +21,28 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220621
+### BOJ 1141. 접두사: [Problem](https://www.acmicpc.net/problem/1141)
+- Algorithm: 문자열, 정렬, Trie
+- Idea
+    - 문자열 집합이 주어진다.
+    - 각 원소들이 다른 원소의 접두사가 되지 않는 부분 집합의 최대 원소 개수 구하기.
+- Solve
+    - Trie 자료형에 주어진 문자열들을 담고, leaf 노드의 개수를 세주었다.
+    - leaf 노드는 문자열의 끝이므로, 접두사가 아니기 때문이다.
+- Complexity
+    1. Time O(N·L)
+        - Trie를 만드는 시간은 O(N·L): 문자열 N개, 평균 길이를 L이라고 했을 때.
+        - Trie를 탐색하는 시간 O(N·L): 현재 구현에서는 매 재귀함수마다 alphabet 배열 전체를 탐색해야 하므로 생성보다 더 걸린다.
+    2. Space
+        - O(N·L) = 문자열 N개 * 문자열 평균 길이 L
+
+## 220620
+- STL 자료구조, 각 정렬의 구현과 특징 복습하였음.
+- **공간 복잡도**에 대한 이해를 확실히 해야 함.
+    - 알고리즘 수행에 필요한 추가 공간
+    - 재귀 함수 호출에 필요한 Call stack도 포함해야 함.
+
 ## 220619
 ### LeetCode 33. Search in Rotated Sorted Array: [Problem](https://leetcode.com/problems/search-in-rotated-sorted-array/)
 - Algorithm: Binary Search, 정렬
