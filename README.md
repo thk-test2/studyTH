@@ -21,6 +21,26 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220622
+### BOJ 9935. 문자열 폭발: [Problem](https://www.acmicpc.net/problem/9935)
+- Algorithm: 문자열, 자료구조, 스택
+- Idea
+    - 문자열이 주어질 때 폭발 문자열을 연쇄적으로 제거하고 남은 문자열 구하기.
+    - kmp, 라빈 카프, hash 등을 생각했으나 substr 연산이 오래 걸려서 시간초과 되는 것 같다.
+        - 스택을 이용한 다음 [풀이](https://blog.encrypted.gg/103)를 참고했다.
+        - 공식을 아는 것도 중요하지만 이런 문제 해결력도 갖추어야 한다.
+- Solve
+    1. 문자열을 탐색하면서 다음 조건대로 스택에 넣는다.
+        - {문자, 폭발 문자열과 일치하는 개수}
+        - 예를 들어 문자열이 ABDABCD이고 폭발 문자열이 ABC 이면 스택에는 다음 값이 들어가게 된다.
+            - {A, 1} {B, 2} {D, 0} {A, 1} {B, 2} {C, 3} {D, 0}
+    2. 진행하다가 폭발 문자열 길이와 match_cnt가 같게되면 match_cnt만큼 pop() 해준다.
+        - 스택이 비어있으면 match_cnt는 0이 되고, 그렇지 않으면 top의 match_cnt로 갱신해준다.(이어서 탐색하기 위해)
+    3. 스택에 남아있는 문자열을 역순으로 출력한다.
+- Complexity
+    1. Time: O(N) = pop연산 최대 O(N) + push연산 최대 O(N)
+    2. Space: O(N) = 스택 O(N)
+
 ## 220621
 ### BOJ 1141. 접두사: [Problem](https://www.acmicpc.net/problem/1141)
 - Algorithm: 문자열, 정렬, Trie
