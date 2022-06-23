@@ -21,6 +21,23 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220623
+### BOJ 2211. 네트워크 복구: [Problem](https://www.acmicpc.net/problem/2211)
+- Algorithm: 그래프 이론, 다익스트라
+- Idea
+    - 1번 컴퓨터로부터 다른 컴퓨터까지의 최소 경로가 되는 간선 set 구하기.
+- Solve
+    1. 다익스트라 알고리즘을 적용한다.(특정 노드에서 다른 모든 노드까지 최소 경로 구하기)
+        - 시간 복잡도를 줄이기 위해 Priority Queue로 최소 경로를 갱신하며 다음 노드를 선택하였다.
+    2. 이 문제에서는 최소 거리 뿐 아니라, 경로도 구해야 한다.
+        - 최소 경로 갱신이 일어날 때 이전 노드를 기록해주면 된다. `path[next] = cur.first`
+    3. 최소 거리와 경로를 탐색한 후 답을 출력한다.
+        - 선택된 간선의 개수는 N-1개가 될 것이다. (1번 컴퓨터를 기준으로한 MST라고 볼 수 있을것 같다)
+        - `path` 배열을 순회하며 선택된 간선들을 출력한다.
+- Complexity
+    1. Time: O(ElogE) = 간선의 수 O(E) * 우선순위 큐 O(logE)
+    2. Space: O(E) = 우선순위 큐 O(E) + Path O(E)
+
 ## 220622
 ### BOJ 9935. 문자열 폭발: [Problem](https://www.acmicpc.net/problem/9935)
 - Algorithm: 문자열, 자료구조, 스택
