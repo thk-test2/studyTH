@@ -21,6 +21,19 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220628
+### LeetCode 38. Count and Say: [Problem](https://leetcode.com/problems/count-and-say/)
+- Algorithm: String
+- Idea
+    - 주어지는 number에 맞는 string을 재귀적으로 추가하는 문제
+- Solve
+    1. 함수 구조는 보통의 백트래킹과 유사하다.
+        - n == 1일 때는 끝에 도달한 것이므로 "1" 을 리턴한다.
+        - 그 외의 경우는 각 숫자 cnt를 세어서 string을 추가해 나간다.
+- Complexity
+    - Time: O(N^2) = 재귀 O(N) * 반복문으로 string 탐색 O(N)
+    - Space: O(N) = 재귀 함수 O(N)
+
 ## 220623
 ### BOJ 2211. 네트워크 복구: [Problem](https://www.acmicpc.net/problem/2211)
 - Algorithm: 그래프 이론, 다익스트라
