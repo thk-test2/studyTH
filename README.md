@@ -21,6 +21,55 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220703
+### LeetCode 216. Combination Sum III: [Problem](https://leetcode.com/problems/combination-sum-iii/) - Medium
+- Algorithm: 백트래킹
+- Idea
+    - k개의 숫자를 써서 n을 만들 수 있는 경우의 수 구하기.
+    - 재귀없이 백트래킹을 구현해보려 했으나, 잘 안 되서 다른코드를 참고했다. 좀 더 연습이 필요하다.
+- Solve
+    - 재귀를 쓴다면 쉬운 백트래킹 문제가 된다.
+- Complexity
+    1. Time: O(K * 10) = K 단계 x 각 단계에서 숫자 10개 검사
+    2. Space: O(K) = 숫자 조합을 담는 벡터
+
+### BOJ 10942. 팰린드롬?: [Problem](https://www.acmicpc.net/problem/10942)
+- Algorithm: DP
+- Idea
+    - 수열이 주어질 때, 특정 구간의 숫자들이 팰린드롬인지 판별하는 문제.
+- Solve
+    1. DP 배열의 정의
+        - `memo[S][E]`: S번째부터 E까지의 숫자가 팰린드롬인지 확인한 결과를 저장. 초기값은 -1
+        - 팰린드롬이라면 1, 아니면 0을 저장한다.
+    2. 재귀로 팰린드롬 여부를 판별하고, memoization으로 중복 검사를 하지 않도록 한다.
+        - S == E 이면 숫자 하나이므로 팰린드롬이다.
+        - S+1과 E-1이 팰린드롬이며, Arr[S]와 Arr[E]가 같으면 S부터 E까지도 팰린드롬이다.
+- Complexity
+    1. Time: O(N^2) = memo 배열을 채우는데 걸리는 시간
+    2. Space: O(N^2) = memo 배열 크기
+
+### LeetCode 376. Wiggle Subsequence: [Problem](https://leetcode.com/problems/wiggle-subsequence/) - Medium
+- Algorithm: DP, 그리디
+- Idea
+    - 수열이 주어질 때, 가장 긴 wiggle subsequence의 길이 구하기.
+    - wiggle subsequence란 구성 원소들이 순서대로 증가와 감소를 반복하는 부분 수열을 말한다.
+- Solve
+    1. DP 배열의 정의
+        - `up[i]`: i번째 까지를 검사했을 때, 마지막 두개의 원소가 증가하는 방향으로 끝난 부분수열의 최장 길이.
+        - `down[i]`: 마지막 두개의 원소가 감소하는 방향으로 끝난 부분수열의 최장 길이.
+        - subsequence를 직접 구하는 것이 아니라, 각 조건의 최장 길이만 기록하는 것이다.
+    2. 다음 조건을 확인하여 DP 배열들을 갱신해준다.
+        1. nums[i] > nums[i-1] 일 때
+            - `up[i] = down[i-1] + 1`: down[i-1]에 감소하는 방향의 최장길이가 기록되어 있으므로.
+            - `down[i] = down[i-1]`: 현재는 증가하는 방향이므로 기존의 최장길이를 유지함.
+        2. nums[i] < nums[i-1]일 때
+            - `up[i] = up[i-1]`
+            - `down[i] = up[i-1] + 1`
+        3. nums[i] == nums[i-1] 일 때는 둘 다 i-1번째 값과 동일.
+- Complexity
+    1. Time: O(N) = 반복문 1개
+    2. Space: O(N) = up[N] + down[N]
+
 ## 220629
 ### LeetCode 136. Single Number: [Problem](https://leetcode.com/problems/single-number/) - Easy
 - Algorithm: Array
