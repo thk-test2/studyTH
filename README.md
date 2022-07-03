@@ -21,8 +21,37 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220629
+### LeetCode 136. Single Number: [Problem](https://leetcode.com/problems/single-number/) - Easy
+- Algorithm: Array
+- Idea
+    - 주어진 array에서 한번만 등장하는 숫자 찾기.
+    - 시간 복잡도는 O(N)이어야 하고 constant extra space만 사용해야 한다.
+- Solve
+    1. 처음 element를 prev에 저장하고 계속 비교해 나간다. cnt는 1로 지정한다.
+    2. prev와 다른 element를 만났을 때 cnt가 1이면 한번만 등장한 숫자이다.
+- Complexity
+    1. Time: O(N) = for문 O(N)
+    2. Space: O(1) = prev와 cnt 변수
+
+### LeetCode 322. Coin Change: [Problem](https://leetcode.com/problems/coin-change/) - Medium
+- Algorithm: Array, DP
+- Idea
+    - 달성해야하는 숫자(amount)와 coin 배열이 주어졌을 때, amount를 만들 수 있는 최소 동전의 개수 구하기.
+    - 한달 전에 풀었지만 풀이가 전혀 생각이 나지 않았다. 제대로 이해하지 못 했다는 것이다.
+- Solve
+    1. DP 배열의 정의
+        - 처음에 생각한 것은 `dp[level][동전 1의 개수][동전 2의 개수][...]` 인데, 동전의 개수가 무한하므로 불가능하다.
+            - 버릇처럼 재귀를 이용한 탐색과 그에 따른 dp 배열 구성이 먼저 생각이 났다. 결국 다시 솔루션을 봤다.
+        - `dp[amount]`: amount를 만들 수 있는 최소 동전의 개수
+    2. 1부터 amount까지 탐색하며 최소 동전의 개수를 구해 나간다.
+        - for문 2개를 활용하는데, 바깥은 amount, 안쪽은 coins 집합을 순회한다.
+- Complexity
+    1. Time: O(N^2) = for문 2개
+    2. Space: O(N) = dp 배열
+
 ## 220628
-### LeetCode 38. Count and Say: [Problem](https://leetcode.com/problems/count-and-say/)
+### LeetCode 38. Count and Say: [Problem](https://leetcode.com/problems/count-and-say/) - Medium
 - Algorithm: String
 - Idea
     - 주어지는 number에 맞는 string을 재귀적으로 추가하는 문제
@@ -31,8 +60,8 @@
         - n == 1일 때는 끝에 도달한 것이므로 "1" 을 리턴한다.
         - 그 외의 경우는 각 숫자 cnt를 세어서 string을 추가해 나간다.
 - Complexity
-    - Time: O(N^2) = 재귀 O(N) * 반복문으로 string 탐색 O(N)
-    - Space: O(N) = 재귀 함수 O(N)
+    1. Time: O(N^2) = 재귀 O(N) * 반복문으로 string 탐색 O(N)
+    2. Space: O(N) = 재귀 함수 O(N)
 
 ## 220623
 ### BOJ 2211. 네트워크 복구: [Problem](https://www.acmicpc.net/problem/2211)
