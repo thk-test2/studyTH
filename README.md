@@ -21,6 +21,37 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220704
+### LeetCode 135. Candy: [Problem](https://leetcode.com/problems/candy/) - Hard
+- Algorithm: Array, 그리디
+- Idea
+    - 조건을 만족하며 학생들에게 캔디를 분배할 때, 분배하는 캔디 개수의 최소값 구하기.
+    - 조건
+        1. 각 학생들은 최소 1개의 캔디를 받아야 한다.
+        2. 이웃 학생들보다 rating이 높은 학생은 더 많은 캔디를 받아야 한다.
+- Solve
+    1. 확실한 조건일때 캔디를 assign 하고, 이를 바탕으로 캔디 분배를 확장해 나간다.
+        - 최초에 확실한 조건은 다음 3가지 뿐이다. 그 외에는 이웃들의 캔디 숫자가 확정되어야 판단할 수 있다.
+        ``` c++
+           if (ratings[0] <= ratings[1]) {
+               candy[0] = 1;
+           }
+           if (ratings[N-1] <= ratings[N-2]) {
+               candy[N-1] = 1;
+           }
+           if (i > 0 && i < N-1) {
+               if (ratings[i] <= ratings[i-1] && ratings[i] <= ratings[i+1]) {
+                   candy[i] = 1;
+               }
+           }
+        ```
+    2. while 문을 돌며 candy 벡터의 빈칸을 채우고 sum에 합산한다.
+        - 특정 경우는 먼저 검사하면 더 빠르게 판단할 수 있다.
+        - 예를 들어 계속 감소하는 rating은 while문의 순회가 비효율적이게 된다.  
+- Complexity
+    1. Time: 캔디 벡터를 모두 채울 때까지 반복 순회하므로 알 수 없다.
+    2. Space: O(N) = 캔디 벡터
+
 ## 220703
 ### LeetCode 216. Combination Sum III: [Problem](https://leetcode.com/problems/combination-sum-iii/) - Medium
 - Algorithm: 백트래킹
