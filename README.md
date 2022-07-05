@@ -21,6 +21,25 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220705
+### LeetCode 128. Longest Consecutive Sequence: [Problem](https://leetcode.com/problems/longest-consecutive-sequence/) - Medium
+- Algorithm: Array, 해쉬, 유니온-파인드
+- Idea
+    - 수열이 주어질 때, 가장 긴 연속적인 부분집합의 길이를 구하는 문제. O(N)의 시간 복잡도를 만족해야 한다.
+    - 원소의 범위가 `-10^9 ~ 10^9` 이므로 카운팅 정렬을 쓰면 메모리가 초과된다.
+        - 카운팅 정렬은 원소의 범위가 작고, 모든 원소가 연속적일 때 쓰인다.
+- Solve
+    1. 먼저 unordered_set, 즉 해쉬 테이블에 모든 원소를 집어 넣는다. 이 때 O(1*N)의 시간이 쓰인다.
+    2. hash를 순회하며 `현재 원소 - 1`이 hash에 없는 원소를 찾는다.
+        - 이것이 연속적인 부분집합의 시작점이 되기 때문이다.
+        - 찾은 이후 `현재 원소 + 1`이 hash에 있는지 반복적으로 검사하여 길이를 갱신해준다.
+    3. 이 과정에서 반복문이 2개가 쓰이는데, 시간 복잡도가 O(N^2)가 아니라 O(N)인 이유를 알아보자.
+        - 6,5,4,3,2,1인 수열이 주어질 때, `현재 원소 - 1` 조건 때문에 마지막 원소 1부터 내부 반복문을 수행하게 된다.
+        - 1에 도달하는데 O(N), 길이 검사하는 과정이 O(N)이므로 결과적으로 O(N)이 된다.
+- Complexity
+    1. Time: O(N) = 해쉬 테이블에 넣는 과정 O(N) + 길이 검사 과정 O(N)
+    2. Space: O(N) = 해쉬 테이블
+
 ## 220704
 ### LeetCode 135. Candy: [Problem](https://leetcode.com/problems/candy/) - Hard
 - Algorithm: Array, 그리디
@@ -1987,7 +2006,9 @@
 ### SWEA 6731. 홍익이의 오델로 게임: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWefzFeq5P8DFAUh)
 - Algorithm: N/A
 - Idea
+    - 한 면은 흰색, 다른 면은 흑색인 돌이 배치된 오델로 판이 주어진다.
+    - 처음에 모두 흰색으로 배치되어 있고, 최종적으로 되어야 하는 모습이 주어질 때 몇 번만에 달성할 수 있는지 찾는 문제.
     - 모든 경우의 수를 탐색하는 백트래킹으로 생각했지만, 경우의 수가 너무 많고 가지치기 조건이 생각나지 않았다.
 - Solve
-    1. 구글링을 통해 뒤집은 지점에서 해당 행,열의 흑돌의 개수를 세었을 때 홀수가 된다는 사실을 알았다.
-    2. 따라서 2차원 배열을 돌면서 홀수인 지점을 선택해주면 된다. 솔루션의 출처를 참고.
+    1. 흰돌을 뒤집은 지점에서 해당 행,열의 흑돌의 개수를 세었을 때 홀수가 되는 규칙이 있다.
+    2. 따라서 2차원 배열을 돌면서 홀수인 지점을 선택해주면 된다. [참고](https://yabmoons.tistory.com/426)
