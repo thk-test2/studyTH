@@ -21,8 +21,28 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220707
+### LeetCode 97. Interleaving String: [Problem](https://leetcode.com/problems/interleaving-string/)
+- Level: Medium
+- Algorithm: String, Dynamic Programming
+- Idea
+    - s1, s2, s3 스트링이 주어졌을 때, s3가 s1과 s2의 interleaving 스트링인지 판별하는 문제.
+    - interleaving은 s1과 s2의 문자 순서가 유지된 채로 교차되어 만들어진 string을 말한다. 
+        - 몇 번째에서 교차되었는지는 상관없지만, s1과 s2의 순서는 유지되어야 한다.(hash로 개수만 세는 것이 아니다.)
+- Solve
+    1. DP를 이용한 완전 탐색으로 풀었다. DP 배열의 정의는 다음과 같다.
+        - `memo[i][j]`: s3가 i+j에서 interleaving 중인지 여부. s1은 i번째, s2는 j번째 원소 일때
+    2. 재귀나 for문을 이용하여 순회한다.
+        - 길이가 200 이하여서 재귀로 풀어도 된다.
+        - 수천 ~ 수만개가 주어지기도 하므로 for문도 활용할 줄 알아야 한다.
+            - for문 풀이 [참고](https://leetcode.com/problems/interleaving-string/discuss/31879/My-DP-solution-in-C%2B%2B)
+- Complexity
+    1. Time: O(s1.length * s2.length) = s1과 s2의 길이
+    2. Space: O(s1.length * s2.length) = DP 배열의 크기
+
 ## 220705
-### LeetCode 128. Longest Consecutive Sequence: [Problem](https://leetcode.com/problems/longest-consecutive-sequence/) - Medium
+### LeetCode 128. Longest Consecutive Sequence: [Problem](https://leetcode.com/problems/longest-consecutive-sequence/)
+- Level: Medium
 - Algorithm: Array, 해쉬, 유니온-파인드
 - Idea
     - 수열이 주어질 때, 가장 긴 연속적인 부분집합의 길이를 구하는 문제. O(N)의 시간 복잡도를 만족해야 한다.
@@ -41,7 +61,8 @@
     2. Space: O(N) = 해쉬 테이블
 
 ## 220704
-### LeetCode 135. Candy: [Problem](https://leetcode.com/problems/candy/) - Hard
+### LeetCode 135. Candy: [Problem](https://leetcode.com/problems/candy/)
+- Level: Hard
 - Algorithm: Array, 그리디
 - Idea
     - 조건을 만족하며 학생들에게 캔디를 분배할 때, 분배하는 캔디 개수의 최소값 구하기.
@@ -72,7 +93,8 @@
     2. Space: O(N) = 캔디 벡터
 
 ## 220703
-### LeetCode 216. Combination Sum III: [Problem](https://leetcode.com/problems/combination-sum-iii/) - Medium
+### LeetCode 216. Combination Sum III: [Problem](https://leetcode.com/problems/combination-sum-iii/)
+- Level: Medium
 - Algorithm: 백트래킹
 - Idea
     - k개의 숫자를 써서 n을 만들 수 있는 경우의 수 구하기.
@@ -98,7 +120,8 @@
     1. Time: O(N^2) = memo 배열을 채우는데 걸리는 시간
     2. Space: O(N^2) = memo 배열 크기
 
-### LeetCode 376. Wiggle Subsequence: [Problem](https://leetcode.com/problems/wiggle-subsequence/) - Medium
+### LeetCode 376. Wiggle Subsequence: [Problem](https://leetcode.com/problems/wiggle-subsequence/)
+- Level: Medium
 - Algorithm: DP, 그리디
 - Idea
     - 수열이 주어질 때, 가장 긴 wiggle subsequence의 길이 구하기.
@@ -121,7 +144,8 @@
     2. Space: O(N) = up[N] + down[N]
 
 ## 220629
-### LeetCode 136. Single Number: [Problem](https://leetcode.com/problems/single-number/) - Easy
+### LeetCode 136. Single Number: [Problem](https://leetcode.com/problems/single-number/)
+- Level: Easy
 - Algorithm: Array
 - Idea
     - 주어진 array에서 한번만 등장하는 숫자 찾기.
@@ -133,7 +157,8 @@
     1. Time: O(N) = for문 O(N)
     2. Space: O(1) = prev와 cnt 변수
 
-### LeetCode 322. Coin Change: [Problem](https://leetcode.com/problems/coin-change/) - Medium
+### LeetCode 322. Coin Change: [Problem](https://leetcode.com/problems/coin-change/)
+- Level: Medium
 - Algorithm: Array, DP
 - Idea
     - 달성해야하는 숫자(amount)와 coin 배열이 주어졌을 때, amount를 만들 수 있는 최소 동전의 개수 구하기.
@@ -150,7 +175,8 @@
     2. Space: O(N) = dp 배열
 
 ## 220628
-### LeetCode 38. Count and Say: [Problem](https://leetcode.com/problems/count-and-say/) - Medium
+### LeetCode 38. Count and Say: [Problem](https://leetcode.com/problems/count-and-say/)
+- Level: Medium
 - Algorithm: String
 - Idea
     - 주어지는 number에 맞는 string을 재귀적으로 추가하는 문제
