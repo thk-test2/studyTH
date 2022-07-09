@@ -21,10 +21,51 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220709
+### 1696. Jump Game VI: [Problem](https://leetcode.com/problems/jump-game-vi/)
+- Level: Medium
+- Algorithm: Array, DP, 우선순위 큐, 슬라이딩 윈도우
+- Idea
+    - 정수 배열과 최대로 점프할 수 있는 범위 k가 주어질 때, 마지막 원소에 도달할 때 얻을 수 있는 가장 큰 점수 구하기.
+    - 배열 크기가 10^5 까지이며, O(N*K) 솔루션은 시간이 초과된다.
+- Solve
+    1. DP 배열의 정의
+        - `memo[i]`: i에 도달했을 때 얻을 수 있는 가장 큰 점수.
+    2. 우선순위 큐(PQ)의 활용
+        - k보다 작은 모든 j를 체크하지 말고, memo[index]를 크기 순으로 정렬하는 PQ를 활용한다.
+        - PQ에는 index와 해당 index의 memo[index] 값이 pair로 삽입된다. `{index, memo[index]}`
+        - PQ.top()의 index와 i와의 거리가 k보다 커지면 제거하고, 다음 최대값을 검사한다.
+    3. i와의 거리가 k보다 작거나 같은 memo[index]를 PQ에서 찾아서 현재 DP 배열 값을 갱신한다.
+        - `memo[i] = max(memo[i], memo[cur.first] + nums[i]);`
+        - 이후 탐색을 위해 다시 `{i, memo[i]}`를 PQ에 삽입한다.
+- Complexity
+    1. Time: O(N*logK) = for문 O(N) + 우선순위 큐 탐색 O(logK)
+    2. Space: O(N+K) = DP 배열 O(N) + 우선순위 큐 O(K)
+
+## 220708
+### 1473. Paint House III: [Problem](https://leetcode.com/problems/paint-house-iii/)
+- Level: Hard
+- Algorithm: Array, DP
+- Idea
+    - houses 배열과 cost 배열, 그리고 target 이웃 그룹의 수가 주어진다.
+    - target 이웃 그룹의 수를 만족하는 가장 작은 페인트칠의 cost 합 구하기.
+        - 같은 색의 집이 붙어있을 때 이웃 그룹이라고 한다.
+- Solve
+    1. DP 배열의 정의
+        - `memo[idx][ncount][color]`
+        - i번째 까지 house를 검사했고, ncount 만큼의 이웃 그룹이 있으며, 직전 색이 color일 때의 최소값.
+    2. 재귀적으로 순회하며 DP 배열을 채우고 최소값을 찾는다.
+        - house[i]가 0이 아니면 작년에 칠한 것이므로 cost 증가 없이 다음 단계로 넘어간다.
+        - house[i]가 0이면 가능한 color를 다 칠하고 cost를 증가하여 다음 단계로 간다.
+        - 모든 경우의 수를 다 검사하되, memo 배열로 중복 검사를 막는다.
+- Complexity
+    1. Time: O(M * N^2) = house O(N) x 이웃그룹 O(N) x 컬러 개수 O(M)
+    2. Space: O(M * N^2) = 위와 같다.
+
 ## 220707
 ### LeetCode 97. Interleaving String: [Problem](https://leetcode.com/problems/interleaving-string/)
 - Level: Medium
-- Algorithm: String, Dynamic Programming
+- Algorithm: String, DP
 - Idea
     - s1, s2, s3 스트링이 주어졌을 때, s3가 s1과 s2의 interleaving 스트링인지 판별하는 문제.
     - interleaving은 s1과 s2의 문자 순서가 유지된 채로 교차되어 만들어진 string을 말한다. 
