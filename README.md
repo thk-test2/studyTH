@@ -21,6 +21,41 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220711
+### 199. Binary Tree Right Side View: [Problem](https://leetcode.com/problems/binary-tree-right-side-view/)
+- Level: Medium
+- Algorithm: Binary Tree, Hash Map
+- Idea
+    - 이진 트리를 오른편에서 바라본다고 가정했을 때, 보이는 원소들을 맨 위에서부터 순서대로 나열하기.
+    - 무조건 right 포인터를 따라가면서 할 수 없다. left height가 더 큰 경우도 있기 때문이다.
+- Solve
+    1. unordered_map 활용
+        - 보통의 preorder traversal을 왼쪽부터 수행하면서 unordered_map에 {height, val} 쌍을 저장한다.
+        - left 먼저 탐색하고 right를 탐색할 때 기존 값을 덮어쓰게 되고, height가 더 길어지면 새 쌍을 넣게된다.
+        - 탐색을 마치고 vector에 1부터 height까지 값을 저장하여 리턴해준다.
+    2. Space를 아낄 수 있는 방법: [링크](https://leetcode.com/problems/binary-tree-right-side-view/discuss/56003/My-C%2B%2B-solution-modified-preorder-traversal)
+        - hash map을 쓰지않아 공간이 절약된다.
+- Complexity
+    1. Time: O(N) = 모든 트리 원소들을 순회 O(N) + vector에 값 복사 O(N)
+    2. Space: O(N) = unordered_map O(N) + vector에 height 만큼의 원소 저장 O(logN)
+
+## 220710
+### 746. Min Cost Climbing Stairs: [Problem](https://leetcode.com/problems/min-cost-climbing-stairs/)
+- Level: Easy
+- Algorithm: Array, DP
+- Idea
+    - cost 배열이 주어질 때 마지막 계단에 도달하는 최소 cost 합 구하기. 계단 오르기 기본 문제이다.
+    - 리트코드 데일리 문제이다. 이번 달은 Array, DP 위주인 것 같다.
+- Solve
+    1. DP 배열의 정의
+        - `memo[i]`: i번째 계단에 도달할 때까지의 최소 cost 합
+    2. 점화식
+        - `memo[i] = min(cost[i-1] + memo[i-1], cost[i-2] + memo[i-2]);`
+        - 연습을 위해 for문과 recursive 두 가지로 풀었다.
+- Complexity
+    1. Time: O(N) = cost 배열 순회 O(N)
+    2. Space: O(N) = DP 배열 O(N)
+
 ## 220709
 ### 1696. Jump Game VI: [Problem](https://leetcode.com/problems/jump-game-vi/)
 - Level: Medium
