@@ -21,6 +21,55 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220713
+### 102. Binary Tree Level Order Traversal: [Problem](https://leetcode.com/problems/binary-tree-level-order-traversal/)
+- Level: Medium
+- Algorithm: Binary Tree, BFS
+- Idea
+    - 이진 트리가 주어질 때 각 height에 위치한 노드들을 같은 vector에 담아 리턴하기.
+- Solve
+    1. 트리의 최대 높이를 구한다. 이 높이가 vector의 size가 된다.
+        - 최대 높이를 구하고 미리 vector에 empty vector들을 높이 개수만큼 삽입해두었다.
+    2. preorder로 순회하며 각 vector[height]에 해당 노드의 value를 삽입한다.
+- Complexity
+    1. Time: O(N) = height 계산할 때 모든 노드를 순회하므로 O(N) + 마찬가지로 levelOrder일 때 O(N)
+    2. Space: O(N) = Tree의 크기
+
+### 1710. Maximum Units on a Truck: [Problem](https://leetcode.com/problems/maximum-units-on-a-truck/)
+- Level: Easy
+- Algorithm: Array, Greedy, Sorting, Priority Queue
+- Idea
+    - Box의 종류와 Box에 담을 수 있는 Unit, 그리고 최대 Box 개수를 의미하는 truckSize가 주어진다.
+    - truckSize를 초과하지 않는 최대 Unit 구하기.
+- Solve
+    1. 우선순위 큐 정의
+        - `boxTypes[i] = [numberOfBoxesi, numberOfUnitsPerBoxi]`
+        - 위와 같은 pair를 second가 클수록, second가 같으면 first가 큰 순으로 정렬하는 우선순위 큐에 삽입한다.
+    2. 우선순위 큐 순회
+        - answer에 pq.top().first와 pq.top().second를 곱하여 누적 해나간다.
+        - 우선순위 큐가 empty가 되거나 truckSize가 0이 되면 순회를 중단한다.
+- Complexity
+    1. Time: O(NlogN) = 우선순위 큐 삽입 O(N*logN) + 우선순위 큐 pop연산 O(N)
+    2. Space: O(N) = 우선순위 큐
+
+## 220712
+### 473. Matchsticks to Square: [Problem](https://leetcode.com/problems/matchsticks-to-square/)
+- Level: Medium
+- Algorithm: Array, DP, Backtracking, Bitmask
+- Idea
+    - 성냥개비 길이 배열이 주어질 때, 정사각형을 만들 수 있는지 검사하는 문제.
+    - 두 가지 관점에서 백트래킹 함수를 만들 수 있다.
+- Solve
+    1. 첫번째 방법
+        - 4개의 그룹을 만들고, 매 stage에서 4개의 그룹을 선택하는 것.
+        - 마지막에 4개의 그룹의 길이를 비교하여 판별한다.
+    2. 두번째 방법: DP + bitmasking
+        - 매 stage에서 모든 성냥개비를 순회하고 안 쓰인 성냥개비를 선택하여 검사한다.
+        - bitmasking을 통해 성냥개비 사용유무를 체크할 수 있고, memoization 배열 인자에도 쓰인다.
+- Complexity
+    1. Time: O(N x 2^N) = 매 stage마다 최대 2^N개의 bit mask 경우의 수
+    2. Space: O(N + 2^N) = N개의 stage가 있고 + DP배열 4 x 2^N = O(2^N)
+
 ## 220711
 ### 199. Binary Tree Right Side View: [Problem](https://leetcode.com/problems/binary-tree-right-side-view/)
 - Level: Medium
@@ -2039,6 +2088,7 @@
     2. `t1 &= ~(1 << n)`: t1의 n번째 bit를 0으로 바꾼다.
     3. `t1 ^= (1 << n)`: t1의 n번째 bit을 토글.
     4. `(t1 >> n) & 1`: t1의 n번째 bit가 1인지 판별.
+        - `t1 & (1 << n)` 을 써야 t1 값이 변하지 않을 것이다.
     5. STL bitset을 사용해도 됨. 
         - `bit.set(2)`: 2번째 bit를 1로 set
         - `bit.reset(2)`: 2번째 bit를 0으로 set
