@@ -21,6 +21,26 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220714
+### 105. Construct Binary Tree from Preorder and Inorder Traversal: [Problem](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
+- Level: Medium
+- Algorithm: Binary Tree, Divide and Conquer
+- Idea
+    - 이진 트리의 preorder, inorder 순회결과가 배열로 주어졌을 때, 원본 트리를 만들어서 리턴하는 문제
+- Solve
+    1. 규칙을 찾아보자.
+        - 임의의 stage에서 preorder 배열의 첫번째 원소가 inorder 배열에 있다면?
+            - 이 원소가 해당 stage의 root node라는 의미이다. 새 TreeNode를 만들어서 값을 할당 해준다.
+    2. 임의의 stage에서 root node를 만든 후
+        - root node의 값이 inorder의 첫번째 원소라면?
+            - 해당 node의 왼쪽에는 더 이상 노드들이 없다는 의미이다. 오른쪽으로 재귀 호출을 수행한다.
+        - root node의 값이 inorder의 첫번째 원소가 아니라면?
+            - 왼쪽에 노드들이 있다는 의미이므로, root node를 기준으로 inorder 배열을 나누어서 왼쪽과 오른쪽 재귀호출을 수행한다.
+- Complexity
+    1. Time: O(N) = 모든 노드를 탐색하므로
+    2. Space: O(N + N) = N개의 stage가 있고 + 원본 트리가 N 만큼 차지함.
+        - 사실 원본 트리에는 null leaf node들이 추가되므로 N보다 좀 더 크다.
+
 ## 220713
 ### 102. Binary Tree Level Order Traversal: [Problem](https://leetcode.com/problems/binary-tree-level-order-traversal/)
 - Level: Medium
