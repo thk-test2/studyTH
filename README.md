@@ -21,10 +21,67 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220716
+### LeetCode 576. Out of Boundary Paths: [Problem](https://leetcode.com/problems/out-of-boundary-paths/)
+- Algorithm: DP / Level: Medium
+- Idea
+    - 2차원 맵과 공의 시작위치가 주어질때, 공이 맵 밖으로 나가는 경우의 수 찾기.
+    - 맵은 최대 50x50이며, local queue나 stack을 사용하기에는 경우의 수가 너무 많아서 memory overflow의 가능성이 있다.
+        - 재귀를 활용한 DFS + DP로 풀이했다.
+- Solve
+    1.  DP 배열의 정의
+        - `memo[maxMove][row][col]`: maxMove 만큼의 이동횟수가 남아있고, row와 col의 위치에 있을때 가능한 경우의 수
+    2. dfs를 돌며 4방향을 모두 탐색해 준다. 물론 종료 조건을 생각해야 한다.
+        - `row < 0 || row >= m || col < 0 || col >= n` 이면 맵 밖을 나간 것이므로 1을 리턴.
+        - maxMove가 0 이하면 실패한 것이므로 0을 리턴.
+        - memoization이 되어 있다면 해당 값을 리턴.
+- Complexity
+    1. Time: O(4^N) = N개 stage마다 4방향의 선택지가 있다. memoization을 하므로 실제로는 더 적게 걸림
+    2. Space: O(N x m x n) = N개의 move x m개의 row x n개의 column
+
+### LeetCode 1465. Maximum Area of a Piece of Cake After Horizontal and Vertical Cuts: [Problem](https://leetcode.com/problems/maximum-area-of-a-piece-of-cake-after-horizontal-and-vertical-cuts/)
+- Algorithm: Array, Greedy, Sorting / Level: Medium
+- Idea
+    - 2차원 맵과 맵을 자르는 horizontalCut, verticalCut 배열이 주어질 때 잘린 조각 중 가장 큰 크기 구하기.
+    - hCut과 vCut 배열에서 가장 큰 간격을 구해서 곱하면 되는데, 숫자가 크므로 int overflow에 주의한다.
+- Solve
+    1. hCut과 vCut을 오름차순으로 정렬한다.
+        - 계산의 편의를 위해 hCut과 vCut에 0(시작점)과 끝점(각각 v, w)를 더한 다음 정렬한다.
+    2. hCut과 vCut 간격 중 최대 값을 찾는다.
+    3. 최대 간격들을 곱하여 리턴한다.
+        - `return (long)max_h * max_v % 1000000007;`
+- Complexity
+    1. Time: O(N*logN) = 정렬 O(NlogN) + 간격 찾기 O(2N)
+    2. Space: O(1) = 각 array의 최대 간격을 저장하는 변수 2개를 추가로 사용한다.
+
+### BOJ 17142. 연구소: [Problem](https://www.acmicpc.net/problem/17142)
+- Algorithm: 그래프 이론, DFS, BFS
+- Idea
+    - 2차원 맵에 바이러스를 놓을 수 있는 위치가 주어질 때, 바이러스가 맵 전체에 퍼지는 최소 시간 구하기.
+    - 구현량이 많은 BFS/DFS 문제이다.
+- Solve
+    - 바이러스 위치 선택은 DFS를 이용한 조합으로, 해당 위치에서 퍼지는 시간은 BFS로 구현했다.
+- Complexity
+    1. Time: 바이러스 후보지 중 M개를 선택하는 조합 * O(N^2)
+    2. Space: O(N^2 + N^2 + N + M) = 상태 저장 배열 O(N^2) + visited 배열 O(N^2) + 바이러스 선택 배열 O(N) + 재귀 함수 스택 O(M)
+
+## 220715
+### LeetCode 695. Max Area of Island: [Problem](https://leetcode.com/problems/max-area-of-island/)
+- Algorithm: BFS, DFS / Level: Medium
+- Idea
+    - 0과 1로 이루어진 맵이 주어진다. 1은 섬을 의미하는데, 섬의 면적 중 최대 크기를 구하여라.
+- Solve
+    1. 맵의 크기가 50x50으로 BFS나 DFS 모두 사용할 수 있다.
+        - 맵을 탐색하다가 1을 만나면 BFS/DFS로 면적을 구한다.
+        - 굳이 visited 배열을 쓰지않고 이미 방문한 섬을 0으로 바꾸면 다시 방문하지 않는다.
+    2. 최대 크기를 구하여 리턴한다.
+- Complexity
+    1. Time: O(R*C) = 맵을 모두 탐색하므로
+    2. Space: 최악 O(R*C) = 맵이 모두 1일때.
+
 ## 220714
-### 105. Construct Binary Tree from Preorder and Inorder Traversal: [Problem](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
-- Level: Medium
-- Algorithm: Binary Tree, Divide and Conquer
+### LeetCode 105. Construct Binary Tree from Preorder and Inorder Traversal: [Problem](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
+- Algorithm: Binary Tree, Divide and Conquer / Level: Medium
 - Idea
     - 이진 트리의 preorder, inorder 순회결과가 배열로 주어졌을 때, 원본 트리를 만들어서 리턴하는 문제
 - Solve
@@ -42,9 +99,8 @@
         - 사실 원본 트리에는 null leaf node들이 추가되므로 N보다 좀 더 크다.
 
 ## 220713
-### 102. Binary Tree Level Order Traversal: [Problem](https://leetcode.com/problems/binary-tree-level-order-traversal/)
-- Level: Medium
-- Algorithm: Binary Tree, BFS
+### LeetCode 102. Binary Tree Level Order Traversal: [Problem](https://leetcode.com/problems/binary-tree-level-order-traversal/)
+- Algorithm: Binary Tree, BFS / Level: Medium
 - Idea
     - 이진 트리가 주어질 때 각 height에 위치한 노드들을 같은 vector에 담아 리턴하기.
 - Solve
@@ -55,9 +111,8 @@
     1. Time: O(N) = height 계산할 때 모든 노드를 순회하므로 O(N) + 마찬가지로 levelOrder일 때 O(N)
     2. Space: O(N) = Tree의 크기
 
-### 1710. Maximum Units on a Truck: [Problem](https://leetcode.com/problems/maximum-units-on-a-truck/)
-- Level: Easy
-- Algorithm: Array, Greedy, Sorting, Priority Queue
+### LeetCode 1710. Maximum Units on a Truck: [Problem](https://leetcode.com/problems/maximum-units-on-a-truck/)
+- Algorithm: Array, Greedy, Sorting, Priority Queue / Level: Easy
 - Idea
     - Box의 종류와 Box에 담을 수 있는 Unit, 그리고 최대 Box 개수를 의미하는 truckSize가 주어진다.
     - truckSize를 초과하지 않는 최대 Unit 구하기.
@@ -73,9 +128,8 @@
     2. Space: O(N) = 우선순위 큐
 
 ## 220712
-### 473. Matchsticks to Square: [Problem](https://leetcode.com/problems/matchsticks-to-square/)
-- Level: Medium
-- Algorithm: Array, DP, Backtracking, Bitmask
+### LeetCode 473. Matchsticks to Square: [Problem](https://leetcode.com/problems/matchsticks-to-square/)
+- Algorithm: Array, DP, Backtracking, Bitmask / Level: Medium
 - Idea
     - 성냥개비 길이 배열이 주어질 때, 정사각형을 만들 수 있는지 검사하는 문제.
     - 두 가지 관점에서 백트래킹 함수를 만들 수 있다.
@@ -91,9 +145,8 @@
     2. Space: O(N + 2^N) = N개의 stage가 있고 + DP배열 4 x 2^N = O(2^N)
 
 ## 220711
-### 199. Binary Tree Right Side View: [Problem](https://leetcode.com/problems/binary-tree-right-side-view/)
-- Level: Medium
-- Algorithm: Binary Tree, Hash Map
+### LeetCode 199. Binary Tree Right Side View: [Problem](https://leetcode.com/problems/binary-tree-right-side-view/)
+- Algorithm: Binary Tree, Hash Map / Level: Medium
 - Idea
     - 이진 트리를 오른편에서 바라본다고 가정했을 때, 보이는 원소들을 맨 위에서부터 순서대로 나열하기.
     - 무조건 right 포인터를 따라가면서 할 수 없다. left height가 더 큰 경우도 있기 때문이다.
@@ -109,9 +162,8 @@
     2. Space: O(N) = unordered_map O(N) + vector에 height 만큼의 원소 저장 O(logN)
 
 ## 220710
-### 746. Min Cost Climbing Stairs: [Problem](https://leetcode.com/problems/min-cost-climbing-stairs/)
-- Level: Easy
-- Algorithm: Array, DP
+### LeetCode 746. Min Cost Climbing Stairs: [Problem](https://leetcode.com/problems/min-cost-climbing-stairs/)
+- Algorithm: Array, DP / Level: Easy
 - Idea
     - cost 배열이 주어질 때 마지막 계단에 도달하는 최소 cost 합 구하기. 계단 오르기 기본 문제이다.
     - 리트코드 데일리 문제이다. 이번 달은 Array, DP 위주인 것 같다.
@@ -126,9 +178,8 @@
     2. Space: O(N) = DP 배열 O(N)
 
 ## 220709
-### 1696. Jump Game VI: [Problem](https://leetcode.com/problems/jump-game-vi/)
-- Level: Medium
-- Algorithm: Array, DP, 우선순위 큐, 슬라이딩 윈도우
+### LeetCode 1696. Jump Game VI: [Problem](https://leetcode.com/problems/jump-game-vi/)
+- Algorithm: Array, DP, 우선순위 큐, 슬라이딩 윈도우 / Level: Medium
 - Idea
     - 정수 배열과 최대로 점프할 수 있는 범위 k가 주어질 때, 마지막 원소에 도달할 때 얻을 수 있는 가장 큰 점수 구하기.
     - 배열 크기가 10^5 까지이며, O(N*K) 솔루션은 시간이 초과된다.
@@ -147,9 +198,8 @@
     2. Space: O(N+K) = DP 배열 O(N) + 우선순위 큐 O(K)
 
 ## 220708
-### 1473. Paint House III: [Problem](https://leetcode.com/problems/paint-house-iii/)
-- Level: Hard
-- Algorithm: Array, DP
+### LeetCode 1473. Paint House III: [Problem](https://leetcode.com/problems/paint-house-iii/)
+- Algorithm: Array, DP / Level: Hard
 - Idea
     - houses 배열과 cost 배열, 그리고 target 이웃 그룹의 수가 주어진다.
     - target 이웃 그룹의 수를 만족하는 가장 작은 페인트칠의 cost 합 구하기.
@@ -168,8 +218,7 @@
 
 ## 220707
 ### LeetCode 97. Interleaving String: [Problem](https://leetcode.com/problems/interleaving-string/)
-- Level: Medium
-- Algorithm: String, DP
+- Algorithm: String, DP / Level: Medium
 - Idea
     - s1, s2, s3 스트링이 주어졌을 때, s3가 s1과 s2의 interleaving 스트링인지 판별하는 문제.
     - interleaving은 s1과 s2의 문자 순서가 유지된 채로 교차되어 만들어진 string을 말한다. 
@@ -187,8 +236,7 @@
 
 ## 220705
 ### LeetCode 128. Longest Consecutive Sequence: [Problem](https://leetcode.com/problems/longest-consecutive-sequence/)
-- Level: Medium
-- Algorithm: Array, 해쉬, 유니온-파인드
+- Algorithm: Array, 해쉬, 유니온-파인드 / Level: Medium
 - Idea
     - 수열이 주어질 때, 가장 긴 연속적인 부분집합의 길이를 구하는 문제. O(N)의 시간 복잡도를 만족해야 한다.
     - 원소의 범위가 `-10^9 ~ 10^9` 이므로 카운팅 정렬을 쓰면 메모리가 초과된다.
@@ -207,8 +255,7 @@
 
 ## 220704
 ### LeetCode 135. Candy: [Problem](https://leetcode.com/problems/candy/)
-- Level: Hard
-- Algorithm: Array, 그리디
+- Algorithm: Array, 그리디 / Level: Hard
 - Idea
     - 조건을 만족하며 학생들에게 캔디를 분배할 때, 분배하는 캔디 개수의 최소값 구하기.
     - 조건
@@ -239,8 +286,7 @@
 
 ## 220703
 ### LeetCode 216. Combination Sum III: [Problem](https://leetcode.com/problems/combination-sum-iii/)
-- Level: Medium
-- Algorithm: 백트래킹
+- Algorithm: 백트래킹 / Level: Medium
 - Idea
     - k개의 숫자를 써서 n을 만들 수 있는 경우의 수 구하기.
     - 재귀없이 백트래킹을 구현해보려 했으나, 잘 안 되서 다른코드를 참고했다. 좀 더 연습이 필요하다.
@@ -266,8 +312,7 @@
     2. Space: O(N^2) = memo 배열 크기
 
 ### LeetCode 376. Wiggle Subsequence: [Problem](https://leetcode.com/problems/wiggle-subsequence/)
-- Level: Medium
-- Algorithm: DP, 그리디
+- Algorithm: DP, 그리디 / Level: Medium
 - Idea
     - 수열이 주어질 때, 가장 긴 wiggle subsequence의 길이 구하기.
     - wiggle subsequence란 구성 원소들이 순서대로 증가와 감소를 반복하는 부분 수열을 말한다.
@@ -290,8 +335,7 @@
 
 ## 220629
 ### LeetCode 136. Single Number: [Problem](https://leetcode.com/problems/single-number/)
-- Level: Easy
-- Algorithm: Array
+- Algorithm: Array / Level: Easy
 - Idea
     - 주어진 array에서 한번만 등장하는 숫자 찾기.
     - 시간 복잡도는 O(N)이어야 하고 constant extra space만 사용해야 한다.
@@ -303,8 +347,7 @@
     2. Space: O(1) = prev와 cnt 변수
 
 ### LeetCode 322. Coin Change: [Problem](https://leetcode.com/problems/coin-change/)
-- Level: Medium
-- Algorithm: Array, DP
+- Algorithm: Array, DP / Level: Medium
 - Idea
     - 달성해야하는 숫자(amount)와 coin 배열이 주어졌을 때, amount를 만들 수 있는 최소 동전의 개수 구하기.
     - 한달 전에 풀었지만 풀이가 전혀 생각이 나지 않았다. 제대로 이해하지 못 했다는 것이다.
@@ -321,8 +364,7 @@
 
 ## 220628
 ### LeetCode 38. Count and Say: [Problem](https://leetcode.com/problems/count-and-say/)
-- Level: Medium
-- Algorithm: String
+- Algorithm: String / Level: Medium
 - Idea
     - 주어지는 number에 맞는 string을 재귀적으로 추가하는 문제
 - Solve
