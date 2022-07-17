@@ -21,6 +21,37 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220717
+### BOJ 1854. K번째 최단경로 찾기: [Problem](https://www.acmicpc.net/problem/1854)
+- Algorithm: 그래프 이론, 다익스트라, 우선순위 큐
+- Idea
+    - 다익스트라처럼 각 정점까지의 최단 경로가 아니라, k번째 최단 경로를 구하는 문제.
+    - 못 풀어서 [여기](https://jungahshin.tistory.com/57)를 참고했다.
+- Solve
+    1. 2개의 우선순위 큐를 활용한다.
+        1. 각 정점마다의 최단 경로를 저장하기 위한 heap(내림차순)
+        2. 다익스트라 알고리즘을 위한 pq(오름차순)
+    2. 핵심 로직
+        - heap의 원소가 k개 미만이면 계속 원소를 넣어준다.
+        - 이미 k개가 들어있으면 heap[i].top()과 next cost를 비교하여, top()이 더 크면 pop하고 next cost를 새로 넣어준다.
+- Complexity
+    1. Time: O(VlogE x K) = 우선순위 큐를 활용한 다익스트라 O(VlogE) x K개의 최단 경로 찾기
+    2. Space: O(V+E + VK) = 인적 리스트 O(V+E) + heap O(VK)
+
+### LeetCode 207. Course Schedule: [Problem](https://leetcode.com/problems/course-schedule/)
+- Algorithm: BFS, DFS, Graph, Topological Sort / Level: Medium
+- Idea
+    - 수강이 필요한 강의 수와 강의 들간의 선결 조건(prerequisites)가 주어질 때, 모든 강의를 들을 수 있는지 판별하기.
+- Solve
+    1. prerequisites으로 adjacency vector를 만들고, 이를 탐색하여 단방향 그래프에서 cycle이 일어나는지 판별하였다.
+        - cycle이 있으면 선결 조건간에 모순이 생겨 수강이 불가능하다.
+    2. 탐색은 모든 노드에 대해 DFS로 탐색하였다.
+        - dependency가 없이 독립적인 노드가 있을 수 있기 때문이다.
+        - 매 탐색마다 visited와 stack를 새로 선언해주었다.(낭비가 될 수 있다)
+- Complexity
+    1. Time: O(E*(V+E)) = E개의 간선에 대해 DFS O(V+E)
+    2. Space: O(V+E + V + E) = adjacency vector O(V+E) + visited 배열 O(V) + DFS 탐색 O(E)
+
 ## 220716
 ### LeetCode 576. Out of Boundary Paths: [Problem](https://leetcode.com/problems/out-of-boundary-paths/)
 - Algorithm: DP / Level: Medium
