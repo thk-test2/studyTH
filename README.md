@@ -21,6 +21,23 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220719
+### LeetCode 210. Course Schedule II: [Problem](https://leetcode.com/problems/course-schedule-ii/)
+- Algorithm: DFS, BFS, Graph, 위상정렬 / Level: Medium
+- Idea
+    - 먼저 처리가 필요한 태스크의 관계가 주어질 때 가능한 태스크 시퀀스 구하기.
+    - Course Schedule 1번 문제는 위상정렬 없이 풀었으나, 시퀀스를 구하기 위해서는 추가 메모리가 많이 필요해서 위상정렬로 품.
+- Solve
+    - 위상 정렬 로직 [참고](https://www.youtube.com/watch?v=qzfeVeajuyc&ab_channel=%EB%8F%99%EB%B9%88%EB%82%98)
+        1. 진입 차수(degree)가 0인 정점을 큐에 삽입한다.
+        2. 큐에서 원소를 꺼내 연결된 모든 간선을 제거한다.
+        3. 간선 제거 이후에 진입 차수가 0이 된 정점을 큐에 삽입한다.
+        4. 큐가 빌때까지 2번 ~ 3번을 반복한다. 모든 원소를 방문하기 전에 큐가 empty면 cycle이 존재하는 것이다.
+            - 모든 원소를 방문했다면 큐에서 꺼낸 순서가 위상 정렬의 결과이다.
+- Complexity
+    1. Time: O(V+E) = 큐에서 degree가 0인 정점 탐색 + 간선의 수(총 degree의 합)
+    2. Space: O(V+E + V + E) = adjacency vector O(V+E) + degree 배열 O(V) + DFS 탐색 O(E)
+
 ## 220717
 ### BOJ 1854. K번째 최단경로 찾기: [Problem](https://www.acmicpc.net/problem/1854)
 - Algorithm: 그래프 이론, 다익스트라, 우선순위 큐
@@ -36,7 +53,7 @@
         - 이미 k개가 들어있으면 heap[i].top()과 next cost를 비교하여, top()이 더 크면 pop하고 next cost를 새로 넣어준다.
 - Complexity
     1. Time: O(VlogE x K) = 우선순위 큐를 활용한 다익스트라 O(VlogE) x K개의 최단 경로 찾기
-    2. Space: O(V+E + VK) = 인적 리스트 O(V+E) + heap O(VK)
+    2. Space: O(V+E + VK) = 인접 리스트 O(V+E) + heap O(VK)
 
 ### LeetCode 207. Course Schedule: [Problem](https://leetcode.com/problems/course-schedule/)
 - Algorithm: BFS, DFS, Graph, Topological Sort / Level: Medium
