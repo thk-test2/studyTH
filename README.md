@@ -21,6 +21,21 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220720
+### LeetCode 792. Number of Matching Subsequences: [Problem](https://leetcode.com/problems/number-of-matching-subsequences/)
+- Algorithm: Hash Table, String, Trie(?), Sorting / Level: Medium
+- Idea
+- Solve
+- Complexity(N = words.size())
+    1. Time: O(N * words[i]의 평균 길이)
+    2. Space: O(N + N) = 해쉬 테이블 + visited 배열
+
+### LeetCode 42. Trapping Rain Water: [Problem](https://leetcode.com/problems/trapping-rain-water/)
+- Algorithm: Array, Two Pointers, DP, Stack / Level: Medium
+- Idea
+- Solve
+- Complexity
+
 ## 220719
 ### LeetCode 210. Course Schedule II: [Problem](https://leetcode.com/problems/course-schedule-ii/)
 - Algorithm: DFS, BFS, Graph, 위상정렬 / Level: Medium
