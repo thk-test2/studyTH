@@ -21,11 +21,61 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220722
+### LeeCode 407. Trapping Rain Water II: [Problem](https://leetcode.com/problems/trapping-rain-water-ii/)
+- Algorithm: Array, BFS, Priority Queue, Matrix / Level: Hard
+- Idea
+    - 3차원의 맵이 주어질 때, 빗물이 고일 수 있는 영역크기 구하기.
+    - 2차원일 때처럼 DP나 투 포인터로는 풀 수 없다.
+- Solve: [참고](https://leetcode.com/problems/trapping-rain-water-ii/discuss/89496/Concise-C%2B%2B-method-with-explanation)
+    - 우선순위 큐 + BFS 활용
+        - 가장자리의 bar들 중 가장 낮은 높이부터 물을 채워 들어오는 개념이다.
+        - 아래 예제를 보면, 2부터 출발하여 물을 채워 들어오면서 빗물을 계산한다.
+            ```
+              4 4 4 4      4 4 4 4
+              4 0 1 2  =>  4 0 2 2
+              4 4 4 4      4 4 4 4
+            ```
+- Complexity
+    1. Time: O(MN * logMN) = MxN의 맵에 대한 BFS 탐색
+    2. Space: O(MN + MN) = 우선순위 큐 + visited 배열
+
+### LeetCode 86. Partition List: [Problem](https://leetcode.com/problems/partition-list/)
+- Algorithm: Linked List, Two Pointers / Level: Medium
+- Idea
+    - 연결 리스트와 숫자 x가 주어질 때, x보다 작은 노드들은 x보다 크거나 같은 노드들보다 왼쪽에 배치하라.
+    - 각 partition의 노드 들의 순서는 유지되어야 한다.
+- Solve
+    1. 리스트를 탐색하며 x보다 작은 노드들을 별도의 리스트로 구성한다.
+    2. 기존 리스트의 왼편에 연결한다.
+- Complexity
+    1. Time: O(N) = 노드들을 loop 한번으로 탐색
+    2. Space: O(1) = ListNode 포인터 외에 추가 공간 쓰이지 않음
+
+## 220721
+### LeetCode 92. Reverse Linked List II: [Problem](https://leetcode.com/problems/reverse-linked-list-ii/)
+- Algorithm: Linked List / Level: Medium
+- Idea
+    - 연결 리스트와 left와 right 포지션이 주어질 때, left부터 right까지의 노드들을 역순으로 연결하라.
+- Solve
+    - 리스트 전체를 역순으로 연결하는 것은 다음 식을 리스트 끝까지 반복해주면 된다.
+        - `node = new ListNode(val, node)`
+        - 새 ListNode를 생성하고 node를 가리키게 한 다음, node를 새 ListNode로 당겨오는 것이다.
+    - 따라서 3구간으로 나누어 위 수식을 left - right까지 적용 후 다시 연결하면 된다.
+- Complexity
+    1. Time: O(N)
+    2. Space: O(N): 새 노드를 생성하는 방식이므로 추가 공간이 필요
+
 ## 220720
 ### LeetCode 792. Number of Matching Subsequences: [Problem](https://leetcode.com/problems/number-of-matching-subsequences/)
 - Algorithm: Hash Table, String, Trie(?), Sorting / Level: Medium
 - Idea
+    - 문자열 s와 문자열 배열 words[]가 주어질 때, s의 subsequence인 words의 원소 개수 구하기.
 - Solve
+    - Brute force에서 중복 계산 줄이기
+        1. 부분 문자열(subsequence)를 판별하는 것은 반복문 하나가 필요하다.
+        2. 모든 words[]의 원소들을 순회하는 것도 반복문이 하나 필요하다. 따라서 O(N^2)의 시간이 걸린다.
+        3. 하지만 words[]에 중복된 원소가 있을 수 있기 때문에, hash table을 써서 이미 검사한 문자열은 pass 하였다.
 - Complexity(N = words.size())
     1. Time: O(N * words[i]의 평균 길이)
     2. Space: O(N + N) = 해쉬 테이블 + visited 배열
@@ -33,8 +83,15 @@
 ### LeetCode 42. Trapping Rain Water: [Problem](https://leetcode.com/problems/trapping-rain-water/)
 - Algorithm: Array, Two Pointers, DP, Stack / Level: Medium
 - Idea
+    - height 배열이 주어질 때, 빗물이 고일 수 있는 영역을 구하는 문제.
+    - DP 또는 투 포인터로 O(N) 복잡도에 해결할 수 있다.
 - Solve
+    - DP 솔루션
+        1. i번째 지점에서 고일 수 있는 빗물은 `min(left_max[i], right_max[i]) - height[i]` 이다.
+        2. 미리 left_max[]와 right_max[]를 구한 후 위 수식으로 빗물을 합산하면 된다.
 - Complexity
+    1. Time: O(N) = left_max O(N) + right_max O(N) + 빗물 계산 O(N)
+    2. Space: O(N + N) = left_max O(N) + right_max O(N)
 
 ## 220719
 ### LeetCode 210. Course Schedule II: [Problem](https://leetcode.com/problems/course-schedule-ii/)
