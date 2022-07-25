@@ -21,6 +21,35 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220725
+### LeetCode 34. Find First and Last Position of Element in Sorted Array: [Problem](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+- Algorithm: Array, Binary Search / Level: Medium
+- Idea
+    - 감소하지 않는 숫자 배열이 주어질 때, target number의 시작과 끝 index를 구하는 문제.
+- Solve
+    1. 먼저 stl::find로 target이 있는지 찾는다. 없으면 `{-1, -1}`을 리턴
+    2. stl::lower_bound와 upper_bound로 iterator를 찾고, stl::distance를 써서 index를 구해준다.
+- Complexity
+    1. Time: O(N) = stl::find O(N) + lower_bound, upper_bound O(logN)
+    2. Space: O(1) = 값 저장 변수 외에 추가 공간이 쓰이지 않는다.
+
+### LeetCode 315. Count of Smaller Numbers After Self: [Problem](https://leetcode.com/problems/count-of-smaller-numbers-after-self/)
+- Algorithm: Array, Merge Sort / Level: Hard
+- Idea
+    - 숫자 배열이 주어질 때 각 원소의 오른쪽에 자신보다 작은 원소가 몇 개인지 세는 문제.
+    - Counting Inversion 이라는 알고리즘을 사용한다.(다시 풀어볼 것)
+- Solve [출처](https://www.geeksforgeeks.org/counting-inversions/)
+    1. The idea is similar to merge sort, divide the array into two equal or almost equal halves in each step until the base case is reached.
+    2. Create a function merge that counts the number of inversions when two halves of the array are merged, create two indices i and j, i is the index for the first half, and j is an index of the second half.
+        - if a[i] is greater than a[j], then there are (mid – i) inversions.
+        - because left and right subarrays are sorted, so all the remaining elements in left-subarray (a[i+1], a[i+2] … a[mid]) will be greater than a[j].
+    3. Create a recursive function to divide the array into halves and find the answer by summing the number of inversions is the first half, the number of inversion in the second half and the number of inversions by merging the two.
+    4. The base case of recursion is when there is only one element in the given half.
+    5. Print the answer
+- Complexity
+    1. Time: O(NlogN)
+    2. Space: O(N)
+
 ## 220722
 ### LeeCode 407. Trapping Rain Water II: [Problem](https://leetcode.com/problems/trapping-rain-water-ii/)
 - Algorithm: Array, BFS, Priority Queue, Matrix / Level: Hard
