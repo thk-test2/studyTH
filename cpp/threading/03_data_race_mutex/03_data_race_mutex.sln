@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32413.511
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "03_data_race_mutex", "03_data_race_mutex.vcxproj", "{BAB550E9-5C7C-4B0A-893E-B1D9D33BA400}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BAB550E9-5C7C-4B0A-893E-B1D9D33BA400}.Debug|x64.ActiveCfg = Debug|x64
+		{BAB550E9-5C7C-4B0A-893E-B1D9D33BA400}.Debug|x64.Build.0 = Debug|x64
+		{BAB550E9-5C7C-4B0A-893E-B1D9D33BA400}.Debug|x86.ActiveCfg = Debug|Win32
+		{BAB550E9-5C7C-4B0A-893E-B1D9D33BA400}.Debug|x86.Build.0 = Debug|Win32
+		{BAB550E9-5C7C-4B0A-893E-B1D9D33BA400}.Release|x64.ActiveCfg = Release|x64
+		{BAB550E9-5C7C-4B0A-893E-B1D9D33BA400}.Release|x64.Build.0 = Release|x64
+		{BAB550E9-5C7C-4B0A-893E-B1D9D33BA400}.Release|x86.ActiveCfg = Release|Win32
+		{BAB550E9-5C7C-4B0A-893E-B1D9D33BA400}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9FA43215-6869-4A0D-B693-73E701B91D6C}
+	EndGlobalSection
+EndGlobal
