@@ -21,6 +21,39 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220731
+### LeetCode 307. Range Sum Query - Mutable: [Problem](https://leetcode.com/problems/range-sum-query-mutable/)
+- Algorithm: Segment Tree / Level: Medium
+- Idea
+    - 숫자 배열이 주어질때 구간합 쿼리 처리하기. 원소의 값은 업데이트 될 수 있다.
+- Solve
+    - 세그먼트 트리를 이용해 구간합을 O(logN)의 복잡도로 구해준다.
+- Complexity
+    1. Time: O(NlogN) = N개의 원소에 대해 삽입, 업데이트, 쿼리 연산
+    2. Space: O(4N) = 트리의 크기
+
+## 220730
+### LeetCode 916. Word Subsets: [Problem](https://leetcode.com/problems/word-subsets/)
+- Algorithm: Array, Hash Table, String / Level: Medium
+- Idea
+- Solve
+- Complexity
+
+## 220726
+### LeetCode 236. Lowest Common Ancestor of a Binary Tree: [Problem](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/)
+- Algorithm: Binary Tree, DFS / Level: Medium
+- Idea
+- Solve: 재귀 O(N)풀이 [참고](https://www.youtube.com/watch?v=KobQcxdaZKY&ab_channel=TECHDOSE)
+- Complexity
+    1. Time: O(N) = 모든 노드 탐색
+    2. Space: O(N) = 재귀 함수 스택
+
+### LeetCode 114. Flatten Binary Tree to Linked List: [Problem](https://leetcode.com/problems/flatten-binary-tree-to-linked-list/)
+- Algorithm: Binary Tree, DFS, Linked List / Level: Medium
+- Idea
+- Solve
+- Complexity
+
 ## 220725
 ### LeetCode 34. Find First and Last Position of Element in Sorted Array: [Problem](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 - Algorithm: Array, Binary Search / Level: Medium
