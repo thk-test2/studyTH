@@ -21,6 +21,32 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220802
+### LeetCode 146. LRU Cache: [Problem](https://leetcode.com/problems/lru-cache/)
+- Algorithm: Hash Table, Linked List, Design / Level: Medium
+- Idea: LRU 캐쉬 동작을 구현하는 문제
+- Solve: 해쉬 맵과 리스트를 사용한 풀이 [참고](https://www.youtube.com/watch?v=8-FZRAjR7qU&ab_channel=ygongcode)
+- Complexity
+    1. Time: O(Query * Capacity) = 쿼리의 개수 x 최대 Capacity만큼 list 탐색
+    2. Space: O(2* Capacity) = 해쉬 맵 + 우선순위를 알기 위한 리스트 사용.
+
+### LeetCode 378. Kth Smallest Element in a Sorted Matrix: [Problem](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/)
+- Algorithm: Array, Sorting, Heap, Binary Search / Level: Medium
+- Idea
+    - N*N 숫자 배열이 주어질 때, K번째로 가장 작은 숫자 구하기.
+    - 배열은 각 row와 column에 대해 non-decreasing order로 정렬되어 있다.
+        - [1, 2][1, 3] 도 가능하기 때문에 단순히 K번 세는 것은 불가능하다.
+        - 또한 O(N^2) 메모리를 써서는 안 된다.
+- Solve
+    1. 최대값을 저장하는 우선순위 큐를 준비한다.
+    2. for문 2개로 배열을 순서대로 탐색한다.
+        1. 우선순위 큐의 size가 K보다 작으면 바로 삽입한다.
+        2. size가 K와 같으면 pq.top()과 현재 원소를 비교하여 pq.top()이 더 크면 제거하고 새 원소를 삽입한다.
+    3. 뒤의 원소가 더 작을 수 있기 때문에 끝까지 탐색 후 pq.top()을 리턴한다.
+- Complexity
+    1. Time: O(N^2) = 배열 끝까지 탐색한다. 
+    2. Space: O(K) = 우선순위 큐의 크기
+
 ## 220731
 ### LeetCode 307. Range Sum Query - Mutable: [Problem](https://leetcode.com/problems/range-sum-query-mutable/)
 - Algorithm: Segment Tree / Level: Medium
@@ -43,6 +69,8 @@
 ### LeetCode 236. Lowest Common Ancestor of a Binary Tree: [Problem](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/)
 - Algorithm: Binary Tree, DFS / Level: Medium
 - Idea
+    - 이진 트리에서 두 노드의 최소공통조상을 구하는 문제.
+    - DP를 써서 O(logN)으로 구할 수도 있다.
 - Solve: 재귀 O(N)풀이 [참고](https://www.youtube.com/watch?v=KobQcxdaZKY&ab_channel=TECHDOSE)
 - Complexity
     1. Time: O(N) = 모든 노드 탐색
