@@ -21,6 +21,23 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220804
+### LeetCode 729. My Calendar I: [Problem](https://leetcode.com/problems/my-calendar-i/)
+- Algorithm: Design, Ordered Set / Level: Medium
+- Idea
+    - 중복 이벤트가 등록되지 않도록 캘린더를 구현하는 문제.
+- Solve
+    1. 오버랩 조건: `existing_event.end > start && existing_event.start < end`
+        - 위 조건에 의하여 오버랩이 된다는 것은 기존 이벤트의 end가 현재 들어온 이벤트의 start보다 크다는 의미이다.
+    2. 위 조건을 활용하여, map에 `{end, start}`를 보관하고 새로 들어온 start의 upper_bound가 존재하는지 검사한다.
+        - 즉 `existing_event.end > start`을 만족시키는 것이 있는지 먼저 검사.
+        - upper_bound는 이진 탐색이므로 O(logN)의 복잡도를 가진다.
+    3. 있으면 그 다음 조건 `existing_event.start < end` 를 검사하여 오버랩인지 아닌지 확인한다.
+        - 오버랩이라면 false를 리턴하고 아니면 맵에 삽입한다.
+- Complexity
+    1. Time: O(NlogN) = N개의 원소에 대하여 맵 탐색
+    2. Space: O(N) = 맵의 크기
+
 ## 220802
 ### LeetCode 146. LRU Cache: [Problem](https://leetcode.com/problems/lru-cache/)
 - Algorithm: Hash Table, Linked List, Design / Level: Medium
