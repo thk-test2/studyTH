@@ -21,6 +21,54 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220807
+### LeetCode 53. Maximum Subarray: [Problem](https://leetcode.com/problems/maximum-subarray/)
+- Algorithm: Array, DP / Level: Medium
+- Idea
+    - 숫자 배열 nums가 주어질 때, 합이 최대가 되는 연속적인 subarray를 구하는 문제.
+- Solve
+    1. DP 배열을 다음과 같이 정의한다. 
+        - `memo[i]`: i번째 원소를 포함하는 최대 부분합
+    2. 점화식: `memo[i] = max(memo[i-1] + nums[i], nums[i])`
+        - memo[i]의 최대값을 기록하며 배열 끝까지 순회한다. 그 최대값이 찾고자 하는 답이다.
+    3. DP 배열 없이 하는 방법(그리디 방식)
+        - 위 점화식을 보면 굳이 memo 배열을 추가로 써야하는지 의문이 생긴다.
+        - 어짜피 배열을 한번만 순회하므로 현재의 값만 유지해도 된다.
+        - 즉 다음과 같이 점화식을 바꿀 수 있다. `cur = max(cur + nums[i], nums[i]);`
+- Complexity
+    1. Time: O(N) = 전체 원소를 한번만 순회한다.
+    2. Space: O(1) = 정답을 저장하기 위한 ans와 현재 최대값 cur 변수 사용
+
+### LeetCode 134. Gas Station: [Problem](https://leetcode.com/problems/gas-station/)
+- Algorithm: Array, Greedy / Level: Medium
+- Idea
+    - gas 배열과 cost 배열이 주어질 때, 전체 배열을 한 바퀴 순회가 가능한지 판별하는 문제.
+    - gas[i]는 i번째에서 얻을 수 있는 gas이고, cost[i]는 i+1로 가기위해 필요한 비용이다.
+- Solve
+    1. `gas[i] >= cost[i]` 인 지점부터 실제로 한바퀴 순회가 가능한지 테스트를 해본다.
+        - 반복문을 추가로 사용한다. `current_gas = current_gas + gas[j] - cost[j]`
+        - 만약 current_gas가 0미만이 되면 i에서는 순회가 불가능한 것이다.
+    2. 그런데 i를 1씩 증가시키며 탐색하면 O(N^2)의 복잡도이므로 시간 초과가 발생한다.(원소의 개수: 10^5)
+        - 1번에서 실패하는 경우를 다시 생각해보자.
+        - i에서 출발하여 j번째에서 실패했다고 하자. i+1에서 출발하면 j에서 또 다시 실패할 것이다.
+    3. 따라서 실패하는 경우 다음부터 탐색을 해야 한다. 즉, `i = j+1`로 갱신해준다.
+- Complexity
+    1. Time: 최악 O(N^2) = 계속 실패하다가 마지막에서 되는 경우
+    2. Space: O(1) = 추가 배열이 쓰이지 않는다.
+
+### LeetCode 1220. Count Vowels Permutation: [Problem](https://leetcode.com/problems/count-vowels-permutation/)
+- Algorithm: DP / Level: Hard
+- Idea
+    - 알파벳 모음(a, e, i, o, u)을 배열할 수 있는 조건이 주어질 때, 길이 N인 string을 구성할 수 있는 경우의 수 구하기.
+    - 많이 풀어본 백트래킹 + memoization 유형의 문제이다.
+- Solve
+    1. DP 배열의 정의
+        - `memo[current_char][current_length]`: 현재 문자와 현재 문자의 길이에서 가능한 경우의 수
+    2. 재귀적으로 순회하며 rule에 따라 string을 구성하고, 중복 계산이 일어나지 않도록 memo 해준다.
+- Complexity
+    1. Time: O(N x 5*N) = 재귀함수에서 memo 배열에 계산 결과 저장
+    2. Space: O(N + 5*N) = 재귀함수 stack 공간과 memo 배열
+
 ## 220806
 ### LeetCode 377. Combination Sum IV: [Problem](https://leetcode.com/problems/combination-sum-iv/)
 - Algorithm: Array, DP / Level: Medium
@@ -100,8 +148,15 @@
 ### LeetCode 916. Word Subsets: [Problem](https://leetcode.com/problems/word-subsets/)
 - Algorithm: Array, Hash Table, String / Level: Medium
 - Idea
+    - 2개의 string 배열 a와 b가 주어진다. a의 universal string 들을 찾아서 리턴하라.
+    - b의 모든 원소가 a의 특정 string에 다 포함될 때, 이 string을 universal 이라고 한다.
 - Solve
+    1. 먼저 모든 b의 원소에 대해 검사하여, count[26] 배열에 각 알파벳의 최대 개수를 저장한다.
+    2. 다음 a의 string들을 알파벳 하나하나 검사하여, 해당 알파벳 개수와 count배열을 비교하여 더 크면 통과된다.
+        - string의 모든 알파벳이 통과되면 정답 벡터에 추가한다.
 - Complexity
+    1. Time: O(A.size() * 26) = 각 
+    2. Space: 정답을 보관하기 위해 최대 A.size()의 배열이 필요하고, 알파벳 개수(26) 크기의 count 배열이 필요하다.
 
 ## 220726
 ### LeetCode 236. Lowest Common Ancestor of a Binary Tree: [Problem](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/)
@@ -116,9 +171,14 @@
 
 ### LeetCode 114. Flatten Binary Tree to Linked List: [Problem](https://leetcode.com/problems/flatten-binary-tree-to-linked-list/)
 - Algorithm: Binary Tree, DFS, Linked List / Level: Medium
-- Idea
+- Idea: 이진 트리를 링크드 리스트로 바꾸는 문제.
 - Solve
+    1. 트리를 Preorder로 순회하며 새 노드를 만들어서 별도의 list pointer에 추가해준다.
+        - 맨 앞을 가리키는 listHead와 생성되는 노드를 가리키는 listTail 포인터를 사용한다.
+    2. 순회를 마치고 원래 tree의 root 포인터가 생성된 리스트를 가리키게 한다.
 - Complexity
+    1. Time: O(N) = 모든 노드 탐색
+    2. Space: O(N + N) = 재귀 함수 공간 + N개의 새 리스트 노드 생성
 
 ## 220725
 ### LeetCode 34. Find First and Last Position of Element in Sorted Array: [Problem](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
