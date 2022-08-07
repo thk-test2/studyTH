@@ -21,6 +21,27 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220806
+### LeetCode 377. Combination Sum IV: [Problem](https://leetcode.com/problems/combination-sum-iv/)
+- Algorithm: Array, DP / Level: Medium
+- Idea
+    - 숫자 배열과 target이 주어질 때 배열의 원소를 써서 target을 만들 수 있는 순열의 수 구하기.
+    - nums의 원소는 distinct unique 이며, 여러번 써도 된다.
+- Solve
+    1. Top-down (재귀)
+        - `memo[currentSum]`: currentSum에서 target을 만들 수 있는 경우의 수
+        - 기본적인 순열을 구하는 방법을 구현하고, 위의 DP배열을 적용한다.
+    2. Bottom-up (반복문)
+        - `dp[currentSum]`: currentSum을 만들 수 있는 경우의 수
+        - dp[0] 부터 dp[target]까지 가능한 경우의 수를 더해나간다.
+    - Top-down은 dp[0]에, bottom-up은 dp[target]에서 최종결과가 구해진다.
+        - 이것이 두 이름의 어원인 것 같다. (Top-down: target->0, Bottom-up: 0->target)
+        - 재귀는 함수 stack 공간이 필요하기 때문에 매우 큰 target에 대해서는 overflow가 날 수 있다.
+        - 따라서 바텀업 방식이 조금 더 효율적일 수 있고, 때로는 바텀업으로 풀어야만 하는 문제도 있다.
+- Complexity
+    1. Time: O(N*target) : N개의 원소 x target
+    2. Space: O(target) : DP[target]의 배열을 추가로 사용한다. 재귀는 함수 stack 공간이 추가로 필요하다.
+
 ## 220804
 ### LeetCode 729. My Calendar I: [Problem](https://leetcode.com/problems/my-calendar-i/)
 - Algorithm: Design, Ordered Set / Level: Medium
