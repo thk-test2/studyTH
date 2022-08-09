@@ -21,6 +21,45 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220808
+### LeetCode 300. Longest Increasing Subsequence: [Problem](https://leetcode.com/problems/longest-increasing-subsequence/)
+- Algorithm: Array, Binary Search, DP / Level: Medium
+- Idea
+    - 수열이 주어질 때 longest strictly increasing subsequence의 길이를 구하여라.
+    - DP 유형의 가장 기본적인 문제이다. O(N^2) 또는 O(NlogN)으로 풀 수 있다.
+- Solve
+    1. 반복문 2개를 이용한 O(N^2) 풀이
+        - `dp[i]`: i번째 인덱스까지 탐색했을 때 부분 수열의 최대 길이
+        - `dp[i] = max(dp[i], dp[j] + 1);` 점화식을 이용한다. i는 0부터 수열 끝까지, j는 0부터 i까지 반복.
+    2. 이진 탐색을 이용한 O(NlogN) 풀이
+        1. 부분 수열을 담을 vector를 생성한다.(엄밀히 말하면 부분 수열은 아닌 경우도 있지만, 길이는 같다.)
+        2. 다음 규칙대로 vector를 채워나간다.
+            - `subseq.back() < nums[i]` 이면 vector에 담는다.
+            - `subseq.back() >= nums[i]` 이면 nums[i] 보다 크거나 같은 index를 부분 수열에서 찾아서 nums[i]로 교체한다.</br>즉 lower_bound(nums[i])를 찾는다.
+        3. 부분 수열 vector의 길이를 리턴한다.
+- Complexity(이진 탐색)
+    1. Time: O(NlogN) = N개의 원소에 대해, vector의 index를 이진 탐색으로 찾음
+    2. Space: 최악 O(N) = 모든 원소가 증가하는 경우
+
+### LeetCode 91. Decode Ways: [Problem](https://leetcode.com/problems/decode-ways/)
+- Algorithm: String, DP / Level: Medium
+- Idea
+    - 숫자 string이 주어질 때 encoding이 가능한 경우의 수 구하기. A는 1, B는 2, ... Z는 26에 매칭된다.
+- Solve
+    1. 재귀(탑 다운) 방식으로 기본 알고리즘을 구현한다. 함수 인자로 index, string을 넘겨준다.
+        - `s[i] == '0'`: 0으로 시작할 수 없으므로 리턴한다.
+        - 그 외의 경우 index+1을 하며 진행해준다.
+    2. 추가로 1과 2의 경우를 고려한다. 알파벳이 1부터 26까지 매칭되기 때문이다.
+        - 1 뒤에는 아무 숫자나 가능하며, 2 뒤에는 0부터 6까지의 숫자가 올 수 있다.
+        - 이 경우에는 index+2를 하여 진행한다.
+    3. Memoization 을 적용한다.
+        - `memo[i]`: i번째 인덱스에서 가능한 경우의 수
+    - 추가로 다음 [솔루션](https://leetcode.com/problems/decode-ways/discuss/30451/Evolve-from-recursion-to-dp)을 참고해보자.
+        - Brute force -> 재귀, 반복문을 이용한 DP -> Constant space 구현까지 잘 소개되어 있다.
+- Complexity
+    1. Time: O(N) = For문을 이용한 구현 / 재귀를 이용한 구현은 각 stage마다 2개의 분기가 있기 때문에 O(N)은 아니다.
+    2. Space: O(N + N) = 함수 stack 공간과 memo 배열
+
 ## 220807
 ### LeetCode 53. Maximum Subarray: [Problem](https://leetcode.com/problems/maximum-subarray/)
 - Algorithm: Array, DP / Level: Medium
