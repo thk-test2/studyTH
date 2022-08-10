@@ -21,6 +21,22 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220810
+### LeetCode 76. Minimum Window Substring: [Problem](https://leetcode.com/problems/minimum-window-substring/)
+- Algorithm: Hash Table, String, Sliding Window / Level: Hard
+- Idea
+    - string s와 t가 주어질 때, t의 문자를 모두 포함하는 s의 minimum window substring 구하기.
+    - O(M*T)으로 간신히 통과하긴 했으나, O(M+N)의 방법을 찾아볼 것이다.
+- Solve - O(M*T)
+    1. string s의 인덱스를 가리키는 l과 r 변수를 준비한다.
+        - t의 모든 문자를 포함할 때까지 r을 증가시킨다.
+        - 모든 문자를 포함하는 동안 l을 증가시킨다.
+    2. window substring이 되지 않으면 1번 과정을 반복한다.
+    3. 이 과정에서 가장 짧은 window substring을 저장해놓고, 마지막에 리턴해준다.
+- Complexity
+    1. Time: O(M*T) = s의 각 문자에 대해 t의 hash map을 탐색한다.
+    2. Space: O(M + T) = s와 t의 hash map 추가 사용
+
 ## 220808
 ### LeetCode 300. Longest Increasing Subsequence: [Problem](https://leetcode.com/problems/longest-increasing-subsequence/)
 - Algorithm: Array, Binary Search, DP / Level: Medium
