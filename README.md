@@ -21,6 +21,36 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220811
+### LeetCode 279. Perfect Squares: [Problem](https://leetcode.com/problems/perfect-squares/)
+- Algorithm: Math, DP, BFS / Level: Medium
+- Idea
+    - 숫자 n이 주어질 때, 제곱수의 합으로 n을 만들 수 있다. 가장 적은 수로 n을 만드는 경우를 찾아라.
+- Solve
+    1. DP 배열의 정의
+        - `memo[i]`: i를 만들기 위한 가장 적은 수의 제곱수
+    2. Bottom-up 방식으로 구현. 바깥쪽 for문은 i를 1부터 n까지 증가시킨다.
+    3. 안쪽 for문은 j를 1부터 j*j <= i까지 증가시키며 다음 점화식을 수행한다.
+        - `memo[i] = min(memo[i], memo[i - j*j] + 1)`
+- Complexity
+    1. Time: O(N logN) = 바깥쪽은 N까지, 안쪽은 logN까지 수행한다.
+    2. Space: O(N) = Memo 배열을 추가로 사용
+
+### LeetCode 238. Product of Array Except Self: [Problem](https://leetcode.com/problems/product-of-array-except-self/)
+- Algorithm: Array, Prefix Sum / Level: Medium
+- Idea
+    - 숫자 배열이 주어질 때, 자기 자신을 제외한 나머지 숫자들의 곱을 구하여 배열로 리턴하라.
+    - 곱한 값은 32-bit integer(int)임이 보장된다. 나누기 기호를 사용하면 안 된다.
+- Solve
+    1. 곱셈 값을 구하기 위한 변수를 선언한다.
+    2. i = 1부터 N번째까지 누적하여 곱해나간다.
+        - i번째 index에는 이전까지의 누적 곱을 assign 한다.
+    3. 이제 i = N-2부터 0까지 반대 방향으로 누적하여 곱해나간다.
+        - 정방향일때 빠져있던 곱셈값을 이번에 곱해주면 된다.
+- Complexity
+    1. Time: O(N) = 정방향 + 역방향 탐색 수행
+    2. Space: O(1) = 곱해지는 수 prod 변수를 사용. 정답 배열은 제외됨
+
 ## 220810
 ### LeetCode 76. Minimum Window Substring: [Problem](https://leetcode.com/problems/minimum-window-substring/)
 - Algorithm: Hash Table, String, Sliding Window / Level: Hard
