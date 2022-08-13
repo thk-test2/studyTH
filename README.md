@@ -21,6 +21,28 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220813
+### LeetCode 287. Find the Duplicate Number: [Problem](https://leetcode.com/problems/find-the-duplicate-number/)
+- Algorithm: Array, Binary Search, Bit Manipulation / Level: Medium
+- Idea
+    - 1부터 n까지 숫자가 들어있는 n + 1 크기의 숫자 배열이 주어진다. 한 개의 중복된 숫자가 있을 때, 이를 찾는 문제
+    - 다음 페이지에서 7가지의 접근 방식을 소개하고 있다. [참고](https://leetcode.com/problems/find-the-duplicate-number/solution/)
+    - 여기서는 이진 탐색을 사용하였다.
+        - 중복되는 숫자보다 mid가 크거나 같을 때, mid보다 작거나 같은 숫자의 개수는 mid보다 크게 된다. 이 때 left half로 탐색을 진행해주면 된다.
+        - mid보다 작거나 같은 숫자의 개수가 mid보다 작거나 같은 지점을 찾으면 righ half를 검사한다.
+        - 수행 조건(low <= high)을 벗어날 때 까지 반복한다.
+- Solve
+    1. low = 1, high = n으로 이진 탐색을 시작한다.
+        1. mid = (low+ high)/2
+        2. 숫자 배열에서 mid보다 작은 원소의 개수를 센다.
+            - `count <= mid` 이면 low = mid + 1
+            - 아니면 high = mid + 1으로 갱신해 준다.
+        3. low가 high 보다 작거나 같은 조건에서 while 문을 계속 수행한다.
+    2. 최종적으로 중복된 값은 low에 담기게 된다.
+- Complexity
+    1. Time: O(NlogN) = O(logN) 이진 탐색 * O(N) Count
+    2. Space: O(1) = 상수 추가 공간
+
 ## 220811
 ### LeetCode 279. Perfect Squares: [Problem](https://leetcode.com/problems/perfect-squares/)
 - Algorithm: Math, DP, BFS / Level: Medium
