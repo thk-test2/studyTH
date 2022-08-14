@@ -21,6 +21,98 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220814
+### LeetCode 46. Permutations: [Problem](https://leetcode.com/problems/permutations/)
+- Algorithm: Array, Backtracking / Level: Medium
+- Idea: 숫자 배열이 주어질 때 가능한 permutation(순열)을 모두 구하여라.
+- Solve
+    1. 백트래킹의 기본적인 유형이다. selected 배열대신 bit-masking을 사용해서 약간의 성능향상을 할 수 있다.
+    2. STL next_permutation()을 사용하면 함수 stack 공간을 줄일 수 있다.
+- Complexity
+    1. Time: O(N!) = 순열의 시간 복잡도. STL이 약간 더 빠르다.
+    2. Space: O(N) = 백트래킹 사용시 함수 stack / O(1) = STL 사용시
+
+### LeetCode 78. Subsets: [Problem](https://leetcode.com/problems/subsets/)
+- Algorithm: Array, Backtracking, Bit Manipulation / Level: Medium
+- Idea
+    - 숫자 배열이 주어질 때 모든 부분집합을 구하여라. 이번에도 백트래킹으로 구현하였다.
+    - discussion을 보니 시간과 공간 복잡도에 대해 의견이 분분한 문제이다.
+        - 내 생각엔 시간 복잡도는 O(N*2^N), 공간 복잡도는 O(N) 이다. 본문에 추가 설명하였다.
+- Solve
+    1. 백트래킹 함수의 정의
+        - `backtrack(first, curr)`: first - 더해야 하는 최초 원소의 인덱스, curr - 현재 만들고 있는 조합
+    2. 알고리즘
+        1. 현재 조합이 완성되었다면 최종 정답에 추가한다.(이 때 복사가 일어나고 O(N)의 시간이 소요된다)
+        2. 아니면 i를 first부터 원래 수열의 크기 N까지 다음 과정을 반복한다.
+            - nums[i]를 현재 조합 curr에 추가한다.
+            - 다음 재귀 함수를 호출한다: backtrack(i+1, curr)
+            - curr의 맨 뒤 원소를 제거한다.
+- Complexity
+    1. Time: O(2^N x N) = 조합을 구하는 과정은 O(2^N)이다. 조합을 구한뒤 ans에 복사할 때 O(N)이 추가로 소요된다.
+    2. Space: O(N + N) = 재귀 함수 공간 + 현재 조합을 보관하는 curr 배열
+        - 정답을 리턴하기 위한 배열인 ans는 space complexity에서 제외된다.
+
+### LeetCode 54. Spiral Matrix: [Problem](https://leetcode.com/problems/spiral-matrix/)
+- Algorithm: Array, Matrix, Simulation / Level: Medium
+- Idea: 2차원 matrix가 주어질 때, spiral order로 순회하는 시퀀스 구하기.
+- Solve
+    1. 기본 구조는 recursive DFS로 구현하였다.
+        - 시작지점(0,0)에서 출발하여 오른쪽으로 진행한다.
+        - 오른쪽에 다다르면 아래쪽으로 진행한다.
+        - 아래쪽에 도달하면 왼쪽으로 진행한다.
+    2. 문제는 왼쪽 아래 모서리에서 한칸 위로 갔을 때 발생한다.
+        - 문제의 의도대로 더 이상 갈 수 없을때까지 위로 가야한다.
+        - 그런데 지금 DFS 조건으로는 오른쪽을 먼저 진행한다.
+    3. 따라서 오른쪽으로 가는 조건에만 한 가지 조건을 더 추가해준다.
+        - 더 이상 위쪽으로 갈 수 없을 때(첫 번째 줄 or visited[i-1][j] == true)만 오른쪽으로 진행한다.
+        - 글로 보는 것보다 코드를 보는 것이 이해하기 쉬울 것 같다.
+- Complexity
+    1. Time: O(N^2) = 2차원 배열 전체 순회
+    2. Space: O(N^2 + N) = visited 배열 사용 + 함수 stack 공간
+
+### LeetCode 155. Min Stack: [Problem](https://leetcode.com/problems/min-stack/)
+- Algorithm: Stack, Design / Level: Medium
+- Idea
+    - int를 인자로 받는 stack을 구현하라.
+    - 단, 최소값을 리턴하는 함수를 추가하고 모든 함수가 O(1)의 시간 복잡도를 가져야 한다.
+    - 클래스 멤버로 `vector<pair<int, int>> st`와 `int min_val`을 갖도록 구현했다.
+        - `pair<int, int>`: {일반 원소, 그 원소가 들어왔을 때의 최소값}
+        - `min_val`: 현재 최소값
+- Solve
+    - `MinStack()` initializes the stack object.
+        - 따로 추가한 것은 없다.
+    - `void push(int val)` pushes the element `val` onto the stack.
+        - 기존 최소값과 비교해서 min_val을 갱신하고 스택에 pair로 push 한다.
+        - 즉 `st.push_back({val, min_val})`
+    - `void pop()` removes the element on the top of the stack.
+        - st를 pop 해주고 min_val을 그 다음 top()의 최소값으로 갱신한다.
+    - `int top()` gets the top element of the stack.
+        - 현재 원소, 즉 top().first를 리턴해줌.
+    - `int getMin()` retrieves the minimum element in the stack.
+        - 현재 최소값, 즉 top().second를 리턴해줌.
+- Complexity
+    1. Time: O(1) = 모든 함수에 대해 O(1) 구현. vector를 썼기 때문에 resizing 시간이 더 걸릴 수 있다.
+    2. Space: O(2N) = pair를 원소로 받는 vector를 사용함.
+
+### LeetCode 189. Rotate Array: [Problem](https://leetcode.com/problems/rotate-array/)
+- Algorithm: Array, Math, Two Pointers / Level: Medium
+- Idea
+    - 숫자 배열이 주어질 때 각 원소들을 k index만큼 앞으로 옮겨라. 만약 배열 끝이라면 첫번째로 rotation 하면 된다.
+    - 다음 링크에 다양한 솔루션이 있으니 참고하자.[링크](https://leetcode.com/problems/rotate-array/discuss/54277/Summary-of-C%2B%2B-solutions)
+- Solve
+    1. visited 배열 사용
+        1. 첫번째 index에서 시작해 k번째로 이동시킨다.
+        2. 다음 원소가 이미 방문했던 곳이라면 i를 1증가 시켜서 다시 수행한다.
+    2. STL reverse 사용
+        1. 처음부터 n-k 인덱스 까지 원소를 reverse 한다.
+        2. k부터 마지막까지의 원소를 reverse 한다.
+        3. 전체 원소를 reverse 하면 구하고자 하는 배열이 된다.
+- Complexity
+    1. visited 배열 사용
+        - Time: O(N) / Space: O(N)
+    2. STL reverse 사용
+        - Time: O(N) / Space: O(1)
+
 ## 220813
 ### LeetCode 287. Find the Duplicate Number: [Problem](https://leetcode.com/problems/find-the-duplicate-number/)
 - Algorithm: Array, Binary Search, Bit Manipulation / Level: Medium
