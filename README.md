@@ -21,6 +21,53 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220815
+### LeetCode 213. House Robber II: [Problem](https://leetcode.com/problems/house-robber-ii/)
+- Algorithm: Array, DP / Level: Medium
+- Idea
+    - 숫자 배열이 주어진다. 이 숫자는 각 집에서 훔칠 수 있는 금액이다.
+    - 연속된 두 집을 도둑질 할 수 없을 때, 도둑이 훔칠 수 있는 가장 큰 금액의 합을 구하여라.
+    - 마지막 집과 처음 집이 circular로 배치되어 있다고 한다.
+- Solve
+    1. 알고리즘
+        - House[1]과 House[n]이 연속되어 있으므로 동시에 훔칠 수 없다.
+        - 따라서 문제를 House[1] - House[n-1]과 House[2] - House[n] 두가지로 나누어 풀면 된다.
+    2. DP 배열의 정의
+        - `memo[i]`: i번째 집 까지의 최대 값
+    3. 점화식
+        - `memo[i] = max(memo[i-2] + nums[i], memo[i-1])`
+- Complexity
+    1. Time: O(N) = N개 원소에 대해 한번 순회함
+    2. Space: O(N+N) = 2개의 memoization 배열 사용
+
+### LeetCode 149. Max Points on a Line: [Problem](https://leetcode.com/problems/max-points-on-a-line/)
+- Algorithm: Array, Hash Table, Math, Geometry / Level: Hard
+- Idea: 좌표 배열이 주어질 때, 한 직선에 놓여있는 최대 좌표의 개수를 구하여라.
+- Solve
+    1. 2개의 좌표간에 기울기를 구한다.
+    2. `unordered_map<float, int> um`: 기울기와 같은 기울기를 가진 좌표의 개수를 기록한다.
+    3. 최대 좌표의 개수를 구한다.
+- Complexity
+    1. Time: O(N^2) = (N-1) + (N-2) + ... + 1 = N(N-1)/2
+    2. Space: O(N) = 기울기를 해쉬 테이블에 기록함
+
+### LeetCode 329. Longest Increasing Path in a Matrix: [Problem](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/)
+- Algorithm: Array, DP, DFS, Graph / Level: Hard
+- Idea
+    - 2차원 integer 배열이 주어진다. 증가하는 방향으로만 path를 탐색할 때 가장 긴 길이를 구하여라.
+    - 경계를 넘어갈 수 없으며(wrap-around 불가), 대각선으로 갈 수 없다.
+- Solve: 
+    1. 2차원 배열을 처음부터 탐색하며, 매 원소마다 DFS로 path의 최대 길이를 구한다.
+        - DFS는 재귀나 stack으로 구현하는데, 재귀가 속도가 더 빠르고 메모리도 더 적게 사용하였다.
+    2. 하지만 DFS만 써서는 시간 초과가 발생하므로 dp를 적용한다.
+        - 2차원 dp 배열을 이용해 해당 위치에서 path의 최대값을 기록한다.
+        - `if (dp[ni][nj] > dp[cur.first][cur.second]) continue;`: 다음 path가 현재 길이보다 크다면 갈 필요가 없다고 본다.
+    3. 각 path의 최대 길이 중 제일 긴 길이를 리턴한다.
+    - [참고](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/discuss/1151423/C%2B%2B-Optimization-from-Brute-Force-to-DP-or-Easy-Solution-w-Explanation)
+- Complexity
+    1. Time: O(MN)
+    2. Space: O(N + MN) =  재귀 함수의 stack 공간 + 2차원 dp 배열 사용
+
 ## 220814
 ### LeetCode 46. Permutations: [Problem](https://leetcode.com/problems/permutations/)
 - Algorithm: Array, Backtracking / Level: Medium
