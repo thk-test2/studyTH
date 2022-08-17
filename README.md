@@ -21,13 +21,57 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220817
+### LeetCode 122. Best Time to Buy and Sell Stock II: [Problem](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)
+- Algorithm: Array, DP, Greedy / Level: Medium
+- Intro
+    - 주식 price 배열이 주어질 때, 가장 큰 수익을 구하여라. 주식은 당일에 사서 바로 팔 수 있다.
+- Solve
+    1. 백트래킹 + DP
+        - 가장 먼저 생각난 아이디어는 백트래킹에 DP를 적용하는 것이었다.
+        - 특정 단계에서 주식을 사거나 팔거나, 또는 아무것도 안하거나 3지선다로 백트래킹을 구성할 수 있다.
+        - 그러나 DP 배열을 정의하려고 하니 배열 사이즈가 너무 커서 memory 초과가 발생하였다.
+            - `dp[i][stock]`: i 단계에서 들고있는 stock의 가격. (i <= 30000, stock <= 10000)
+        - 그래서 DP가 아닌 Greedy로 접근이 필요한 문제이다.
+    2. Greedy
+        - 전체 profit은 각 단계별 profit의 합으로 볼 수 있다.
+            - 예를 들어 [1, 2, 3, 4, 5]는 5-1 = 4 이고 (2-1) + (3-2) + (4-3) + (5-4) = 4 로 풀어서 볼 수 있다.
+        - 단지 음수가 되는 경우만 제외해주면 된다. 즉 점화식은 다음과 같다.
+            - `profit += max(prices[i+1] - prices[i], 0);`
+- Complexity(Greedy)
+    1. Time: O(N) = 전체 배열 한번만 순회
+    2. Space: O(1) = profit 변수 추가 사용
+
+### LeetCode 239. Sliding Window Maximum: [Problem](https://leetcode.com/problems/sliding-window-maximum/)
+- Algorithm: Array, Map, Sliding Window / Level: Hard
+- Intro
+    - 숫자 배열이 주어질 때, 왼쪽에서 오른쪽으로 진행하면서 길이 k 윈도우 안의 최대값들을 배열에 구하여라.
+    - Constraints: `1 <= nums.length <= 10^5`, `1 <= k <= nums.length`
+    - 배열의 길이가 10^5이므로 O(N^2)로는 풀 수 없다.(10^9가 대략 1초이므로 10^10은 10초)
+        - 따라서 O(NlogN) 방법을 구상하였다.
+        - 통과는 했지만 시간과 메모리 효율이 좋지 않았다. 좀 더 좋은 방법을 찾아야 한다.
+- Solve
+    1. 원소와 그 원소의 개수를 담을 수 있는 map을 선언한다. `map<int, int> m`
+        - map은 insert/erase/find를 O(logN)에 수행하며, 첫번째 원소를 기준으로 자동 정렬된다.
+        - 즉 map의 맨 끝 원소가 윈도우 안의 가장 큰 숫자이다.
+    2. 반복문을 수행한다.
+        - i < k-1 이면 map에 계속 count를 올린다.
+        - i == k-1 이면 map의 가장 끝 원소를 answer 배열에 push 한다.
+        - i >= k 이면 가장 앞의 원소 count를 감소시키고, 새로 들어오는 원소의 count를 증가시킨다.
+            - map의 맨 끝 원소의 count가 0이면 윈도우 범위를 벗어났다는 뜻이므로 제거해준다.
+            - answer 배열에 map의 맨 끝 원소를 push한다.
+- Complexity
+    1. Time: O(NlogN) = 앞에서 부터 순회하면서 map에 원소를 저장 및 제거.
+        - map에서 count가 0인 원소를 제거할 때 추가 반복문을 사용하므로 실제로는 더 걸린다.
+    2. Space: O(N) = map 추가 사용. 정답 저장을 위한 ans 벡터는 제외
+
 ## 220815
 ### LeetCode 213. House Robber II: [Problem](https://leetcode.com/problems/house-robber-ii/)
 - Algorithm: Array, DP / Level: Medium
-- Idea
+- Intro
     - 숫자 배열이 주어진다. 이 숫자는 각 집에서 훔칠 수 있는 금액이다.
     - 연속된 두 집을 도둑질 할 수 없을 때, 도둑이 훔칠 수 있는 가장 큰 금액의 합을 구하여라.
-    - 마지막 집과 처음 집이 circular로 배치되어 있다고 한다.
+    - 마지막 집과 처음 집은 연속되어 있다.
 - Solve
     1. 알고리즘
         - House[1]과 House[n]이 연속되어 있으므로 동시에 훔칠 수 없다.
@@ -42,7 +86,7 @@
 
 ### LeetCode 149. Max Points on a Line: [Problem](https://leetcode.com/problems/max-points-on-a-line/)
 - Algorithm: Array, Hash Table, Math, Geometry / Level: Hard
-- Idea: 좌표 배열이 주어질 때, 한 직선에 놓여있는 최대 좌표의 개수를 구하여라.
+- Intro: 좌표 배열이 주어질 때, 한 직선에 놓여있는 최대 좌표의 개수를 구하여라.
 - Solve
     1. 2개의 좌표간에 기울기를 구한다.
     2. `unordered_map<float, int> um`: 기울기와 같은 기울기를 가진 좌표의 개수를 기록한다.
@@ -53,7 +97,7 @@
 
 ### LeetCode 329. Longest Increasing Path in a Matrix: [Problem](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/)
 - Algorithm: Array, DP, DFS, Graph / Level: Hard
-- Idea
+- Intro
     - 2차원 integer 배열이 주어진다. 증가하는 방향으로만 path를 탐색할 때 가장 긴 길이를 구하여라.
     - 경계를 넘어갈 수 없으며(wrap-around 불가), 대각선으로 갈 수 없다.
 - Solve: 
@@ -71,7 +115,7 @@
 ## 220814
 ### LeetCode 46. Permutations: [Problem](https://leetcode.com/problems/permutations/)
 - Algorithm: Array, Backtracking / Level: Medium
-- Idea: 숫자 배열이 주어질 때 가능한 permutation(순열)을 모두 구하여라.
+- Intro: 숫자 배열이 주어질 때 가능한 permutation(순열)을 모두 구하여라.
 - Solve
     1. 백트래킹의 기본적인 유형이다. selected 배열대신 bit-masking을 사용해서 약간의 성능향상을 할 수 있다.
     2. STL next_permutation()을 사용하면 함수 stack 공간을 줄일 수 있다.
@@ -81,7 +125,7 @@
 
 ### LeetCode 78. Subsets: [Problem](https://leetcode.com/problems/subsets/)
 - Algorithm: Array, Backtracking, Bit Manipulation / Level: Medium
-- Idea
+- Intro
     - 숫자 배열이 주어질 때 모든 부분집합을 구하여라. 이번에도 백트래킹으로 구현하였다.
     - discussion을 보니 시간과 공간 복잡도에 대해 의견이 분분한 문제이다.
         - 내 생각엔 시간 복잡도는 O(N*2^N), 공간 복잡도는 O(N) 이다. 본문에 추가 설명하였다.
@@ -101,7 +145,7 @@
 
 ### LeetCode 54. Spiral Matrix: [Problem](https://leetcode.com/problems/spiral-matrix/)
 - Algorithm: Array, Matrix, Simulation / Level: Medium
-- Idea: 2차원 matrix가 주어질 때, spiral order로 순회하는 시퀀스 구하기.
+- Intro: 2차원 matrix가 주어질 때, spiral order로 순회하는 시퀀스 구하기.
 - Solve
     1. 기본 구조는 recursive DFS로 구현하였다.
         - 시작지점(0,0)에서 출발하여 오른쪽으로 진행한다.
@@ -119,7 +163,7 @@
 
 ### LeetCode 155. Min Stack: [Problem](https://leetcode.com/problems/min-stack/)
 - Algorithm: Stack, Design / Level: Medium
-- Idea
+- Intro
     - int를 인자로 받는 stack을 구현하라.
     - 단, 최소값을 리턴하는 함수를 추가하고 모든 함수가 O(1)의 시간 복잡도를 가져야 한다.
     - 클래스 멤버로 `vector<pair<int, int>> st`와 `int min_val`을 갖도록 구현했다.
@@ -143,9 +187,9 @@
 
 ### LeetCode 189. Rotate Array: [Problem](https://leetcode.com/problems/rotate-array/)
 - Algorithm: Array, Math, Two Pointers / Level: Medium
-- Idea
+- Intro
     - 숫자 배열이 주어질 때 각 원소들을 k index만큼 앞으로 옮겨라. 만약 배열 끝이라면 첫번째로 rotation 하면 된다.
-    - 다음 링크에 다양한 솔루션이 있으니 참고하자.[링크](https://leetcode.com/problems/rotate-array/discuss/54277/Summary-of-C%2B%2B-solutions)
+    - 다음 [링크](https://leetcode.com/problems/rotate-array/discuss/54277/Summary-of-C%2B%2B-solutions)에 다양한 솔루션이 있으니 참고하자.
 - Solve
     1. visited 배열 사용
         1. 첫번째 index에서 시작해 k번째로 이동시킨다.
@@ -163,9 +207,9 @@
 ## 220813
 ### LeetCode 287. Find the Duplicate Number: [Problem](https://leetcode.com/problems/find-the-duplicate-number/)
 - Algorithm: Array, Binary Search, Bit Manipulation / Level: Medium
-- Idea
+- Intro
     - 1부터 n까지 숫자가 들어있는 n + 1 크기의 숫자 배열이 주어진다. 한 개의 중복된 숫자가 있을 때, 이를 찾는 문제
-    - 다음 페이지에서 7가지의 접근 방식을 소개하고 있다. [참고](https://leetcode.com/problems/find-the-duplicate-number/solution/)
+    - 다음 [페이지](https://leetcode.com/problems/find-the-duplicate-number/solution/)에서 7가지의 접근 방식을 소개하고 있다.
     - 여기서는 이진 탐색을 사용하였다.
         - 중복되는 숫자보다 mid가 크거나 같을 때, mid보다 작거나 같은 숫자의 개수는 mid보다 크게 된다. 이 때 left half로 탐색을 진행해주면 된다.
         - mid보다 작거나 같은 숫자의 개수가 mid보다 작거나 같은 지점을 찾으면 righ half를 검사한다.
@@ -185,7 +229,7 @@
 ## 220811
 ### LeetCode 279. Perfect Squares: [Problem](https://leetcode.com/problems/perfect-squares/)
 - Algorithm: Math, DP, BFS / Level: Medium
-- Idea
+- Intro
     - 숫자 n이 주어질 때, 제곱수의 합으로 n을 만들 수 있다. 가장 적은 수로 n을 만드는 경우를 찾아라.
 - Solve
     1. DP 배열의 정의
@@ -199,7 +243,7 @@
 
 ### LeetCode 238. Product of Array Except Self: [Problem](https://leetcode.com/problems/product-of-array-except-self/)
 - Algorithm: Array, Prefix Sum / Level: Medium
-- Idea
+- Intro
     - 숫자 배열이 주어질 때, 자기 자신을 제외한 나머지 숫자들의 곱을 구하여 배열로 리턴하라.
     - 곱한 값은 32-bit integer(int)임이 보장된다. 나누기 기호를 사용하면 안 된다.
 - Solve
@@ -215,7 +259,7 @@
 ## 220810
 ### LeetCode 76. Minimum Window Substring: [Problem](https://leetcode.com/problems/minimum-window-substring/)
 - Algorithm: Hash Table, String, Sliding Window / Level: Hard
-- Idea
+- Intro
     - string s와 t가 주어질 때, t의 문자를 모두 포함하는 s의 minimum window substring 구하기.
     - O(M*T)으로 간신히 통과하긴 했으나, O(M+N)의 방법을 찾아볼 것이다.
 - Solve - O(M*T)
@@ -231,7 +275,7 @@
 ## 220808
 ### LeetCode 300. Longest Increasing Subsequence: [Problem](https://leetcode.com/problems/longest-increasing-subsequence/)
 - Algorithm: Array, Binary Search, DP / Level: Medium
-- Idea
+- Intro
     - 수열이 주어질 때 longest strictly increasing subsequence의 길이를 구하여라.
     - DP 유형의 가장 기본적인 문제이다. O(N^2) 또는 O(NlogN)으로 풀 수 있다.
 - Solve
@@ -250,7 +294,7 @@
 
 ### LeetCode 91. Decode Ways: [Problem](https://leetcode.com/problems/decode-ways/)
 - Algorithm: String, DP / Level: Medium
-- Idea
+- Intro
     - 숫자 string이 주어질 때 encoding이 가능한 경우의 수 구하기. A는 1, B는 2, ... Z는 26에 매칭된다.
 - Solve
     1. 재귀(탑 다운) 방식으로 기본 알고리즘을 구현한다. 함수 인자로 index, string을 넘겨준다.
@@ -270,7 +314,7 @@
 ## 220807
 ### LeetCode 53. Maximum Subarray: [Problem](https://leetcode.com/problems/maximum-subarray/)
 - Algorithm: Array, DP / Level: Medium
-- Idea
+- Intro
     - 숫자 배열 nums가 주어질 때, 합이 최대가 되는 연속적인 subarray를 구하는 문제.
 - Solve
     1. DP 배열을 다음과 같이 정의한다. 
@@ -287,7 +331,7 @@
 
 ### LeetCode 134. Gas Station: [Problem](https://leetcode.com/problems/gas-station/)
 - Algorithm: Array, Greedy / Level: Medium
-- Idea
+- Intro
     - gas 배열과 cost 배열이 주어질 때, 전체 배열을 한 바퀴 순회가 가능한지 판별하는 문제.
     - gas[i]는 i번째에서 얻을 수 있는 gas이고, cost[i]는 i+1로 가기위해 필요한 비용이다.
 - Solve
@@ -304,7 +348,7 @@
 
 ### LeetCode 1220. Count Vowels Permutation: [Problem](https://leetcode.com/problems/count-vowels-permutation/)
 - Algorithm: DP / Level: Hard
-- Idea
+- Intro
     - 알파벳 모음(a, e, i, o, u)을 배열할 수 있는 조건이 주어질 때, 길이 N인 string을 구성할 수 있는 경우의 수 구하기.
     - 많이 풀어본 백트래킹 + memoization 유형의 문제이다.
 - Solve
@@ -318,7 +362,7 @@
 ## 220806
 ### LeetCode 377. Combination Sum IV: [Problem](https://leetcode.com/problems/combination-sum-iv/)
 - Algorithm: Array, DP / Level: Medium
-- Idea
+- Intro
     - 숫자 배열과 target이 주어질 때 배열의 원소를 써서 target을 만들 수 있는 순열의 수 구하기.
     - nums의 원소는 distinct unique 이며, 여러번 써도 된다.
 - Solve
@@ -339,7 +383,7 @@
 ## 220804
 ### LeetCode 729. My Calendar I: [Problem](https://leetcode.com/problems/my-calendar-i/)
 - Algorithm: Design, Ordered Set / Level: Medium
-- Idea
+- Intro
     - 중복 이벤트가 등록되지 않도록 캘린더를 구현하는 문제.
 - Solve
     1. 오버랩 조건: `existing_event.end > start && existing_event.start < end`
@@ -356,7 +400,7 @@
 ## 220802
 ### LeetCode 146. LRU Cache: [Problem](https://leetcode.com/problems/lru-cache/)
 - Algorithm: Hash Table, Linked List, Design / Level: Medium
-- Idea: LRU 캐쉬 동작을 구현하는 문제
+- Intro: LRU 캐쉬 동작을 구현하는 문제
 - Solve: 해쉬 맵과 리스트를 사용한 풀이 [참고](https://www.youtube.com/watch?v=8-FZRAjR7qU&ab_channel=ygongcode)
 - Complexity
     1. Time: O(Query * Capacity) = 쿼리의 개수 x 최대 Capacity만큼 list 탐색
@@ -364,7 +408,7 @@
 
 ### LeetCode 378. Kth Smallest Element in a Sorted Matrix: [Problem](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/)
 - Algorithm: Array, Sorting, Heap, Binary Search / Level: Medium
-- Idea
+- Intro
     - N*N 숫자 배열이 주어질 때, K번째로 가장 작은 숫자 구하기.
     - 배열은 각 row와 column에 대해 non-decreasing order로 정렬되어 있다.
         - [1, 2][1, 3] 도 가능하기 때문에 단순히 K번 세는 것은 불가능하다.
@@ -382,7 +426,7 @@
 ## 220731
 ### LeetCode 307. Range Sum Query - Mutable: [Problem](https://leetcode.com/problems/range-sum-query-mutable/)
 - Algorithm: Segment Tree / Level: Medium
-- Idea
+- Intro
     - 숫자 배열이 주어질때 구간합 쿼리 처리하기. 원소의 값은 업데이트 될 수 있다.
 - Solve
     - 세그먼트 트리를 이용해 구간합을 O(logN)의 복잡도로 구해준다.
@@ -393,7 +437,7 @@
 ## 220730
 ### LeetCode 916. Word Subsets: [Problem](https://leetcode.com/problems/word-subsets/)
 - Algorithm: Array, Hash Table, String / Level: Medium
-- Idea
+- Intro
     - 2개의 string 배열 a와 b가 주어진다. a의 universal string 들을 찾아서 리턴하라.
     - b의 모든 원소가 a의 특정 string에 다 포함될 때, 이 string을 universal 이라고 한다.
 - Solve
@@ -407,7 +451,7 @@
 ## 220726
 ### LeetCode 236. Lowest Common Ancestor of a Binary Tree: [Problem](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/)
 - Algorithm: Binary Tree, DFS / Level: Medium
-- Idea
+- Intro
     - 이진 트리에서 두 노드의 최소공통조상을 구하는 문제.
     - DP를 써서 O(logN)으로 구할 수도 있다.
 - Solve: 재귀 O(N)풀이 [참고](https://www.youtube.com/watch?v=KobQcxdaZKY&ab_channel=TECHDOSE)
@@ -417,7 +461,7 @@
 
 ### LeetCode 114. Flatten Binary Tree to Linked List: [Problem](https://leetcode.com/problems/flatten-binary-tree-to-linked-list/)
 - Algorithm: Binary Tree, DFS, Linked List / Level: Medium
-- Idea: 이진 트리를 링크드 리스트로 바꾸는 문제.
+- Intro: 이진 트리를 링크드 리스트로 바꾸는 문제.
 - Solve
     1. 트리를 Preorder로 순회하며 새 노드를 만들어서 별도의 list pointer에 추가해준다.
         - 맨 앞을 가리키는 listHead와 생성되는 노드를 가리키는 listTail 포인터를 사용한다.
@@ -429,7 +473,7 @@
 ## 220725
 ### LeetCode 34. Find First and Last Position of Element in Sorted Array: [Problem](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 - Algorithm: Array, Binary Search / Level: Medium
-- Idea
+- Intro
     - 감소하지 않는 숫자 배열이 주어질 때, target number의 시작과 끝 index를 구하는 문제.
 - Solve
     1. 먼저 stl::find로 target이 있는지 찾는다. 없으면 `{-1, -1}`을 리턴
@@ -440,7 +484,7 @@
 
 ### LeetCode 315. Count of Smaller Numbers After Self: [Problem](https://leetcode.com/problems/count-of-smaller-numbers-after-self/)
 - Algorithm: Array, Merge Sort / Level: Hard
-- Idea
+- Intro
     - 숫자 배열이 주어질 때 각 원소의 오른쪽에 자신보다 작은 원소가 몇 개인지 세는 문제.
     - Counting Inversion 이라는 알고리즘을 사용한다.(다시 풀어볼 것)
 - Solve [출처](https://www.geeksforgeeks.org/counting-inversions/)
@@ -458,7 +502,7 @@
 ## 220722
 ### LeeCode 407. Trapping Rain Water II: [Problem](https://leetcode.com/problems/trapping-rain-water-ii/)
 - Algorithm: Array, BFS, Priority Queue, Matrix / Level: Hard
-- Idea
+- Intro
     - 3차원의 맵이 주어질 때, 빗물이 고일 수 있는 영역크기 구하기.
     - 2차원일 때처럼 DP나 투 포인터로는 풀 수 없다.
 - Solve: [참고](https://leetcode.com/problems/trapping-rain-water-ii/discuss/89496/Concise-C%2B%2B-method-with-explanation)
@@ -476,7 +520,7 @@
 
 ### LeetCode 86. Partition List: [Problem](https://leetcode.com/problems/partition-list/)
 - Algorithm: Linked List, Two Pointers / Level: Medium
-- Idea
+- Intro
     - 연결 리스트와 숫자 x가 주어질 때, x보다 작은 노드들은 x보다 크거나 같은 노드들보다 왼쪽에 배치하라.
     - 각 partition의 노드 들의 순서는 유지되어야 한다.
 - Solve
@@ -489,7 +533,7 @@
 ## 220721
 ### LeetCode 92. Reverse Linked List II: [Problem](https://leetcode.com/problems/reverse-linked-list-ii/)
 - Algorithm: Linked List / Level: Medium
-- Idea
+- Intro
     - 연결 리스트와 left와 right 포지션이 주어질 때, left부터 right까지의 노드들을 역순으로 연결하라.
 - Solve
     - 리스트 전체를 역순으로 연결하는 것은 다음 식을 리스트 끝까지 반복해주면 된다.
@@ -503,7 +547,7 @@
 ## 220720
 ### LeetCode 792. Number of Matching Subsequences: [Problem](https://leetcode.com/problems/number-of-matching-subsequences/)
 - Algorithm: Hash Table, String, Trie(?), Sorting / Level: Medium
-- Idea
+- Intro
     - 문자열 s와 문자열 배열 words[]가 주어질 때, s의 subsequence인 words의 원소 개수 구하기.
 - Solve
     - Brute force에서 중복 계산 줄이기
@@ -516,7 +560,7 @@
 
 ### LeetCode 42. Trapping Rain Water: [Problem](https://leetcode.com/problems/trapping-rain-water/)
 - Algorithm: Array, Two Pointers, DP, Stack / Level: Medium
-- Idea
+- Intro
     - height 배열이 주어질 때, 빗물이 고일 수 있는 영역을 구하는 문제.
     - DP 또는 투 포인터로 O(N) 복잡도에 해결할 수 있다.
 - Solve
@@ -530,7 +574,7 @@
 ## 220719
 ### LeetCode 210. Course Schedule II: [Problem](https://leetcode.com/problems/course-schedule-ii/)
 - Algorithm: DFS, BFS, Graph, 위상정렬 / Level: Medium
-- Idea
+- Intro
     - 먼저 처리가 필요한 태스크의 관계가 주어질 때 가능한 태스크 시퀀스 구하기.
     - Course Schedule 1번 문제는 위상정렬 없이 풀었으나, 시퀀스를 구하기 위해서는 추가 메모리가 많이 필요해서 위상정렬로 품.
 - Solve
@@ -547,7 +591,7 @@
 ## 220717
 ### BOJ 1854. K번째 최단경로 찾기: [Problem](https://www.acmicpc.net/problem/1854)
 - Algorithm: 그래프 이론, 다익스트라, 우선순위 큐
-- Idea
+- Intro
     - 다익스트라처럼 각 정점까지의 최단 경로가 아니라, k번째 최단 경로를 구하는 문제.
     - 못 풀어서 [여기](https://jungahshin.tistory.com/57)를 참고했다.
 - Solve
@@ -563,7 +607,7 @@
 
 ### LeetCode 207. Course Schedule: [Problem](https://leetcode.com/problems/course-schedule/)
 - Algorithm: BFS, DFS, Graph, Topological Sort / Level: Medium
-- Idea
+- Intro
     - 수강이 필요한 강의 수와 강의 들간의 선결 조건(prerequisites)가 주어질 때, 모든 강의를 들을 수 있는지 판별하기.
 - Solve
     1. prerequisites으로 adjacency vector를 만들고, 이를 탐색하여 단방향 그래프에서 cycle이 일어나는지 판별하였다.
@@ -578,7 +622,7 @@
 ## 220716
 ### LeetCode 576. Out of Boundary Paths: [Problem](https://leetcode.com/problems/out-of-boundary-paths/)
 - Algorithm: DP / Level: Medium
-- Idea
+- Intro
     - 2차원 맵과 공의 시작위치가 주어질때, 공이 맵 밖으로 나가는 경우의 수 찾기.
     - 맵은 최대 50x50이며, local queue나 stack을 사용하기에는 경우의 수가 너무 많아서 memory overflow의 가능성이 있다.
         - 재귀를 활용한 DFS + DP로 풀이했다.
@@ -595,7 +639,7 @@
 
 ### LeetCode 1465. Maximum Area of a Piece of Cake After Horizontal and Vertical Cuts: [Problem](https://leetcode.com/problems/maximum-area-of-a-piece-of-cake-after-horizontal-and-vertical-cuts/)
 - Algorithm: Array, Greedy, Sorting / Level: Medium
-- Idea
+- Intro
     - 2차원 맵과 맵을 자르는 horizontalCut, verticalCut 배열이 주어질 때 잘린 조각 중 가장 큰 크기 구하기.
     - hCut과 vCut 배열에서 가장 큰 간격을 구해서 곱하면 되는데, 숫자가 크므로 int overflow에 주의한다.
 - Solve
@@ -610,7 +654,7 @@
 
 ### BOJ 17142. 연구소: [Problem](https://www.acmicpc.net/problem/17142)
 - Algorithm: 그래프 이론, DFS, BFS
-- Idea
+- Intro
     - 2차원 맵에 바이러스를 놓을 수 있는 위치가 주어질 때, 바이러스가 맵 전체에 퍼지는 최소 시간 구하기.
     - 구현량이 많은 BFS/DFS 문제이다.
 - Solve
@@ -622,7 +666,7 @@
 ## 220715
 ### LeetCode 695. Max Area of Island: [Problem](https://leetcode.com/problems/max-area-of-island/)
 - Algorithm: BFS, DFS / Level: Medium
-- Idea
+- Intro
     - 0과 1로 이루어진 맵이 주어진다. 1은 섬을 의미하는데, 섬의 면적 중 최대 크기를 구하여라.
 - Solve
     1. 맵의 크기가 50x50으로 BFS나 DFS 모두 사용할 수 있다.
@@ -636,7 +680,7 @@
 ## 220714
 ### LeetCode 105. Construct Binary Tree from Preorder and Inorder Traversal: [Problem](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
 - Algorithm: Binary Tree, Divide and Conquer / Level: Medium
-- Idea
+- Intro
     - 이진 트리의 preorder, inorder 순회결과가 배열로 주어졌을 때, 원본 트리를 만들어서 리턴하는 문제
 - Solve
     1. 규칙을 찾아보자.
@@ -655,7 +699,7 @@
 ## 220713
 ### LeetCode 102. Binary Tree Level Order Traversal: [Problem](https://leetcode.com/problems/binary-tree-level-order-traversal/)
 - Algorithm: Binary Tree, BFS / Level: Medium
-- Idea
+- Intro
     - 이진 트리가 주어질 때 각 height에 위치한 노드들을 같은 vector에 담아 리턴하기.
 - Solve
     1. 트리의 최대 높이를 구한다. 이 높이가 vector의 size가 된다.
@@ -667,7 +711,7 @@
 
 ### LeetCode 1710. Maximum Units on a Truck: [Problem](https://leetcode.com/problems/maximum-units-on-a-truck/)
 - Algorithm: Array, Greedy, Sorting, Priority Queue / Level: Easy
-- Idea
+- Intro
     - Box의 종류와 Box에 담을 수 있는 Unit, 그리고 최대 Box 개수를 의미하는 truckSize가 주어진다.
     - truckSize를 초과하지 않는 최대 Unit 구하기.
 - Solve
@@ -684,7 +728,7 @@
 ## 220712
 ### LeetCode 473. Matchsticks to Square: [Problem](https://leetcode.com/problems/matchsticks-to-square/)
 - Algorithm: Array, DP, Backtracking, Bitmask / Level: Medium
-- Idea
+- Intro
     - 성냥개비 길이 배열이 주어질 때, 정사각형을 만들 수 있는지 검사하는 문제.
     - 두 가지 관점에서 백트래킹 함수를 만들 수 있다.
 - Solve
@@ -701,7 +745,7 @@
 ## 220711
 ### LeetCode 199. Binary Tree Right Side View: [Problem](https://leetcode.com/problems/binary-tree-right-side-view/)
 - Algorithm: Binary Tree, Hash Map / Level: Medium
-- Idea
+- Intro
     - 이진 트리를 오른편에서 바라본다고 가정했을 때, 보이는 원소들을 맨 위에서부터 순서대로 나열하기.
     - 무조건 right 포인터를 따라가면서 할 수 없다. left height가 더 큰 경우도 있기 때문이다.
 - Solve
@@ -718,7 +762,7 @@
 ## 220710
 ### LeetCode 746. Min Cost Climbing Stairs: [Problem](https://leetcode.com/problems/min-cost-climbing-stairs/)
 - Algorithm: Array, DP / Level: Easy
-- Idea
+- Intro
     - cost 배열이 주어질 때 마지막 계단에 도달하는 최소 cost 합 구하기. 계단 오르기 기본 문제이다.
     - 리트코드 데일리 문제이다. 이번 달은 Array, DP 위주인 것 같다.
 - Solve
@@ -734,7 +778,7 @@
 ## 220709
 ### LeetCode 1696. Jump Game VI: [Problem](https://leetcode.com/problems/jump-game-vi/)
 - Algorithm: Array, DP, 우선순위 큐, 슬라이딩 윈도우 / Level: Medium
-- Idea
+- Intro
     - 정수 배열과 최대로 점프할 수 있는 범위 k가 주어질 때, 마지막 원소에 도달할 때 얻을 수 있는 가장 큰 점수 구하기.
     - 배열 크기가 10^5 까지이며, O(N*K) 솔루션은 시간이 초과된다.
 - Solve
@@ -754,7 +798,7 @@
 ## 220708
 ### LeetCode 1473. Paint House III: [Problem](https://leetcode.com/problems/paint-house-iii/)
 - Algorithm: Array, DP / Level: Hard
-- Idea
+- Intro
     - houses 배열과 cost 배열, 그리고 target 이웃 그룹의 수가 주어진다.
     - target 이웃 그룹의 수를 만족하는 가장 작은 페인트칠의 cost 합 구하기.
         - 같은 색의 집이 붙어있을 때 이웃 그룹이라고 한다.
@@ -773,7 +817,7 @@
 ## 220707
 ### LeetCode 97. Interleaving String: [Problem](https://leetcode.com/problems/interleaving-string/)
 - Algorithm: String, DP / Level: Medium
-- Idea
+- Intro
     - s1, s2, s3 스트링이 주어졌을 때, s3가 s1과 s2의 interleaving 스트링인지 판별하는 문제.
     - interleaving은 s1과 s2의 문자 순서가 유지된 채로 교차되어 만들어진 string을 말한다. 
         - 몇 번째에서 교차되었는지는 상관없지만, s1과 s2의 순서는 유지되어야 한다.(hash로 개수만 세는 것이 아니다.)
@@ -791,7 +835,7 @@
 ## 220705
 ### LeetCode 128. Longest Consecutive Sequence: [Problem](https://leetcode.com/problems/longest-consecutive-sequence/)
 - Algorithm: Array, 해쉬, 유니온-파인드 / Level: Medium
-- Idea
+- Intro
     - 수열이 주어질 때, 가장 긴 연속적인 부분집합의 길이를 구하는 문제. O(N)의 시간 복잡도를 만족해야 한다.
     - 원소의 범위가 `-10^9 ~ 10^9` 이므로 카운팅 정렬을 쓰면 메모리가 초과된다.
         - 카운팅 정렬은 원소의 범위가 작고, 모든 원소가 연속적일 때 쓰인다.
@@ -810,7 +854,7 @@
 ## 220704
 ### LeetCode 135. Candy: [Problem](https://leetcode.com/problems/candy/)
 - Algorithm: Array, 그리디 / Level: Hard
-- Idea
+- Intro
     - 조건을 만족하며 학생들에게 캔디를 분배할 때, 분배하는 캔디 개수의 최소값 구하기.
     - 조건
         1. 각 학생들은 최소 1개의 캔디를 받아야 한다.
@@ -841,7 +885,7 @@
 ## 220703
 ### LeetCode 216. Combination Sum III: [Problem](https://leetcode.com/problems/combination-sum-iii/)
 - Algorithm: 백트래킹 / Level: Medium
-- Idea
+- Intro
     - k개의 숫자를 써서 n을 만들 수 있는 경우의 수 구하기.
     - 재귀없이 백트래킹을 구현해보려 했으나, 잘 안 되서 다른코드를 참고했다. 좀 더 연습이 필요하다.
 - Solve
@@ -852,7 +896,7 @@
 
 ### BOJ 10942. 팰린드롬?: [Problem](https://www.acmicpc.net/problem/10942)
 - Algorithm: DP
-- Idea
+- Intro
     - 수열이 주어질 때, 특정 구간의 숫자들이 팰린드롬인지 판별하는 문제.
 - Solve
     1. DP 배열의 정의
@@ -867,7 +911,7 @@
 
 ### LeetCode 376. Wiggle Subsequence: [Problem](https://leetcode.com/problems/wiggle-subsequence/)
 - Algorithm: DP, 그리디 / Level: Medium
-- Idea
+- Intro
     - 수열이 주어질 때, 가장 긴 wiggle subsequence의 길이 구하기.
     - wiggle subsequence란 구성 원소들이 순서대로 증가와 감소를 반복하는 부분 수열을 말한다.
 - Solve
@@ -890,7 +934,7 @@
 ## 220629
 ### LeetCode 136. Single Number: [Problem](https://leetcode.com/problems/single-number/)
 - Algorithm: Array / Level: Easy
-- Idea
+- Intro
     - 주어진 array에서 한번만 등장하는 숫자 찾기.
     - 시간 복잡도는 O(N)이어야 하고 constant extra space만 사용해야 한다.
 - Solve
@@ -902,7 +946,7 @@
 
 ### LeetCode 322. Coin Change: [Problem](https://leetcode.com/problems/coin-change/)
 - Algorithm: Array, DP / Level: Medium
-- Idea
+- Intro
     - 달성해야하는 숫자(amount)와 coin 배열이 주어졌을 때, amount를 만들 수 있는 최소 동전의 개수 구하기.
     - 한달 전에 풀었지만 풀이가 전혀 생각이 나지 않았다. 제대로 이해하지 못 했다는 것이다.
 - Solve
@@ -919,7 +963,7 @@
 ## 220628
 ### LeetCode 38. Count and Say: [Problem](https://leetcode.com/problems/count-and-say/)
 - Algorithm: String / Level: Medium
-- Idea
+- Intro
     - 주어지는 number에 맞는 string을 재귀적으로 추가하는 문제
 - Solve
     1. 함수 구조는 보통의 백트래킹과 유사하다.
@@ -932,7 +976,7 @@
 ## 220623
 ### BOJ 2211. 네트워크 복구: [Problem](https://www.acmicpc.net/problem/2211)
 - Algorithm: 그래프 이론, 다익스트라
-- Idea
+- Intro
     - 1번 컴퓨터로부터 다른 컴퓨터까지의 최소 경로가 되는 간선 set 구하기.
 - Solve
     1. 다익스트라 알고리즘을 적용한다.(특정 노드에서 다른 모든 노드까지 최소 경로 구하기)
@@ -949,7 +993,7 @@
 ## 220622
 ### BOJ 9935. 문자열 폭발: [Problem](https://www.acmicpc.net/problem/9935)
 - Algorithm: 문자열, 자료구조, 스택
-- Idea
+- Intro
     - 문자열이 주어질 때 폭발 문자열을 연쇄적으로 제거하고 남은 문자열 구하기.
     - kmp, 라빈 카프, hash 등을 생각했으나 substr 연산이 오래 걸려서 시간초과 되는 것 같다.
         - 스택을 이용한 다음 [풀이](https://blog.encrypted.gg/103)를 참고했다.
@@ -969,7 +1013,7 @@
 ## 220621
 ### BOJ 1141. 접두사: [Problem](https://www.acmicpc.net/problem/1141)
 - Algorithm: 문자열, 정렬, Trie
-- Idea
+- Intro
     - 문자열 집합이 주어진다.
     - 각 원소들이 다른 원소의 접두사가 되지 않는 부분 집합의 최대 원소 개수 구하기.
 - Solve
@@ -991,7 +1035,7 @@
 ## 220619
 ### LeetCode 33. Search in Rotated Sorted Array: [Problem](https://leetcode.com/problems/search-in-rotated-sorted-array/)
 - Algorithm: Binary Search, 정렬
-- Idea
+- Intro
     - 어떤 int 배열이 오름차순으로 정렬되어 있다. 이 때 O(logN) 시간복잡도 안에서 특정 target을 찾는 문제.
     - 단, 이 배열은 특정 index에서(pivot) 로테이션 되어 있을 수 있다.
     - 예를 들어 [0,1,2,4,5,6,7] 배열이 pivot index=3으로 로테이션 된다면 [4,5,6,7,0,1,2]가 된다.
@@ -1007,7 +1051,7 @@
 
 ### LeetCode 56. Merge Intervals: [Problem](https://leetcode.com/problems/merge-intervals/)
 - Algorithm: Array, 정렬
-- Idea
+- Intro
     - 구간들이 주어질 때 겹치는 구간들을 merge하여 리턴하기.
 - Solve
     1. 먼저 `vector<vector<int>> intervals`를 다음 기준으로 정렬하였다.
@@ -1026,7 +1070,7 @@
     
 ### LeetCode 240. Search a 2D Matrix II: [Problem](https://leetcode.com/problems/search-a-2d-matrix-ii/)
 - Algorithm: Array, 정렬, 이분 탐색, 매트릭스
-- Idea
+- Intro
     - 2차원 배열이 주어진다. 각 행은 오름차순으로 정렬되어 있고, 각 열도 오름차순으로 정렬되어 있다.
     - 이 때 target을 찾는 효율적인 알고리즘을 구하는 문제.
 - Solve
@@ -1043,7 +1087,7 @@
 ## 220618
 ### BOJ 14238. 출근 기록: [Problem](https://www.acmicpc.net/problem/14238)
 - Algorithm: 백트래킹, DP
-- Idea
+- Intro
     - 출근할 수 있는 조건이 주어질 때, 가능한 조합 하나 구하여 출력하기.
     - DP가 어려워질수록 DP 배열에 대한 정의가 까다로워 지는 것 같다.
 - Solve
@@ -1059,7 +1103,7 @@
 
 ### BOJ 16236. 아기 상어: [Problem](https://www.acmicpc.net/problem/16236)
 - Algorithm: 구현, DFS/BFS
-- Idea
+- Intro
     - 유명한 아기 상어 시리즈. DP 없는 DFS/BFS 문제 중에서 구현량이 많아 어려운 유형인 것 같다.
     - 필요한 데이터 구조와 method를 잘 정의하여 하나하나 구현해 나가야 한다.
 - Solve
@@ -1081,7 +1125,7 @@
 
 ### LeetCode 73. Set Matrix Zeroes: [Problem](https://leetcode.com/problems/set-matrix-zeroes/)
 - Algorithm: Array, Matrix, Hash Table
-- Idea
+- Intro
     - 주어진 matrix에서 element가 0인 것이 있으면, 해당 row와 column을 모두 0으로 만들어야 한다.
     - in place, 즉 추가 저장공간 없이 수행해야 한다.
 - Solve
@@ -1101,14 +1145,14 @@
 ## 220617
 ### LeetCode 12. Generate Parentheses: [Problem](https://leetcode.com/problems/generate-parentheses/)
 - Algorithm: 백트래킹
-- Idea
+- Intro
     - n개의 괄호 쌍 만들기. 왼쪽 오른쪽이 바뀌지 않게 조합을 만들어야 한다.
 - Solve
     - 재귀를 돌 때, 오른쪽 괄호가 먼저 나오지 않도록 (왼쪽 괄호의 수 < 3)이면 왼쪽을 먼저 넣어준다.
     
 ### LeetCode 621. Task Scheduler: [Problem](https://leetcode.com/problems/task-scheduler/)
 - Algorithm: 해쉬 테이블, 정렬
-- Idea
+- Intro
     - 주어진 task 배열과 idle 타임을 고려하여 task 스케쥴링 하기.
     - 같은 task는 idle 타임이 지나야 수행할 수 있다.
 - Solve
@@ -1125,7 +1169,7 @@
 
 ### BOJ 12996. Acka: [Problem](https://www.acmicpc.net/problem/12996)
 - Algorithm: 백트래킹, DP
-- Idea
+- Intro
     - 세 사람이 녹음해야 하는 곡의 수가 주어질 때, 앨범을 만들 수 있는 경우의 수 구하기.
 - Solve
     1. 모든 DP 문제가 그렇듯 DP 배열에 대한 정의가 중요하다.
@@ -1143,7 +1187,7 @@
 ## 220616
 ### LeetCode 5. Longest Palindromic Substring: [Problem](https://leetcode.com/problems/longest-palindromic-substring/)
 - Algorithm: DP(?), 2 포인터
-- Idea
+- Intro
     - Substring 중 가장 긴 Palindrome을 찾는 문제.
     - DP라고 분류되어 있는데 어떤 부분이 DP인지 모르겠다. 2 포인터로 좌우 문자를 비교해가며 풀 수 있다.
 - Solve
@@ -1157,7 +1201,7 @@
 ## 220615
 ### LeetCode 17. Letter Combinations of a Phone Number: [Problem](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)
 - Algorithm: 백트래킹
-- Idea
+- Intro
     - 숫자와 문자가 적힌 다이얼과 누를 수 있는 버튼이 주어질 때 가능한 문자 조합 구하기.
 - Solve
     1. 지금까지 접한 다이얼 문제와 다르게 각 숫자에 해당하는 문자 그룹이 있는 것이 새로웠다.
@@ -1173,7 +1217,7 @@
 
 ### BOJ 11047. 동전 0: [Problem](https://www.acmicpc.net/problem/11047)
 - Algorithm: 그리디
-- Idea
+- Intro
     - 동전의 종류가 주어질 때, 가치의 합을 K로 만들 수 있는 최소 동전의 개수 구하기.
     - 그리디 라는 것을 알고 풀어서 어렵지 않았다.
 - Solve
@@ -1187,7 +1231,7 @@
 ## 220614
 ### LeetCode 139. Word Break: [Problem](https://leetcode.com/problems/word-break/)
 - Algorithm: Hash Table, DP
-- Idea
+- Intro
     - string S가 주어진 단어들로 구성될 수 있는지 확인하는 문제. 단어들이 겹치면 안 된다.
 - Solve
     1. 단어들은 unique하므로 hash table에 보관하여 검색 속도를 높일 수 있다.
@@ -1202,7 +1246,7 @@
 ## 220613
 ### BOJ 14938. 서강그라운드: [Problem](https://www.acmicpc.net/problem/14938)
 - Algorithm: 그래프 이론, 다익스트라
-- Idea
+- Intro
     - 허용되는 거리(M) 내에서 얻을 수 있는 최대 아이템 개수 구하기.
     - 처음에는 전체 노드를 순회 + BFS로 시도했으나 실패. BFS 경로 탐색이 최소 경로가 아닐 수 있기 때문이다.
         - 안 되는 이유는 [이 글](https://www.acmicpc.net/board/view/48932)을 읽어보자.
@@ -1224,7 +1268,7 @@
 ## 220612
 ### BOJ 9470. Strahler 순서: [Problem](https://www.acmicpc.net/problem/9470)
 - Algorithm: 그래프 이론
-- Idea
+- Intro
     - Strahler 순서를 구하는 문제. Strahler 순서는 유입되는 하천의 S 순서와 개수에 따라 결정된다.
 - Solve
     1. 주어진 간선 정보들을 adjacency 벡터에 저장한다.
@@ -1238,18 +1282,18 @@
 
 ### SWEA 4335. 무인도 탈출: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWL6HGz6Ai4DFAUY)
 - Algorithm: 백트래킹, DP 
-- Idea: 엄청난 구현량의 백트래킹 문제. 못 풀었음. 다시 도전해 볼 것..
+- Intro: 엄청난 구현량의 백트래킹 문제. 못 풀었음. 다시 도전해 볼 것..
 
 ### BOJ 1927. 최소 힙: [Problem](https://www.acmicpc.net/problem/1927)
 - Algorithm: 우선순위 큐
-- Idea: 기본적인 최소 힙을 구현하였다.
+- Intro: 기본적인 최소 힙을 구현하였다.
 - Complexity
     1. Time: O(NlogN) = N개 * 삽입 O(logN)
     2. Space: O(N) = N개 element
 
 ### BOJ 2042. 구간 합 구하기: [Problem](https://www.acmicpc.net/problem/2042)
 - Algorithm: 세그먼트 트리
-- Idea: 기본적인 세그먼트 트리를 구현하였다.
+- Intro: 기본적인 세그먼트 트리를 구현하였다.
 - Complexity
     1. Time: O(NlogN) = N개 * 삽입 O(logN)
     2. Space: O(N) = 트리 element O(4N)
@@ -1257,7 +1301,7 @@
 ## 220611
 ### LeetCode 15. 3Sum: [Problem](https://leetcode.com/problems/3sum/)
 - Algorithm: Arrays, Two Pointers, Sorting
-- Idea
+- Intro
     - 배열의 3개 요소의 합이 0이 되는 경우 찾기. 중복된 set이 없도록 한다.
     - 3중 for문으로는 시간 초과가 발생한다. O(N^2)로 해결할 수 있는 방법이 필요
 - Solve
@@ -1273,7 +1317,7 @@
 
 ### LeetCode 49. Group Anagrams: [Problem](https://leetcode.com/problems/group-anagrams/)
 - Algorithm: Array, Hash Table, String, Sorting
-- Idea
+- Intro
     - 주어진 string 배열에서 anagram들을 그룹으로 묶어서 리턴하기
 - Solve
     1. string 배열을 처음부터 순회하면서 각 string을 검사한다.
@@ -1285,7 +1329,7 @@
 
 ### LeetCode 3. Longest Substring Without Repeating Characters: [Problem](https://leetcode.com/problems/longest-substring-without-repeating-characters/)
 - Algorithm: Hash Table, String, Sliding Window
-- Idea
+- Intro
     - 중복된 요소를 포함하지 않는 가장 긴 연속수열 구하기
     - 중복된 요소는 hash table로 검사하면 된다.
 - Solve
@@ -1298,7 +1342,7 @@
 
 ### LeetCode 94. Binary Tree Inorder Traversal: [Problem](https://leetcode.com/problems/binary-tree-inorder-traversal/)
 - Algorithm: DFS, Binary Tree
-- Idea: inorder로 출력하는 문제
+- Intro: inorder로 출력하는 문제
 - Solve
     - left 탐색 전 출력을 하면 preorder 이다. 
     - left 탐색을 마치고 right 탐색 전에 출력을 하면 inorder 가 된다.
@@ -1308,7 +1352,7 @@
 
 ### LeetCode 103. Binary Tree Zigzag Level Order Traversal: [Problem](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/)
 - Algorithm: BFS, Binary Tree
-    - Idea
+    - Intro
     - level이 짝수이면 왼쪽부터, 홀수이면 오른쪽부터 그룹으로 만들어서 벡터에 담는 문제.
 - Solve
     1. 나는 먼저 maximum depth를 구한 다음 빈 vector들을 삽입해 놓았다.
@@ -1318,7 +1362,7 @@
 ## 220610
 ### LeetCode 55. Jump Game: [Problem](https://leetcode.com/problems/jump-game/)
 - Algorithm: DP, 백트래킹
-    - Idea
+    - Intro
     - 주어진 숫자 array의 끝에 도달할 수 있는지 확인하는 문제
 - Solve
     1. 내가 푼 방법
@@ -1339,7 +1383,7 @@
 ## 220609
 ### LeetCode 62. Unique Paths: [Problem](https://leetcode.com/problems/unique-paths/)
 - Algorithm: DP
-- Idea:
+- Intro:
     - M*N 행렬의 오른쪽 끝에 도달할 수 있는 유니크 경로의 개수 구하기. 
     - 오른쪽 또는 아래쪽으로만 이동할 수 있다.
 - Solve
@@ -1353,7 +1397,7 @@
 
 ### LeetCode 143. Reorder List: [Problem](https://leetcode.com/problems/reorder-list/)
 - Algorithm: Linked List
-- Idea
+- Intro
     - 링크드 리스트 항목들의 순서를 바꾸는 문제. 첫번째 노드가 마지막을, 두번째 노드가 마지막에서 두번째 것을 가리키게 한다.
     - Ex) 1 -> 2 -> 3 -> 4  => 1 -> 4 -> 2 -> 3
 - Solve
@@ -1366,7 +1410,7 @@
 
 ### BOJ 16197. 두 동전: [Problem](https://www.acmicpc.net/problem/16197)
 - Algorithm: 백트래킹, 시뮬레이션
-- Idea
+- Intro
     - 두 개의 동전 중 하나만 떨어지게 하는 최소의 이동횟수 구하기.
     - 둘 다 떨어지거나 이동횟수가 10을 초과하면 리턴.
 - Solve
@@ -1380,7 +1424,7 @@
 ## 220606
 ### BOJ 10422. 괄호: [Problem](https://www.acmicpc.net/problem/10422)
 - Algorithm: DP, 카탈란수
-- Idea
+- Intro
     - 올바른 괄호수의 개수를 구하는 문제.
     - O(N^2)의 DP 풀이 또는 카탈란 수로 O(N)으로 풀 수 있다고 한다. 여기서는 DP 풀이를 소개한다.
     - 카탈란 수를 공부하고 다시 풀어보자.
@@ -1400,7 +1444,7 @@
 ## 220605
 ### BOJ 12869. 뮤탈리스크: [Problem](https://www.acmicpc.net/problem/12869)
 - Algorithm: DP, 백트래킹
-- Idea
+- Intro
     - SCV 3기의 체력이 주어질 때 뮤탈리스크가 공격해야 하는 횟수의 최대값 구하기.
     - DP문제 해결과정은 [다음책]((http://www.kyobobook.co.kr/product/detailViewKor.laf?mallGb=KOR&ejkGb=KOR&barcode=9788931586053))에서 말하는 수학적 사고의 과정과 닮은것 같다.
         - 수학적 사고는 정의, 분석, 체계화의 과정으로 진행된다.
@@ -1416,7 +1460,7 @@
 
 ### BOJ 2023. 신기한 소수: [Problem](https://www.acmicpc.net/problem/2023)
 - Algorithm: DP, 백트래킹
-- Idea
+- Intro
     - 1에서 N자리까지 모두 소수인 숫자를 찾아야 한다.
     - 소수를 판별하기 위한 isPrime() 구현은 알아두자. Square root 까지만 검사하면 된다.
 - Solve
@@ -1429,7 +1473,7 @@
 ## 220604
 ### BOJ 2616. 소형기관차: [Problem](https://www.acmicpc.net/problem/2616)
 - Algorithm: DP, 누적합
-- Idea
+- Intro
     - 소형 기관차 3개를 썼을 때 가장 많은 손님을 끌 수 있는 경우를 찾기.
     - 누적합을 이용해서 구간의 합을 빠르게 구할 수 있다. 여기에 DP 요소를 결합해야 한다.
 - Solve
@@ -1444,7 +1488,7 @@
 
 ### BOJ 13904. 과제: [Problem](https://www.acmicpc.net/problem/13904)
 - Algorithm: 그리디, 정렬
-- Idea: 하루에 한 과제를 할 수 있다고 할 때, 과제 duedate을 감안하여 가장 높은 점수를 받을 수 있는 경우 찾기.
+- Intro: 하루에 한 과제를 할 수 있다고 할 때, 과제 duedate을 감안하여 가장 높은 점수를 받을 수 있는 경우 찾기.
 - Solve
     1. duedate와 point를 vector에 담고 다음 조건대로 정렬한다.
         1. 과제 점수가 높은 순
@@ -1458,7 +1502,7 @@
 
 ### BOJ 11559. Puyo Puyo: [Problem](https://www.acmicpc.net/problem/11559)
 - Algorithm: 구현, BFS
-- Idea: 
+- Intro: 
     - 현재 Puyo의 배치에서 몇 연쇄가 일어날 수 있는지 판단하는 문제.
     - 현재 상태에서 터질 수 있는 애들이 다 터진다음 이동시키는 것이 1연쇄이다.
 - Solve
@@ -1470,7 +1514,7 @@
 ## 220602
 ### BOJ 5557. 1학년: [Problem](https://www.acmicpc.net/problem/5557)
 - Algorithm: DP
-- Idea: 마지막 숫자를 만들 수 있는 경우의 수를 구하는 문제. Top down 또는 bottom up 방식으로 풀 수 있다.
+- Intro: 마지막 숫자를 만들 수 있는 경우의 수를 구하는 문제. Top down 또는 bottom up 방식으로 풀 수 있다.
 - Solve
     1. Top down 방식은 백트래킹에 dp(memo) 를 조합하는 방식으로 구현한다.
         - 최초 함수 호출시 인자로 (0, 0)을 전달하면 틀리고 (1, arr[0])를 전달해야 통과되었다. 반례를 모르겠다.
@@ -1483,7 +1527,7 @@
 ## 220601
 ### BOJ 15656. N과 M (7): [Problem](https://www.acmicpc.net/problem/15656)
 - Algorithm: 백트래킹, 정렬
-- Idea: 일반적인 백트래킹 문제. 연습을 위해 merge sort를 구현하였다.
+- Intro: 일반적인 백트래킹 문제. 연습을 위해 merge sort를 구현하였다.
 - Complexity
     1. Time: O(NlogN) = Merge Sort O(NlogN)
     2. Space: O(N) = Merge Sort O(2*N)
@@ -1491,14 +1535,14 @@
 ## 220526
 ### LeetCode 300. Longest Increasing Subsequence: [Problem](https://leetcode.com/problems/longest-increasing-subsequence/)
 - Algorithm: DP
-- Idea: 일반적인 LIS 문제.
+- Intro: 일반적인 LIS 문제.
 - Solve
     1. for문 2개를 이용하면 O(N^2)의 시간이 걸린다.
     2. 이분탐색을 이용하면 O(N*logN)의 복잡도를 가진다.
 
 ### BOJ 1135. 뉴스 전하기: [Problem](https://www.acmicpc.net/problem/1135)
 - Algorithm: Greedy, DFS
-- Idea
+- Intro
 - Solve
     1. 처음에 현재 자식의 수가 가장 많은 노드부터 dfs를 시작하도록 하였다. 그러나 답이 아니었다. 다음 [링크](https://www.acmicpc.net/board/view/760) 설명을 읽어보자.
         1. 그러나 많은 자식을 가지고 있다고 해서 가장 먼저 뉴스를 전하는 것이 올바른 선택이 아닐 수 있다.
@@ -1515,7 +1559,7 @@
 ## 220525
 ### BOJ 14002. 가장 긴 증가하는 부분 수열 4: [Problem](https://www.acmicpc.net/problem/14002)
 - Algorithm: DP
-- Idea: 부분 수열 길이를 계산할 때 가장 큰 부분수열도 같이 기록한다.
+- Intro: 부분 수열 길이를 계산할 때 가장 큰 부분수열도 같이 기록한다.
 - Solve
     1. DP 배열을 선언해서 동일하게 가장 긴 부분수열의 길이를 계산한다.
     2. vector<int> LIS[1001] 배열을 선언하여, DP 배열이 갱신될 때 LIS를 저장한다.
@@ -1525,7 +1569,7 @@
 ## 220523
 ### LeetCode 242. Valid Anagram: [Problem](https://leetcode.com/problems/valid-anagram/)
 - Algorithm: Hashing
-- Idea: unordered_map을 활용해서 anagram을 판별하는 문제.
+- Intro: unordered_map을 활용해서 anagram을 판별하는 문제.
 - Solve
     - Note: find()를 써서 키가 있는지 먼저 확인을 하자. um[key] 를 하면 자동으로 Entry가 생성이 된다.
     - 즉 다음과 같이 활용. `if (um.find(t[i]) != um.end() && um[t[i]] > 0)`
@@ -1533,14 +1577,14 @@
 ## 220520
 ### BOJ 2357. 최솟값과 최댓값: [Problem](https://www.acmicpc.net/problem/2357)
 - Algorithm: 세그먼트 트리
-- Idea: 최소값 세그먼트 트리와 최대값 세그먼트 트리를 구현한다.
+- Intro: 최소값 세그먼트 트리와 최대값 세그먼트 트리를 구현한다.
 - Complexity
     - Time: O(NlogN) = 삽입 O(NlogN) + 쿼리 O(NlogN)
     - Space: O(N) = Array O(N) + 트리 O(4*N)
 
 ### BOJ 6443. 애너그램: [Problem](https://www.acmicpc.net/problem/6443)
 - Algorithm: 백트래킹
-- Idea: 주어진 알파벳으로 가능한 모든 조합을 구하는 문제
+- Intro: 주어진 알파벳으로 가능한 모든 조합을 구하는 문제
 - Solve
     1. 처음에는 주어진 string을 정렬하고 string size 내에서 조합을 구하며, 중복은 hashing으로 하려고 했다.
         - 그런데 메모리와 시간 초과가 났다. hashing을 하지 않고도 중복없이 출력해야 하는것 같았다.
@@ -1551,13 +1595,13 @@
 
 ### BOJ 1697. 숨바꼭질: [Problem](https://www.acmicpc.net/problem/1697)
 - Algorithm: BFS
-- Idea
+- Intro
     - 일직선 상에서 수빈이와 동생의 위치가 주어졌을 때, 동생을 찾을 수 있는 가장 빠른 시간을 구하는 문제
     - Queue를 이용한 일반적인 BFS 문제이다.
 
 ### BOJ 5525. IOIOI: [Problem](https://www.acmicpc.net/problem/5525)
 - Algorithm: 문자열, KMP, 라빈-카프
-- Idea: 몇 개의 풀이가 있는데, 나는 KMP로 직접 개수를 세어 주었다.
+- Intro: 몇 개의 풀이가 있는데, 나는 KMP로 직접 개수를 세어 주었다.
 - Solve
     1. N을 입력받고 찾고자 하는 패턴(IOI...)를 만든다.
     2. KMP로 개수를 세어준다.
@@ -1567,7 +1611,7 @@
 
 ### BOJ 1446. 지름길: [Problem](https://www.acmicpc.net/problem/1446)
 - Algorithm: DP, 그래프 이론, 다익스트라
-- Idea: 브루트 포스로 0부터 D까지 dist[] 배열을 탐색하면서 지름길을 이용해 거리를 갱신해준다.
+- Intro: 브루트 포스로 0부터 D까지 dist[] 배열을 탐색하면서 지름길을 이용해 거리를 갱신해준다.
 - Solve
     1. 인접 리스트로 지름길의 출발점, 도착점 그리고 길이정보들을 간선과 해당 비용으로 저장한다.
         - 지름길이 도착점 - 출발점 사이보다 크다면 저장할 필요가 없다.
@@ -1583,7 +1627,7 @@
 ## 220519
 ### BOJ 11652. 카드: [Problem](https://www.acmicpc.net/problem/11652)
 - Algorithm: Hash, Sorting
-- Idea: 여러 카드가 주었졌을 때 가장 많이 갖고 있는 정수를 구하는 문제
+- Intro: 여러 카드가 주었졌을 때 가장 많이 갖고 있는 정수를 구하는 문제
 - Solve
     1. Hash 테이블에 카드와 카드의 개수를 저장한다.
     2. 개수에 따라 정렬할 수 있도록 array에 옮기고, 정렬을 수행한다.
@@ -1594,7 +1638,7 @@
 ## 220517
 ## LeetCode 19. Remove Nth Node From End of List: [Problem](https://leetcode.com/problems/remove-nth-node-from-end-of-list/)
 - Algorithm: Linked List
-- Idea: 끝에서 n번째 Element를 삭제하는 문제
+- Intro: 끝에서 n번째 Element를 삭제하는 문제
 - Solve
     1. head 부터 끝까지 탐색하여 element count를 계산한다.
     2. 다시 처음부터 탐색하여 N-1번째에 prev pointer를 기록하고, N번째로 넘어가서 prev pointer가 그 다음 element를 가리키게 한다.
@@ -1604,7 +1648,7 @@
 
 ### BOJ 1976. 여행 가자: [Problem](https://www.acmicpc.net/problem/1976)
 - Algorithm: 그래프 이론, 유니온 파인드
-- Idea: 유니온 파인드 기본개념 문제.
+- Intro: 유니온 파인드 기본개념 문제.
 - Solve
     - **Note**: 일반적인 unionParent 함수 구현을 보면 parent 값을 갱신할 때 자신의 부모, 또는 부모의 부모를 갱신하고 넘어간다.
         - 즉, `parent[b] = pa` 또는 `parent[pb] = pa` 으로 한 번 assign 하고 넘어간다.
@@ -1628,7 +1672,7 @@
 
 ### BOJ 12865. 평범한 배낭: [Problem](https://www.acmicpc.net/problem/12865)
 - Algorithm: DP
-- Idea: 배낭문제 개념을 공부하기 위해 다시 풀었음
+- Intro: 배낭문제 개념을 공부하기 위해 다시 풀었음
 - Solve
     1. DP 배열을 정의하는 것이 중요하다. `memo[A][B] = C` 의 의미는 A번째 물건까지 왔고 B의 무게를 가질때 C의 가치가 있다.
     2. for문 두개를 활용한다.
@@ -1644,16 +1688,16 @@
 
 ### BOJ 10814. 나이순 정렬: [Problem](https://www.acmicpc.net/problem/10814)
 - Algorithm: Sorting
-- Idea: struct에 대한 sorting을 연습한 문제. 
+- Intro: struct에 대한 sorting을 연습한 문제. 
 - Solve: Struct compare 함수와 merge sort를 구현하였다.
 
 ### BOJ 2167. 2차원 배열의 합: [Problem](https://www.acmicpc.net/problem/2167)
 - Algorithm: Prefix Sum
-- Idea: 기본적인 2차원 prefix sum 문제
+- Intro: 기본적인 2차원 prefix sum 문제
 
 ### BOJ 10282. 해킹: [Problem](https://www.acmicpc.net/problem/10282)
 - Algorithm: 다익스트라
-- Idea: adjacency vector로 단방향 그래프를 구성하고 다익스트라 알고리즘을 적용한다.
+- Intro: adjacency vector로 단방향 그래프를 구성하고 다익스트라 알고리즘을 적용한다.
 - Complexity
     1. Time: O(E logE) = 간선 검사 O(E) * 우선순위 큐 추가 O(logE)
     2. Space: O(N+E) = adjacency vector O(N+E) + 우선순위 큐 O(E)
@@ -1661,7 +1705,7 @@
 ## 220514
 ### BOJ 9465. 스티커: [Problem](https://www.acmicpc.net/problem/9465)
 - Algorithm: DP
-- Idea: 스티커를 떼어낼 수 있는 조건이 있을 때, 뗀 스티커들의 최대 가치합 찾기
+- Intro: 스티커를 떼어낼 수 있는 조건이 있을 때, 뗀 스티커들의 최대 가치합 찾기
 - Solve
     - 조건: 스티커를 떼면 상하좌우의 스티커는 뗄 수 없다.
     - 점화식
@@ -1671,14 +1715,14 @@
 
 ### BOJ 11057. 오르막 수: [Problem](https://www.acmicpc.net/problem/11057)
 - Algorithm: DP
-- Idea: 각 자리수가 크거나 같은 수를 오르막 수라고 하며, 그것의 개수를 찾는 문제
+- Intro: 각 자리수가 크거나 같은 수를 오르막 수라고 하며, 그것의 개수를 찾는 문제
 - Solve
     1. DP 배열 정의: `memo[i][j]` i번째 자리수가 j로 끝나는 경우의 수
     2. 오르막 수의 특성대로 이전 자리수보다 크거나 같은 경우의 수를 모두 더해준다.
 
 ### BOJ 11054. 가장 긴 바이토닉 부분 수열: [Problem](https://www.acmicpc.net/problem/11054)
 - Algorithm: DP
-- Idea: 가장 긴 증가하는 부분 수열과 가장 긴 감소하는 부분 수열을 조합하는 문제
+- Intro: 가장 긴 증가하는 부분 수열과 가장 긴 감소하는 부분 수열을 조합하는 문제
 - Solve
     1. 배열을 앞에서부터 탐색하여 가장 긴 증가하는 부분 수열의 길이를 찾는다.
     2. 배열을 뒤에서부터 탐색하여 가장 긴 감소하는 부분 수열의 길이를 찾는다.
@@ -1686,7 +1730,7 @@
 
 ### SWEA 4311. 오래된 스마트폰: [Problem](https://swexpertacademy.com/main/code/problem/problemSolver.do?contestProbId=AWL2vlPKMlQDFAUE&)
 - Algorithm: 백트래킹, DP
-- Idea: 계산기에서 원하는 숫자를 만들고자 할 때, 최소 터치 횟수를 찾아라. 누를 수 없는 버튼들이 있다.
+- Intro: 계산기에서 원하는 숫자를 만들고자 할 때, 최소 터치 횟수를 찾아라. 누를 수 없는 버튼들이 있다.
 - Solve
     1. best[1000] 배열은 해당 숫자를 몇 번 터치로 만들 수 있는지 값을 저장하는 배열이다.
         - 조합을 이용해 주어진 숫자로 만들 수 있는 것들을 미리 만든다. 가지치기를 위해 정렬해둔다.
@@ -1697,7 +1741,7 @@
 ## 220513
 ### SWEA 8191. 만화책 정렬하기: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWwtYmX6hvsDFAWU)
 - Algorithm: Array
-- Idea: 뒤섞인 만화책을 몇 번 탐색해야 순서대로 정렬되는지 확인하는 문제
+- Intro: 뒤섞인 만화책을 몇 번 탐색해야 순서대로 정렬되는지 확인하는 문제
 - Solve
     - 배열에 만화책 번호의 위치를 기록한다.
     - 연속된 만화책이 앞선 위치에 있다면 재탐색이 필요한 것이다. 재탐색이 필요한 개수를 세어준다.
@@ -1707,7 +1751,7 @@
 
 ### BOJ 11052. 카드 구매하기: [Problem](https://www.acmicpc.net/problem/11052)
 - Algorithm: DP
-- Idea: N장의 카드를 구매할 때, 지불해야 하는 최대금액을 구해야 하는 문제
+- Intro: N장의 카드를 구매할 때, 지불해야 하는 최대금액을 구해야 하는 문제
 - Solve
     1. DP 배열 정의: `DP[A] = B` A장의 카드를 사는데 지불해야 하는 최대 금액은 B원 이다.
     2. 점화식 정의: `DP[N] = Card[1] + DP[N-1]`, `DP[N] = Card[2] + DP[N-2]`, ... ,`DP[N] = Card[N] + DP[0]`
@@ -1720,7 +1764,7 @@
 ## 220512
 ### SWEA 7088. 은기의 송아지 세기: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWkIeU76A9cDFAXC)
 - Algorithm: Prefix Sum, 이진 탐색, 세그먼트 트리
-- Idea: 주어진 범위 내에서 각 품종이 몇 마리씩 있는지 값을 찾는 문제
+- Intro: 주어진 범위 내에서 각 품종이 몇 마리씩 있는지 값을 찾는 문제
 - Solve: 다양한 방법이 가능하다.
     - Prefix Sum: `Count[a][1] = b` 의 의미는 a번 index까지 1번 품종인 송아지는 b마리가 있다.
     - 이진탐색:  각 품종의 벡터에 넣고 upper/lower_bound를 찾음
@@ -1734,12 +1778,12 @@
 
 ### LeetCode 295. Find Median from Data Stream: [Problem](https://leetcode.com/problems/find-median-from-data-stream/)
 - Algorithm: Priority Queue
-- Idea: 가운데를 말해요(BOJ 1655)와 유사한 문제
+- Intro: 가운데를 말해요(BOJ 1655)와 유사한 문제
 
 ## 220511
 ### LeetCode 347. Top K Frequent Elements: [Problem](https://leetcode.com/problems/top-k-frequent-elements/)
 - Algorithm: Hash Table, Heap, Sorting
-- Idea: 빈도수가 가장 높은 순으로 숫자를 정렬하는 문제. 몇 가지 자료구조를 조합하여 구현함
+- Intro: 빈도수가 가장 높은 순으로 숫자를 정렬하는 문제. 몇 가지 자료구조를 조합하여 구현함
 - Solve
     1. 전달받은 nums 배열을 순회하며 hash table에 빈도수를 저장한다.
     2. 숫자와 빈도수를 pair로 보관하는 priority queue를 준비한다.
@@ -1753,7 +1797,7 @@
 ## 220508
 ### BOJ 1605. 반복 부분문자열: [Problem](https://www.acmicpc.net/problem/1605)
 - Algorithm: Hashing, Ravin-Karp
-- Idea: 롤링 해쉬를 이용해 문자열을 탐색한다. BOJ 3033(가장 긴 문자열)과 같은 문제이다.
+- Intro: 롤링 해쉬를 이용해 문자열을 탐색한다. BOJ 3033(가장 긴 문자열)과 같은 문제이다.
 - Solve
     1. 롤링 해쉬를 이용해 문자열을 탐색한다.
         - 부분 문자열의 길이는 binary search을 통해 최적의 값을 찾아 나간다.
@@ -1764,7 +1808,7 @@
 
 ### BOJ 1405. 미친 로봇: [Problem](https://www.acmicpc.net/problem/1405)
 - Algorithm: 백트래킹, 수학
-- Idea: 일반적인 백트래킹에 확률 계산을 더한 문제
+- Intro: 일반적인 백트래킹에 확률 계산을 더한 문제
 - Solve
     1. 확률을 입력받을 때 double 형 percent로 변환하여 입력받는다.
     2. 2차원 visited 배열을 이용해 방문한 곳이면 가지 않는다.
@@ -1776,11 +1820,11 @@
 
 ### BOJ 14427. 수열과 쿼리 15: [Problem](https://www.acmicpc.net/problem/14427)
 - Algorithm: 우선순위 큐, 세그먼트 트리
-- Idea: 두번째 풀이. 우선순위 큐 업데이트에 익숙해지기 위해
+- Intro: 두번째 풀이. 우선순위 큐 업데이트에 익숙해지기 위해
 
 ### SWEA 5432. 쇠막대기 자르기: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWVl47b6DGMDFAXm)
 - Algorithm: 스택
-- Idea: 스택을 활용하여 쇠막대기를 자르는 타이밍을 확인하고 개수를 더해 나간다.
+- Intro: 스택을 활용하여 쇠막대기를 자르는 타이밍을 확인하고 개수를 더해 나간다.
 - Solve
     1. input이 `(` 이면 스택에 넣는다.
     2. input이 `)` 이면 두 가지 경우가 생긴다.
@@ -1790,7 +1834,7 @@
 ## 220507
 ### BOJ 20920. 영단어 암기는 괴로워: [Problem](https://www.acmicpc.net/problem/20920)
 - Algorithm: Hash, Sort
-- Idea
+- Intro
     - String과 cnt의 쌍으로 hash에 저장한 다음, 조건에 맞게 정렬한다. 연습을 위해 Hash를 직접 구현해 주었다.
     - Priority Queue를 갱신하는 방법도 있는데, update 구현이 어렵고 연습이 필요하다.
 - Complexity
@@ -1799,7 +1843,7 @@
 
 ### BOJ 9251. LCS: [Problem](https://www.acmicpc.net/problem/9251)
 - Algorithm: DP
-- Idea: 2차원 dp 배열을 활용하여 가장 긴 subsequence를 찾는다.
+- Intro: 2차원 dp 배열을 활용하여 가장 긴 subsequence를 찾는다.
 - Solve
     - LCS 배열을 만드는 과정. subsequence의 길이는 이 단계만 진행해도 찾을 수 있다.
         1. 문자열 A, 문자열 B를 한글자씩 비교해본다.
@@ -1813,7 +1857,7 @@
 ## 220506
 ### BOJ 1753. 최단경로: [Problem](https://www.acmicpc.net/problem/1753)
 - Algorithm: Dijkstra
-- Idea: 우선순위 큐를 이용해 가장 낮은 가중치를 가진 간선을 O(1)으로 찾는다.
+- Intro: 우선순위 큐를 이용해 가장 낮은 가중치를 가진 간선을 O(1)으로 찾는다.
 - Solve
     1. 간선정보를 adjacency vector에 담는다.
     2. 다익스트라를 위한 dp 배열과 우선순위 큐를 준비하고 start 값을 지정한다.
@@ -1830,15 +1874,15 @@
 - 내일부터 다시 한글로 작성할 것이다. 영어로 하니 공부한거 찾기도 힘들고 잘 안 올리게 된다.. 나중에 다시 시도할 수 있다.
 ### BOJ 1920. 수 찾기: [Problem](https://www.acmicpc.net/problem/1920)
 - Algorithm: Binary search
-- Idea: A basic binary search problem
+- Intro: A basic binary search problem
 
 ### BOJ 10815. 숫자 카드: [Problem](https://www.acmicpc.net/problem/10815)
 - Algorithm: Binary search
-- Idea: A basic binary search problem
+- Intro: A basic binary search problem
 
 ### BOJ 10816. 숫자 카드2: [Problem](https://www.acmicpc.net/problem/10816)
 - Algorithm: Binary search
-- Idea: An advanced binary search problem
+- Intro: An advanced binary search problem
 - Solve
     1. Find the target value by binary search.
     2. Find lower and upper bound of the same value.
@@ -1850,7 +1894,7 @@
 
 ### BOJ 10868. 최솟값: [Problem](https://www.acmicpc.net/problem/10868)
 - Algorithm: Segment Tree
-- Idea: A basic segment tree problem
+- Intro: A basic segment tree problem
 
 ### LeetCode 21. Merge Two Sorted Lists: [Problem](https://leetcode.com/problems/merge-two-sorted-lists/)
 - Algorithm: Linked List
@@ -1891,7 +1935,7 @@
 
 ### LeetCode 141. Linked List Cycle: [Problem](https://leetcode.com/problems/linked-list-cycle/)
 - Algorithm: Linked List, Two Pointers
-- Idea: Traverse linked list using two pointers.
+- Intro: Traverse linked list using two pointers.
 - Solve
     1. Move one pointer(slow_p) by one and another pointer(fast_p) by two.
     2. If these pointers meet at the same node then there is a loop.
@@ -1917,7 +1961,7 @@
 
 ### SWEA 2983. 두 번 이상 등장하는 문자열: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV-eALvKRnsDFAXr)
 - Algorithm: String, Ravin-Karp
-- Idea: Find the longest substring occurs more than once.
+- Intro: Find the longest substring occurs more than once.
 - Solve
     1. Use binary search to find the maximum length occurs more than once.
     2. To search the string in O(N), use a rolling hash(Ravin-Karp) technic.
@@ -1935,7 +1979,7 @@
 ## 220430
 ### BOJ 1766. 문제집: [Problem](https://www.acmicpc.net/problem/1766)
 - Algorithm: Graph Theory, Topological Sort, Priority Queue
-- Idea: Adopt topological sort with priority queue.
+- Intro: Adopt topological sort with priority queue.
 - Solve
     1. Prepare an adjacency matrix and an entry array.
         - Entry array records the number of entry points for each problem.
@@ -1951,7 +1995,7 @@
 
 ### LeetCode 133. Clone Graph: [Problem](https://leetcode.com/problems/clone-graph/)
 - Algorithm: Hash Table, Graph, BFS, DFS
-- Idea: Use a Hash Table to contain the cloned graph.
+- Intro: Use a Hash Table to contain the cloned graph.
 - Solve
     1. Declare a hash table: `unordered_map<Node*, Node*> m;
     2. Use DFS(or BFS) to make & connect the cloned nodes.
@@ -1990,7 +2034,7 @@
 ## 220427
 ### LeetCode 206. Reverse Linked List: [Problem](https://leetcode.com/problems/reverse-linked-list/)
 - Algorithm: Linked List, Recursion
-- Idea: Find a simple rule to reverse the Linked List.
+- Intro: Find a simple rule to reverse the Linked List.
 - Solve
     1. When creating a ListNode, give the current head as the next node. 
         - This means the created ListNode is pointing the current node.
@@ -1999,7 +2043,7 @@
 
 ### LeetCode 3. Longest Substring Without Repeating Characters: [Problem](https://leetcode.com/problems/longest-substring-without-repeating-characters/)
 - Algirothm: Hash Table, String, Sliding Window / Two Pointers
-- Idea: Using Two pointers, the time complexity could be O(N).
+- Intro: Using Two pointers, the time complexity could be O(N).
 - Solve
     1. If the current number doesn't exist in the hash:
         - Increase `cnt` and add the number to the hash. Then increase `end`.
@@ -2009,7 +2053,7 @@
 ## 220426
 ### LeetCode 121. Best Time to Buy and Sell Stock: [Problem](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
 - Algorithm: Array, Dynamic Programming
-- Idea
+- Intro
     1. Save the maximum difference
     2. If the next value is bigger than the current minimum, check the maximum difference and update it.
 
@@ -2027,7 +2071,7 @@
 
 ### BOJ 1715. 카드 정렬하기: [Problem](https://www.acmicpc.net/problem/1715)
 - Algorithm: Data structure, Greedy, Priority queue
-- Idea: The key rule is that combining the 2 lowest values first.
+- Intro: The key rule is that combining the 2 lowest values first.
 - Solve
     1. Insert all the numbers to a minimum heap.
     2. Combine the 2 values on the top of the heap.
@@ -2037,11 +2081,11 @@
 ## 220424
 ### BOJ 4485. 녹색 옷 입은 애가 젤다지?: [Problem](https://www.acmicpc.net/problem/4485)
 - Algorithm: Graph theory, Dijkstra
-- Idea: This is a BFS problem that combines memoization(Dijkstra array). Similar with BOJ 1261.
+- Intro: This is a BFS problem that combines memoization(Dijkstra array). Similar with BOJ 1261.
 
 ### BOJ 11779. 최소비용 구하기 2: [Problem](https://www.acmicpc.net/problem/11779)
 - Algorithm: Graph theory, Dijkstra
-- Idea
+- Intro
     - Dijkstra + Print the visited nodes of the shortest path.
     - Time complexity: Using priority queue O(N*logN)
 - Solve
@@ -2085,7 +2129,7 @@
 ## 220421
 ### BOJ 1261. 알고스팟: [Problem](https://www.acmicpc.net/problem/1261)
 - Algorithm: Graph theory, Dijkstra, BFS
-- Idea: This is a BFS problem that combines memoization(Dijkstra array).
+- Intro: This is a BFS problem that combines memoization(Dijkstra array).
 - Solve
     1. Prepare 2 arrays.
         - Map[][]: Save the given map.
@@ -2101,7 +2145,7 @@
 - I plan to upload in **English** for a while to study.
 ### BOJ 1238. 파티: [Problem](https://www.acmicpc.net/problem/1238)
 - Algorithm: Graph theory, Dijkstra
-- Idea
+- Intro
     - This is a normal Dijkstra problem, but needs a little modification.
     - Time complexity: Using priority queue O(N*logN)
 - Solve
@@ -2113,7 +2157,7 @@
 ## 220415
 ### BOJ 1701. Cubeditor: [Problem](https://www.acmicpc.net/problem/1701)
 - Algorithm: 문자열, KMP, 라빈-카프
-- Idea: KMP 또는 라빈-카프 방식으로 구할 수 있다.
+- Intro: KMP 또는 라빈-카프 방식으로 구할 수 있다.
     - **KMP** Solve
         1. KMP의 핵심인 fail table을 생각해보자. prefix와 postfix가 일치하는 길이를 저장하는 테이블이다.
             - prefix와 postfix가 일치한다는 것은, 해당 문자가 2번 이상 등장한다는 의미이다.
@@ -2131,14 +2175,14 @@
 ## 220413
 ### BOJ 2606. 바이러스: [Problem](https://www.acmicpc.net/problem/2606)
 - Algorithm: 연결 리스트, BFS
-- Idea: Adjacency matrix를 vector로 많이 표현하지만, 연습을 위해 연결 리스트로 구현하였다.
+- Intro: Adjacency matrix를 vector로 많이 표현하지만, 연습을 위해 연결 리스트로 구현하였다.
 - Solve
     1. 연결 리스트를 구현 후 adjacency matrix를 입력함.
     2. 일반적인 BFS로 탐색해주며 노드를 하나 탐색할 때마다 cnt++하여 답을 구한다.
 
 ### BOJ 1707. 이분 그래프: [Problem](https://www.acmicpc.net/problem/1707)
 - Algorithm: 연결 리스트, DFS
-- Idea
+- Intro
     - 이 문제도 연결 리스트 연습을 위해 구현해 주었다.
     - 이분 그래프의 **핵심 아이디어**는 인접 노드를 탐색(DFS)하면서 다른 color로 칠해주는 것이다.
 - Solve
@@ -2150,7 +2194,7 @@
 
 ### BOJ 1764. 듣보잡: [Problem](https://www.acmicpc.net/problem/1764)
 - Algorithm: 문자열, 정렬, 해시
-- Idea
+- Intro
     - unordered_map을 사용해도 되지만 해시 연습을 위해 구현해 주었다.
     - 시간 복잡도: O(NlogN) = 해시 테이블 넣기 O(1*N) + set에 추가하기 O(NlogN) + set 데이터 가져오기 O(NlogN)
 - Solve
@@ -2161,7 +2205,7 @@
 
 ### BOJ 14427. 수열과 쿼리 15: [Problem](https://www.acmicpc.net/problem/14427)
 - Algorithm: 우선순위 큐 or 세그먼트 트리
-- Idea
+- Intro
     - 우선순위 큐의 데이터를 업데이트 해주거나, 세그먼트 트리로 구현할 수 있다.
 - Solve
     - **우선순위 큐**
@@ -2181,7 +2225,7 @@
 ## 220412
 ### BOJ 2075. N번째 큰 수: [Problem](https://www.acmicpc.net/problem/2075)
 - Algorithm: 자료 구조, 정렬, 우선순위 큐
-- Idea
+- Intro
     - 최대 힙에 다 넣어놓고 N번 pop을 해서 찾으면 된다고 생각함. 그러나 메모리 초과
 - Solve
     1. 최소 힙에 넣으면서 힙의 사이즈가 N 이상이면, 새로 들어온 숫자와 top()을 비교
@@ -2191,7 +2235,7 @@
 ## 220411
 ### BOJ 19236. 청소년 상어: [Problem](https://www.acmicpc.net/problem/19236)
 - Algorithm: 시뮬레이션, 백트래킹
-- Idea
+- Intro
     - 백트래킹에 여러 조건을 달아 고려할 것이 많은 문제
     - 맵 자체는 4x4여서 DP 최적화 없이 DFS로 탐색하면 된다.
 - Solve
@@ -2212,7 +2256,7 @@
 
 ### BOJ 1406. 에디터: [Problem](https://www.acmicpc.net/problem/1406)
 - Algorithm: 자료 구조, 스택, 연결 리스트
-- Idea
+- Intro
     - 메모리 풀 방식의 연결 리스트를 구현(노가다)해주었다. (48 ms)
     - **STL List**로도 구현이 가능하며, 시간이 약간 더 걸린다. (68 ms)
     - 2 개의 **Stack**으로 구현한 코드를 보니 시간이 더 빨랐다. (44 ms)
@@ -2220,12 +2264,12 @@
 ## 220410
 ### BOJ 15829. Hashing: [Problem](https://www.acmicpc.net/problem/15829)
 - Algorithm: 문자열, 해싱
-- Idea: hash 값을 구하는 문제
+- Intro: hash 값을 구하는 문제
 - Solve: 문자열에 31을 곱해 더해나갈때 매번 modular 연산으로 overflow가 나지 않도록 한다.
 
 ### BOJ 3033. 가장 긴 문자열: [Problem](https://www.acmicpc.net/problem/3033)
 - Algorithm: 문자열, 해싱, 라빈-카프
-- Idea
+- Intro
     1. 2번 이상 등장하는 부분 문자열의 길이를 이분탐색으로 찾는다.
     2. 시간 복잡도: O(L*LogL) = 이분탐색 O(logL) x 2번 이상 등장하는지 체크 O(L)
 - Solve
@@ -2240,7 +2284,7 @@
 
 ### SWEA 8382. 방향 전환: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWyNQrCahHcDFAVP)
 - Algorithm: BFS 또는 계산
-- Idea: BFS로 구현하거나, 규칙을 찾아 계산을 해주면 된다.
+- Intro: BFS로 구현하거나, 규칙을 찾아 계산을 해주면 된다.
 - Solve
     - BFS
         1. x좌표, y좌표, 이동방향, 이동횟수를 관리하는 node를 선언한다.
@@ -2257,7 +2301,7 @@
 ## 220409
 ### BOJ 11000. 강의실 배정: [Problem](https://www.acmicpc.net/problem/11000)
 - Algorithm: 정렬, PQ
-- Idea
+- Intro
     - 정렬과 PQ를 이용한 문제
     - 시간 복잡도: O(NlogN) = vector에 데이터 삽입 O(1*N) + vector 정렬 O(NlogN) + PQ를 이용한 쿼리 처리 O(NlogN)
 - Solve ([풀이 참고](https://velog.io/@soosungp33/BOJ-11000%EB%B2%88-%EA%B0%95%EC%9D%98%EC%8B%A4-%EB%B0%B0%EC%A0%95C))
@@ -2272,7 +2316,7 @@
 ## 220408
 ### BOJ 11660. 구간 합 구하기 5: [Problem](https://www.acmicpc.net/problem/11660)
 - Algorithm: Prefix Sum
-- Idea
+- Intro
     - Prefix Sum은 누적합을 미리 구한 다음, 특정 구간의 합을 빠르게 구하는 유형이다.
 - Solve
     1. 2차원 배열의 누적합을 구해 놓는다.<br/>
@@ -2282,7 +2326,7 @@
 
 ### BOJ 11003. 최솟값 찾기: [Problem](https://www.acmicpc.net/problem/11003)
 - Algorithm: O(N):Deque / O(NlogN): Priority Queue, Seg Tree
-- Idea
+- Intro
     - O(N*logN)이면 아슬아슬하고 O(N)이어야 넉넉히 풀리는 문제
     - O(N*logN)이 왜 안 될 수 있는지 [다음 글](https://www.acmicpc.net/board/view/36198)을 읽어보자.
     - 개인적으로 PQ 문제들이 다양한 접근방식을 고민하기에 좋은것 같다.<br/>
@@ -2300,7 +2344,7 @@
 ## 220407
 ### SWEA 1257. K번째 문자열: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV18KWf6ItECFAZN)
 - Algorithm: 문자열, 조합
-- Idea
+- Intro
     - 모든 문자열 조합을 구하는 방법을 사용했다.
     - LCP(Longest Common Prefix)를 활용하는 방법이 있다고 한다.
 - Solve
@@ -2319,7 +2363,7 @@
 
 ### BOJ 9612. Maximum Word Frequency: [Problem](https://www.acmicpc.net/problem/9612)
 - Algorithm: Hash
-- Idea: unordered_map을 활용하거나 직접 구현하여 Hash에 key-value를 저장한다.
+- Intro: unordered_map을 활용하거나 직접 구현하여 Hash에 key-value를 저장한다.
 - Solve
     1. str을 입력받아서 unordererd_map에 추가하며 value를 증가시켜 준다.
         - `m[str]++`
@@ -2331,7 +2375,7 @@
 ## 220406
 ### SWEA 4340. 파이프 연결: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWL6LhM6A60DFAUY)
 - Algorithm: 백트래킹, DP
-- Idea
+- Intro
     - 파이프를 돌릴 수 있다는 것은, 같은 타입의 파이프를 모두 사용할 수 있다는 것을 의미한다.
     - 들어온 방향에 따라 어떻게 이동이 되는지 생각한다.
         1. 직선 파이프는 들어온 방향이 유지 된다.
@@ -2353,7 +2397,7 @@
 ## 220404
 ### BOJ 9252. LCS 2: [Problem](https://www.acmicpc.net/problem/9252)
 - Algorithm: DP
-- Idea: memo 배열을 만드는 것도 문제지만, LCS를 어떻게 도출할지 고민해야 함.
+- Intro: memo 배열을 만드는 것도 문제지만, LCS를 어떻게 도출할지 고민해야 함.
 - Solve
     1. memo 배열 만들기
         1. 문자열A, 문자열B의 한글자씩 비교해봅니다.
@@ -2370,7 +2414,7 @@
 
 ### BOJ 1987. 알파벳: [Problem](https://www.acmicpc.net/problem/1987)
 - Algorithm: 백트래킹
-- Idea: 백트래킹 기본기 점검을 위한 문제.
+- Intro: 백트래킹 기본기 점검을 위한 문제.
 - Solve
     - 방문한 곳을 다시 방문하지 않도록 visited를 사용하고,
     - 한번 지나간 알파벳도 다시 사용하지 않도록 alphabet 배열을 추가로 사용한다.
@@ -2379,7 +2423,7 @@
 ## 220403
 ### SWEA 1798. 범준이의 제주도 여행 계획: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV4x9oyaCR8DFAUx)
 - Algorithm: 백트래킹
-- Idea: 백트래킹 수행 중 따져야 할 것이 많은 문제
+- Intro: 백트래킹 수행 중 따져야 할 것이 많은 문제
 - Solve
     1. 관광지와 그 외의 것들로 구분해서 관리하는 것이 편하다.
     2. 허용된 시간(540분) 안에서 관광지를 최대한 돌고 540이 초과되면 호텔이나 공항을 선택한다.
@@ -2388,7 +2432,7 @@
 
 ### SWEA 8189. 우편함: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWwtU7XqhL0DFAWU)
 - Algorithm: 구현
-- Idea: 시간을 1씩 증가시키면서 문제의 조건에 맞게 구현한다.
+- Intro: 시간을 1씩 증가시키면서 문제의 조건에 맞게 구현한다.
 - Solve
     1. 메일함을 확인하는 조건은 설정한 메일함의 용량에 도달했을 때, 그리고 메일 수령 이후 특정 시간이 지났을 때이다.
         - 메일함을 확인할 때는 절반만 확인해준다.
@@ -2396,11 +2440,11 @@
 
 ### BOJ 11437. LCA: [Problem](https://www.acmicpc.net/problem/11437)
 - Algorithm: Lowest Common Ancestor
-- Idea: 좀 더 공부를 하고 업데이트 할 것.
+- Intro: 좀 더 공부를 하고 업데이트 할 것.
 
 ### BOJ 11066: 파일 합치기: [Problem](https://www.acmicpc.net/problem/11066)
 - Algorithm: DP
-- Idea: `memo` 배열의 인자와 채워나가는 순서를 고민해야 하는 문제
+- Intro: `memo` 배열의 인자와 채워나가는 순서를 고민해야 하는 문제
 - Solve
     1. memo 배열은 2차원으로, 첫번째는 합치는 범위의 시작 index, 두번째는 종료 index 이다.
     2. 재귀나 for 문의 기법을 사용해서 가장 작은 단위부터 memo 배열을 채워 나간다.
@@ -2423,12 +2467,12 @@
 
 ### BOJ 11049. 행렬 곱셈 순서: [Problem](https://www.acmicpc.net/problem/11049)
 - Algorithm: DP
-- Idea: 위 **파일 합치기** 문제와 비슷함. 더해줘야 하는 offset만 다르다.
+- Intro: 위 **파일 합치기** 문제와 비슷함. 더해줘야 하는 offset만 다르다.
 
 ## 220401
 ### SWEA 6855. 신도시 전기 연결하기: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWhUBBUqQO0DFAW_)
 - Algorithm: Sort
-- Idea
+- Intro
     - 도시 간 거리가 높은 곳부터 발전소를 배치하자.
     - PS에서 **정렬**이 쓰이는 경우가 많다. 아이디어가 떠오르지 않으면 정렬을 생각해보자.
 - Solve
@@ -2438,7 +2482,7 @@
 ## 220331
 ### SWEA 7701. 염라대왕의 이름 정렬: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWqU0zh6rssDFARG)
 - Algorithm: Hash, Priority Queue
-- Idea: 우선순위 큐의 우선순위 조정을 할 수 있으면 된다. 
+- Intro: 우선순위 큐의 우선순위 조정을 할 수 있으면 된다. 
 - Solve
     - 우선순위 조정을 위한 struct 선언: 길이가 짧은 것이 우선순위가 높고, 길이가 같으면 사전 순서가 앞인 것이 우선순위가 높다.
     - Hash를 이용해 중복된 원소가 삽입되지 않도록 한다.
@@ -2446,7 +2490,7 @@
 ## 220330
 ### SWEA 1227. 미로2: [Problem](https://swexpertacademy.com/main/code/problem/problemSolver.do?contestProbId=AV14wL9KAGkCFAYD)
 - Algorithm: BFS
-- Idea: 맵을 탐색하여 목표 지점에 도착할 수 있는지 확인하는 문제.
+- Intro: 맵을 탐색하여 목표 지점에 도착할 수 있는지 확인하는 문제.
     - N이 **10~20** 이면 **DFS나 BFS** 사용 가능
     - N이 **30~100** 이면 **BFS**일 가능성이 큼
     - visited 배열 등, 배열 초기화시 memset을 사용하자. for문보다 빠르게 초기화 가능
@@ -2461,7 +2505,7 @@
 
 ### SWEA 7988. 내전 경기: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWvQZmdKUoEDFASy)
 - Algorithm: 이분 그래프, Hash
-- Idea: 노드를 탐색하며 **이분 그래프** 기법으로 팀을 나누어 본다.
+- Intro: 노드를 탐색하며 **이분 그래프** 기법으로 팀을 나누어 본다.
 - Solve
     1. 노드의 값이 string이기 때문에 hash를 사용하여 int로 변환해 준다. (string - key)
         - 인접 노드 벡터를 선언하여 변환된 int에 맞게 입력을 받는다.
@@ -2474,7 +2518,7 @@
 ## 220328
 ### BOJ 1655. 가운데를 말해요: [Problem](https://www.acmicpc.net/problem/1655)
 - Algorithm: Priority Queue
-- Idea: 최대 힙과 최소 힙을 활용하여 최대 힙의 top이 가운데 값을 유지하게 한다.
+- Intro: 최대 힙과 최소 힙을 활용하여 최대 힙의 top이 가운데 값을 유지하게 한다.
 - Solve
     1. 최대 힙의 크기는 최소 힙의 크기와 같거나, 하나 더 크다.
     2. 최대 힙의 최대 원소는 최소 합의 최소 원소보다 작거나 같다.
@@ -2482,7 +2526,7 @@
 
 ### BOJ 12865. 평범한 배낭: [Problem](https://www.acmicpc.net/problem/12865)
 - Algorithm: DP
-- Idea: DP 배열의 차원과 의미에 대해 고민해야 하는 문제. 구글링으로 해결..
+- Intro: DP 배열의 차원과 의미에 대해 고민해야 하는 문제. 구글링으로 해결..
 - Solve
     1. DP의 핵심이 되는 memo 배열을 어떻게 구성할지 생각해본다.
         - 모든 아이템의 상태를 저장하려면 100 bit가 필요하여 불가능하다.
@@ -2500,7 +2544,7 @@
 
 ### SWEA 2115. 벌꿀채취: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV5V4A46AdIDFAWu)
 - Algorithm: 백트래킹
-- Idea: 백트래킹을 꼭 재귀로만 구현할 필요 없다는 것을 다시 확인한 문제.
+- Intro: 백트래킹을 꼭 재귀로만 구현할 필요 없다는 것을 다시 확인한 문제.
     - 선택 대상이 적거나, 혹은 너무 많아서 *스택 오버플로우* 가 발생한다면 for문으로 구현해야 한다.
 - Solve
     1. 2명의 일꾼이 작업하는 범위는 가로로 배치되며, 겹치지 않아야 한다.
@@ -2513,7 +2557,7 @@
 ## 220326
 ### BOJ 1038. 감소하는 수: [Problem](https://www.acmicpc.net/problem/1038)
 - Algorithm: 백트래킹
-- Idea: 감소하는 수를 만드는 것이 은근히 까다로웠던 문제. 감소하는 수의 **최대값**이 무엇일지 생각해보자.
+- Intro: 감소하는 수를 만드는 것이 은근히 까다로웠던 문제. 감소하는 수의 **최대값**이 무엇일지 생각해보자.
 - Solve
     1. 감소하는 수의 최대값은 **9876543210** 이다.
     2. 지저분한 방법
@@ -2528,7 +2572,7 @@
 
 ### BOJ 7662. 이중 우선순위 큐: [Problem](https://www.acmicpc.net/problem/7662)
 - Algorithm: Priority Queue
-- Idea: 우선순위 큐 구현에 매몰되지 말고 STL을 잘 활용하자.
+- Intro: 우선순위 큐 구현에 매몰되지 말고 STL을 잘 활용하자.
 - Solve
     1. 우선순위 큐 2개(최소 힙과 최대 힙)을 준비한다. 구현을 해도 되고, 굳이 update가 필요없다면 STL을 사용한다.
         1. Push 할 때 두개의 힙에 모두 Push 해준다. check 배열을 하나 두고 count를 1씩 증가시킨다.
@@ -2540,7 +2584,7 @@
 
 ### BOJ 1305. 광고: [Problem](https://www.acmicpc.net/problem/7662)
 - Algorithm: KMP
-- Idea: 현재 광고판에서 가능한 가장 짧은 패턴을 찾아내는 문제. 옆으로 이동한다는 가정은 신경쓸 필요가 없다.
+- Intro: 현재 광고판에서 가능한 가장 짧은 패턴을 찾아내는 문제. 옆으로 이동한다는 가정은 신경쓸 필요가 없다.
 - Solve
     1. KMP 알고리즘에서 pattern의 prefix와 postfix가 일치하는 길이를 테이블에 기록하는데, 이를 **Fail Table**이라고 한다.
         - pattern의 원소를 처음부터 하나씩 늘려가며 prefix와 postfix가 일치하는 최대 길이를 테이블의 원소로 기록한다.
@@ -2553,7 +2597,7 @@
 ## 220324
 ### BOJ 10971. 외판원 순회 2: [Problem](https://www.acmicpc.net/problem/10971)
 - Algorithm: 백트래킹, DP
-- Idea: 일반적인 백트래킹으로도 풀 수 있지만, **DP를 이용하여 최적화** 할 수 있는 문제.
+- Intro: 일반적인 백트래킹으로도 풀 수 있지만, **DP를 이용하여 최적화** 할 수 있는 문제.
 - Solve
     1. 평범한 방식: 모든 노드를 방문한 후, 최초 시작 지점으로 갈 수 있는지 확인하여 최소값을 갱신한다.
         -  visited 배열을 써서 다시 방문하지 않고, cost[current][i]가 0인 경우를 가지치기 해주었다.
@@ -2569,7 +2613,7 @@
 
 ### BOJ 2193. 이친수: [Problem](https://www.acmicpc.net/problem/2193)
 - Algorithm: DP
-- Idea: memo 배열을 **2차원**으로 생각해본다.
+- Intro: memo 배열을 **2차원**으로 생각해본다.
 - Solve
     1. 규칙: 1이 2번 연속 나타날 수 없다.
     2. *i번째에서 0으로 끝나는 이친수* 를 생각해 보자.
@@ -2581,7 +2625,7 @@
 
 ### BOJ 1904. 01타일: [Problem](https://www.acmicpc.net/problem/1904)
 - Algorithm: DP
-- Idea: N이 2, 3, 4의 경우를 따져보고 규칙을 찾아보자.
+- Intro: N이 2, 3, 4의 경우를 따져보고 규칙을 찾아보자.
 - Solve
     1. 이친수와 비슷하지만 약간 다르다. 1은 제한이 없고 0은 2개씩 붙여서 사용해야 한다.
     2. memo[i]와 memo[i-1] 관계를 생각해보자.
@@ -2596,7 +2640,7 @@
 ## 220323
 ### BOJ 14889. 스타트와 링크: [Problem](https://www.acmicpc.net/problem/14889)
 - Algorithm: 백트래킹
-- Idea: 짝수 사람들을 두 팀으로 나누고 능력치를 합산하여 능력치 차가 최소가 되도록 한다.
+- Intro: 짝수 사람들을 두 팀으로 나누고 능력치를 합산하여 능력치 차가 최소가 되도록 한다.
 - Solve
     1. `N/2`의 사람들을 선택하면 나머지는 자동으로 다른 팀이 된다. 이렇게 하여 시도했지만 시간 초과가 났다.
         - 각 경우의 수에서 사람번호를 찍어보니 **중복으로 선택되는 경우**가 있었다.
@@ -2609,7 +2653,7 @@
 
 ### BOJ 11053. 가장 긴 증가하는 부분 수열: [Problem](https://www.acmicpc.net/problem/11053)
 - Algorithm: DP
-- Idea: i번째 최대값 `best[i]`를 계속 갱신하여 답을 찾는다. 원소의 개수가 1000개 이하여서 **이중 for문**으로 가능하다.
+- Intro: i번째 최대값 `best[i]`를 계속 갱신하여 답을 찾는다. 원소의 개수가 1000개 이하여서 **이중 for문**으로 가능하다.
 - Solve
     1. i 이전까지 가장 긴 값을 j를 이용해 탐색한다.
     2. `arr[i] > arr[j]` 이면 현재의 최대값 `best[i]`과 `best[j]+1` 을 비교하고 더 크면 갱신한다.
@@ -2617,7 +2661,7 @@
 
 ### BOJ 12015. 가장 긴 증가하는 부분 수열 2: [Problem](https://www.acmicpc.net/problem/12015)
 - Algorithm: DP, Binary search
-- Idea: 원소의 개수가 백만개이므로 이중 for문으로는 시간초과가 난다.
+- Intro: 원소의 개수가 백만개이므로 이중 for문으로는 시간초과가 난다.
     - 이번엔 실제로 증가하는 부분수열을 만들어 본다.
 - Solve
     1. 부분 수열을 만들기 위한 **vector**나 배열을 준비하고 **0번째 숫자**를 넣는다.
@@ -2631,7 +2675,7 @@
 ## 220322
 ### BOJ 9663. N-Queen: [Problem](https://www.acmicpc.net/problem/9663)
 - Algorithm: 백트래킹, DP
-- Idea
+- Intro
     - 백트래킹의 대표적인 문제라고 한다. 처음에는 단순히 경우의 수를 세어보려고 했지만 어림 없었다. 위키피디아를 참고 했다.
 - Solve
     1. 위키 코드에서는 아래로 한 행씩 늘려가며 탐색한다. 퀸은 가로/세로/대각을 공격할 수 있기 때문에, 각각 다른 행에 놓아야 한다.
@@ -2663,11 +2707,11 @@
 
 ### BOJ 15654. N과 M (5): [Problem](https://www.acmicpc.net/problem/15654)
 - Algorithm: 백트래킹
-- Idea: 배열에 입력값을 받아 정렬 후 순열을 구해준다. 재귀로 순열을 구하는 기본적인 문제
+- Intro: 배열에 입력값을 받아 정렬 후 순열을 구해준다. 재귀로 순열을 구하는 기본적인 문제
 
 ### BOJ 15663. N과 M (9): [Problem](https://www.acmicpc.net/problem/15663)
 - Algorithm: 백트래킹
-- Idea
+- Intro
     - 입력값은 중복이 있을 수 있지만, 한번 출력한 조합은 더 이상 출력하지 말아야 한다.
     - 최적화에 대한 고민이 필요한 문제.
 - Solve
@@ -2678,7 +2722,7 @@
 
 ### BOJ 11727. 2×n 타일링 2: [Problem](https://www.acmicpc.net/problem/11727)
 - Algorithm: DP
-- Idea: 기본적인 관계식을 구하는 문제.
+- Intro: 기본적인 관계식을 구하는 문제.
 - Solve
     - 처음에 관계식을 잘못 구했다. `memo[i] = memo[i-1]*memo[1]*2 + memo[i-2]*memo[2]*2 + ... + memo[i/2]*memo[i/2]*2`
         - 위 수식은 중복된 경우를 따지게 된다.
@@ -2690,7 +2734,7 @@
 ## 220318
 ### BOJ 11286. 절댓값 힙: [Problem](https://www.acmicpc.net/problem/11286)
 - Algorithm: 자료구조, 우선순위 큐
-- Idea
+- Intro
     - 기본 우선순위 큐 구현 + 커스텀 노드의 우선순위를 판별한다.
 - Solve
     1. 문제의 조건에 맞게 비교함수를 구현할 것
@@ -2713,7 +2757,7 @@
 
 ### SWEA 2112. 보호 필름: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV5V1SYKAaUDFAWu)
 - Algorithm: 백트래킹, 구현
-- Idea
+- Intro
     - 특정 line을 0또는 1로 칠해가며 모든 경우의 수를 탐색
 - Solve
     1. check(): 현재 film의 상태가 합격할 수 있는 상태인지 확인하는 함수
@@ -2723,7 +2767,7 @@
 
 ### BOJ 10844. 쉬운 계단 수: [Problem](https://www.acmicpc.net/problem/10844)
 - Algorithm: DP
-- Idea
+- Intro
     - 계단수 길이를 하나씩 늘어날때, 마지막 숫자는 이전 수 마지막 숫자와 1씩 차이가 나는 것을 이용
 - Solve
     1. dp[i][j]: i번째 계단수가 j로 끝날 때 개수. 0과 9를 제외하고 다음과 같은 규칙이 있다.
@@ -2734,7 +2778,7 @@
 
 ### SWEA 3234. 준환이의 양팔저울: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWAe7XSKfUUDFAUw)
 - Algorithm: 백트래킹, DP
-- Idea
+- Intro
     - **조건**: 왼쪽 추들의 합계보다 오른쪽이 작거나 같아야 한다.
     - 추를 하나하나 조건에 맞게 놓으면서, 반복되는 계산을 `memo[]`에 기록하여 다시 계산하지 않도록 한다.
 - Solve
@@ -2750,7 +2794,7 @@
 ## 220317
 ### SWEA 1808. 지희의 고장난 계산기: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV4yC3pqCegDFAUx)
 - Algorithm: 백트래킹
-- Idea
+- Intro
     - 숫자만 눌러서 만들 수 있으면 바로 리턴, 아니면 재귀를 통한 탐색
 - Solve
     1. makeNums(): 누를 수 있는 숫자들을 조합하여 만들 수 있는 숫자들을 구하고, 누른 횟수를 made[]에 저장한다.
@@ -2759,7 +2803,7 @@
 
 ### BOJ 11659, 구간 합 구하기 4: [Problem](https://www.acmicpc.net/problem/11659)
 - Algorithm: 세그먼트 트리
-- Idea
+- Intro
     - 세그먼트 트리 기본문제. 입력받을 때 누적합을 구하는 dp 접근 방식도 있는것 같다.
 - Solve
     1. makeTree(): 재귀로 leaf node에 도착한 뒤 tree[idx] 값 입력. 돌아오면서 합으로 채워짐
@@ -2773,7 +2817,7 @@
 
 ### SWEA 6731. 홍익이의 오델로 게임: [Problem](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWefzFeq5P8DFAUh)
 - Algorithm: N/A
-- Idea
+- Intro
     - 한 면은 흰색, 다른 면은 흑색인 돌이 배치된 오델로 판이 주어진다.
     - 처음에 모두 흰색으로 배치되어 있고, 최종적으로 되어야 하는 모습이 주어질 때 몇 번만에 달성할 수 있는지 찾는 문제.
     - 모든 경우의 수를 탐색하는 백트래킹으로 생각했지만, 경우의 수가 너무 많고 가지치기 조건이 생각나지 않았다.
