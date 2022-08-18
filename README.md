@@ -1,12 +1,11 @@
 ### 목적
-- 공부한 내용, 문제 해결방법 등 기록하기
+- 공부한 내용, 문제 해결방법 등을 기록하기
 
 ### 공부 주제
-- 알고리즘 문제
-- 프로그래밍 언어: Cpp, Python, Qt 등
-- 빌드 시스템
-- 컴퓨터 구조
-- SW 설계 및 최적화
+- Basic Computer Science
+- 알고리즘
+- 프로그래밍 언어: Cpp, Python 등
+- 개발 프레임워크: Qt, OpenGL, Gstreamer 등
 
 ### 기타
 - 마크다운 [문법](https://gist.github.com/ihoneymon/652be052a0727ad59601)
@@ -20,6 +19,36 @@
         코드 
        ```
     - 지수: 2<sup>n</sup>
+
+## 220818
+### LeetCode 84. Largest Rectangle in Histogram: [Problem](https://leetcode.com/problems/largest-rectangle-in-histogram/)
+- Algorithm: Array, Monotonic Stack / Level: Hard
+- Intro
+    - heights 배열이 주어질 때, 히스토그램에서 가장 넓은 직사각형의 면적을 구하여라. 각 bar의 width는 1이다.
+    - Monotonic stack 활용: 이 스택은 원소들이 오름차순 또는 내림차순 상태를 유지하도록 한다.
+        - stack에는 height가 아니라 index를 저장할 것이다.
+    - 계산의 편의를 위해 heights 배열 끝에 height가 0인 bar를 추가해준다.(index는 n이 된다.)
+        - 맨 앞에도 height가 0이고 index가 -1인 원소가 있는 것으로 생각한다.
+- Solve [참고](https://leetcode.com/problems/largest-rectangle-in-histogram/discuss/732697/44ms-Easy-Solution-or-C%2B%2B)
+    1. 왼쪽부터 원소들을 순회하며 `heights[st.top()] <= heights[i]`이면 stack에 바로 push 한다.
+    2. `heights[st.top()] > heights[i]`이면,
+        - stack이 비거나 `heights[st.top()] <= heights[i]`가 될 때까지 pop을 하며 면적을 계산해준다.
+            ```cpp
+                while (!st.empty() && heights[st.top()] > heights[i]) {
+                    int cur_height = heights[st.top()];
+                    st.pop();
+                    int idx = st.empty() ? -1 : st.top();
+                    ans = max(ans, cur_height * (i - idx - 1));
+                }
+            ```
+        - 위 코드에서 왜 st.pop()을 하고 인덱스를 계산하는지 의아할 수 있다.
+            - 스택의 top 원소(cur_height의 index)와 그 아래 index 사이의 간격을 구하기 위함이다.
+            - 그 간격이 얼마가 되었든, 그 사이의 height들은 cur_height 보다 크거나 같기 때문(monotonic stack)에 면적 계산에 포함된다.
+        - 그리고 스택이 empty()일 때 index = -1인 이유는, 앞서 얘기한 것처럼 맨 앞에 height가 0인 것이 있는것으로 가정했기 때문이다.
+    3. 면적의 최대값을 구하여 리턴한다.
+- Complexity
+    1. Time: O(N) = 모든 원소가 한 번씩만 push/pop 됨
+    2. Space O(N) = 최대 stack 크기
 
 ## 220817
 ### LeetCode 122. Best Time to Buy and Sell Stock II: [Problem](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)
