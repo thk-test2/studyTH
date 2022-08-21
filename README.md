@@ -2,10 +2,10 @@
 - 공부한 내용, 문제 해결방법 등을 기록하기
 
 ### 공부 주제
-- Basic Computer Science
+- Computer Science Basics
 - 알고리즘
 - 프로그래밍 언어: Cpp, Python 등
-- 개발 프레임워크: Qt, OpenGL, Gstreamer 등
+- 개발 프레임워크: Qt, OpenGL, GStreamer 등
 
 ### 기타
 - 마크다운 [문법](https://gist.github.com/ihoneymon/652be052a0727ad59601)
@@ -19,6 +19,68 @@
         코드 
        ```
     - 지수: 2<sup>n</sup>
+
+## 220819
+### LeetCode 130. Surrounded Regions: [Problem](https://leetcode.com/problems/surrounded-regions/)
+- Algorithm: Array, BFS, Union Find / Level: Medium
+- Intro
+    - 'X'와 'O'로 이루어진 matrix가 주어질 때, 'X'로 둘러싸인 'O'의 영역을 모두 'X'로 바꾸어라.
+    - 4방향이 모두 'X'로 싸여있어야 한다.
+    - `1 <= m, n <= 200`: 보통 matrix 크기가 1 ~ 50은 DFS로, 50 ~ 100은 BFS로 풀이가 가능하다고 한다.
+        - 나는 BFS + visited 배열로 풀었다.
+- Solve
+    1. `1<= i < M-1`, `1 <= j < N-1`에 대해 BFS를 수행한다.
+        - 가장 자리를 제외하는 이유는 가장 자리에 있는 'O'는 'X'에 둘러싸일 수 없기 때문이다.
+        - visited 배열과, 탐색하는 경로를 저장할 vector를 추가로 사용한다.
+    2. 만약 BFS 수행 중 가장자리에 닿으면 탐색을 멈추는 것이 아니라 `captured = false`로 기록해 둔다.
+        - `captured = false`라도 모든 영역을 탐색하며 visited배열에 기록하기 위함이다.
+        - `captured = true`이면 지나온 경로를 'X'로 바꿔준다.(vector에 저장되어 있을 것이다.)
+- Complexity
+    1. Time: O(MN) = 모든 matrix 탐색
+    2. Space: O(MN + MN) = visited 배열 + 탐색한 경로를 저장하는 벡터 사용
+
+### LeetCode 28. Implement strStr(): [Problem](https://leetcode.com/problems/implement-strstr/)
+- Algorithm: Two Pointers, String Matching, KMP / Level: Easy
+- Intro
+    - Text와 찾아야 하는 pattern이 주어질 때, pattern이 처음 등장하는 index를 찾아 리턴하라.
+    - O(N*M)의 브루트포스로 풀어도 통과 가능하고, O(N+M)의 복잡도인 KMP 알고리즘을 쓸 수도 있다.
+- Solve
+    - KMP는 접두사와 접미사가 같으면 비교를 건너뛸 수 있다는 것을 활용하는 알고리즘이다.
+        - 다음 [사이트](https://bowbowbow.tistory.com/6)의 설명을 참고해 보자.
+- Complexity
+    1. Time: O(M+N) = Text의 길이 M + Pattern의 길이 N
+    2. Space: O(N) = Pattern의 길이를 크기로 갖는 Fail Table을 사용한다.
+
+### LeetCode 88. Merge Sorted Array: [Problem](https://leetcode.com/problems/merge-sorted-array/)
+- Algorithm: Array, Two Pointers, Sorting / Level: Easy
+- Intro
+    - 오름차순으로 정렬되어 있는 두 정수 배열이 주어진다. 모든 원소가 정렬되도록 두 배열을 merge 해야 한다.
+    - 단순히 합친 후 sort()를 써도 되지만, O(M+N) 시간복잡도로 풀고자 하면 난이도가 상승한다.
+    - Easy 문제에도 최적화를 고민해야 하는 좋은 Follow-up 질문들이 있다. 다음은 추천 할 만한 문제들이다.
+        - 101. Symmetric Tree: [링크](https://leetcode.com/problems/symmetric-tree/)
+        - 160. Intersection of Two Linked Lists: [링크](https://leetcode.com/problems/intersection-of-two-linked-lists/)
+        - 283. Move Zeroes: [링크](https://leetcode.com/problems/move-zeroes/)
+        - 234. Palindrome Linked List: [링크](https://leetcode.com/problems/palindrome-linked-list/)
+- Solve: 다음 [풀이](https://leetcode.com/problems/merge-sorted-array/discuss/29614/C%2B%2B-solution-runtime-O(n)-in-place-easy-to-understand) 참고함
+    1. nums1에 nums2를 정렬된 상태로 합쳐야 한다. nums1에는 M+N 만큼의 공간이 할당되어 있다.
+    2. 변수들을 다음과 같이 초기화 한다.
+        - `int i = m - 1`: i는 nums1에 있는 숫자를 뒤에서부터 탐색하는데 사용된다.
+        - `int j = n - 1`: j는 nums2를 뒤에서부터 탐색하는데 사용된다.
+        - `int k = m + n - 1`: k는 nums1에 정렬된 값을 assign 하는데 사용된다.
+    3. 다음 알고리즘이 핵심이다.
+        - nums1과 nums2의 원소들을 뒤에서부터 비교하며 더 큰 값을 k 위치에 assign 해준다.
+        ```cpp
+            while (i >= 0 && j >= 0) {
+                if(nums1[i] > nums2[j])
+                    nums1[k--] = nums1[i--];
+                else
+                    nums1[k--] = nums2[j--];
+            }
+        ```
+     4. 혹시 nums2의 원소가 남아있다면 nums1에 복사해준다.
+- Complexity
+    1. Time: O(M+N) = M+N 길이의 nums1을 한 번만 순회한다.
+    2. Space: O(1) = 추가 배열을 사용하지 않는다.
 
 ## 220818
 ### LeetCode 84. Largest Rectangle in Histogram: [Problem](https://leetcode.com/problems/largest-rectangle-in-histogram/)
