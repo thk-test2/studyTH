@@ -20,6 +20,25 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220821
+### LeetCode 48. Rotate Image: [Problem](https://leetcode.com/problems/rotate-image/)
+- Algorithm: Array, Math, Matrix / Level: Medium
+- Intro
+    - 2차원 matrix를 90도 회전시켜야 한다. 추가 배열을 사용하지 않고 주어진 matrix 안에서 수행해야 한다.
+- Solve
+    1. 90도 회전시킬 때 원소들의 좌표는 다음 규칙을 따라 이동한다.
+        - int ni = j, nj = matrix.size() - 1 - i;
+    2. 위 규칙을 활용하여 제일 바깥 테두리부터 원소를 이동시킨다.
+        - 3x3 matrix의 경우 (0,0) -> (0,2) -> (2,2) -> (2,0) -> (0,0) 순으로 돈다.
+        - 다시 시작점으로 돌아온 것을 어떻게 알 수 있을까? 최초 출발할 때 식별할 수 있는 값(9999 등)을 넣어주면 된다.
+        - (0,0)으로 돌아왔다면 이제 (0,1)에서 출발하면 된다.
+    3. 바깥 테두리를 다 돌았다면 이제 안쪽 테두리로 이동하여 다시 원소들을 이동시킨다.
+        - 이제 시작점이 (1,1)이 될 것이다.
+        - (N/2, N/2)까지 진행하면 모든 원소를 이동시킬 수 있다.
+- Complexity
+    1. Time: O(N^2) = matrix의 모든 원소를 탐색함
+    2. Space: O(N) = 재귀 함수 stack 공간 필요함
+
 ## 220819
 ### LeetCode 130. Surrounded Regions: [Problem](https://leetcode.com/problems/surrounded-regions/)
 - Algorithm: Array, BFS, Union Find / Level: Medium
