@@ -20,6 +20,83 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220827
+### 363. Max Sum of Rectangle No Larger Than K: [Problem](https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/)
+- Algorithm: Array, Matrix, Prefix Sum, Binary Search, Ordered Set / Level: Hard
+- Intro
+    - 2차원 int 배열이 주어질 때, sub matrix의 max sum을 구하는 문제. max sum은 k 이하여야 한다.
+- Solve
+    1. 나는 prefix sum을 이용해서 풀었지만 time complexity가 O((MN)^2) 이므로 효율적인 방법이 아니다.
+    2. Kadane 알고리즘으로 O(M N logN) 복잡도로 풀 수 있다. 다음 솔루션을 참고해보자.[참고](https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/discuss/851448/C%2B%2B-from-800-ms-to-50-ms)
+- Complexity
+    1. Time: O((MN)^2) = 모든 구간의 합을 구함
+    2. Space: O(MN) = Prefix Sum 배열 사용함
+
+## 220823
+### LeetCode 208. Implement Trie (Prefix Tree): [Problem](https://leetcode.com/problems/implement-trie-prefix-tree/)
+- Algorithm: Hash Table, String, Design, Trie / Level: Medium
+- Intro
+    - 문자열을 저장 및 탐색하는 Trie를 구현하는 문제.
+- Solve
+    1. Trie의 기본 Node를 선언해준다.
+        - Node는 알파벳 개수 26크기의 Node* 배열과, 문자열 끝임을 알 수 있는 isEnd 변수를 갖고 있다.
+    2. String이 들어오면 처음 character부터 해당 Node가 생성되어 있는지 확인한다.
+        - 현재 character에 해당하는 Node가 없다면, 생성하여 부모 Node의 배열에 할당하고 다음 index로 넘어간다.
+        - 재귀나 반복문을 통해 구현해준다. [반복문을 이용한 구현](https://leetcode.com/problems/implement-trie-prefix-tree/discuss/58842/Maybe-the-code-is-not-too-much-by-using-%22next26%22-C%2B%2B)
+    3. 마지막 character에 도착하면 isEnd 변수를 true로 설정해 준다.
+        - 문자열 탐색시 isEnd 변수로 해당 문자열의 존재 여부를 확인할 수 있다.
+- Complexity
+    1. Time
+        - 생성 시간 복잡도: O(ML) = 문자열 M개 x 문자열들의 평균 길이 L
+        - 탐색 시간 복잡도: O(L) = 문자열 하나를 탐색할 때
+    2. Space
+        - O(26^L) = 크기 26인 배열 ^ 문자열들의 평균 길이 L
+
+## 220822
+### LeetCode 395. Longest Substring with At Least K Repeating Characters: [Problem](https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/)
+- Algorithm: Hash Table, String, Divide and Conquer, Sliding Window / Level: Medium
+- Intro
+    - string과 정수 k가 주어질 때, 모든 원소들이 k개 이상 등장하는 가장 긴 substring을 구하여라.
+- Solve
+    1. Brute Force
+        - 모든 substring에 대해 hash map으로 각 character들이 2번 이상 등장하는지 검사한다.
+    2. Divde and Conquer: [참고](https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/solution/)
+        1. Build the countMap with the frequency of each character in the string s.
+        2. Find the position for mid index by iterating over the string.
+            - The mid index would be the first invalid character in the string.
+        3. Split the string into 2 substrings at the mid index and recursively find the result.
+- Complexity
+    1. Brute Force
+        1. Time: O(N^2) = substring 만드는 데 O(N^2)이 들고, 26의 크기를 갖는 hash map을 검사.(복잡도에서는 제외)
+        2. Space: O(1) = 26의 크기를 갖는 hash map을 사용함.(Constant space)
+    2. Divde and Conquer
+        1. Time: 최악의 경우 O(N^2) 이지만 보통 Brute force 보다는 빠르다.
+        2. Space: O(N) = 재귀 함수 stack 공간
+
+### LeetCode 380. Insert Delete GetRandom O(1): [Problem](https://leetcode.com/problems/insert-delete-getrandom-o1/)
+- Algorithm: Array, Hash Table, Math, Design, Randomized / Level: Medium
+- Intro
+    - RandomizedSet을 구현하는 문제. 모든 원소를 같은 확률로 return 할 수 있어야 한다.
+        - `insert(int val)`: val이 set에 없다면 삽입한다. 
+        - `remove(int val)`: 원소가 set에 있다면 제거한다.
+        - `int getRandom()`: 원소를 random하게 선택하여 return 한다.
+    - 모든 함수는 O(1)의 평균 시간 복잡도를 가져야 한다.
+- Solve
+    1. 처음 든 생각은 unordred_map을 단독으로 사용하는 것이었다. 
+        - 하지만 unordered_map은 임의의 위치의 원소에 access 할 수 없어 getRandom을 O(1)의 복잡도로 구현할 수 없다.
+        - 따라서 vector를 추가로 사용하였다. unordered_map에는 (val, 원소의 index)를 보관한다.
+    2. 구현
+        - insert(val)
+            - unordered_map에 val이 없다면 vector의 끝에 삽입한다.
+            - unordered_map에는 val과 val의 index(vector의 size - 1)를 보관해준다.
+        - remove(val)
+            - O(1)의 복잡도로 삭제하기 위해, vector에서 해당 val을 vector의 마지막으로 보낸뒤 삭제한다.
+            - unordered_map의 index도 업데이트 해준다.
+        - getRandom: `return nums[rand() % nums.size()];`
+- Complexity
+    1. Time: O(1) 의 평균 시간복잡도
+    2 Space: O(N + N) = vector와 unordered_map 추가로 사용함
+
 ## 220821
 ### LeetCode 48. Rotate Image: [Problem](https://leetcode.com/problems/rotate-image/)
 - Algorithm: Array, Math, Matrix / Level: Medium
