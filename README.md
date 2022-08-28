@@ -20,8 +20,19 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220828
+### LeetCode 1329. Sort the Matrix Diagonally: [Problem](https://leetcode.com/problems/sort-the-matrix-diagonally/)
+- Algorithm: Array, Sorting, Matrix / Level: Medium
+- Intro
+    - 2차원 숫자 배열이 주어질 때, 각 대각선에 놓여있는 원소들을 오름차순으로 정렬하기.
+- Solve
+    - 각 대각선의 원소들을 vector에 넣고 stl::sort()를 이용하여 정렬한 뒤, 다시 배열에 assign 하였다.
+- Complexity
+    1. Time: O(M x NlogN) = 각 대각선에 대해 vector를 이용하여 정렬함(NlogN)
+    2. Space: O(MN) = 정렬하기 위한 vector를 추가로 사용함
+
 ## 220827
-### 363. Max Sum of Rectangle No Larger Than K: [Problem](https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/)
+### LeetCode 363. Max Sum of Rectangle No Larger Than K: [Problem](https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/)
 - Algorithm: Array, Matrix, Prefix Sum, Binary Search, Ordered Set / Level: Hard
 - Intro
     - 2차원 int 배열이 주어질 때, sub matrix의 max sum을 구하는 문제. max sum은 k 이하여야 한다.
