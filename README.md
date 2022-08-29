@@ -20,6 +20,23 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220829
+### LeetCode 108. Convert Sorted Array to Binary Search Tree: [Problem](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/)
+- Algorithm: Divide and Conquer, Binary Search Tree / Level: Easy
+- Intro
+    - 오름차순으로 정렬된 정수 배열이 주어질 때, 이를 height-balanced BST로 바꾸는 문제.
+    - height-balanced는 두 subtree의 node의 depth 차이가 1이상 나지 않는 것이다.
+- Solve
+    1. 오름차순으로 정렬되어 있기 때문에 다음이 성립한다.
+        - 가운데 노드를 기준으로 왼쪽 원소들은 node->left에, 오른쪽 원소들은 node->right에 subtree로 만들면 된다.
+    2. 이를 재귀적으로 반복한다.
+        - 최초 start는 0, end는 nums.size()이다.
+        - mid = (start+end)/2로 계산 후, node를 동적으로 생성하여 nums[mid] 값을 할당해준다.
+        - 다시 2 구간으로 나누어 진행한다.
+- Complexity
+    1. Time: O(N) = 배열의 모든 원소를 순회하므로
+    2. Space: O(N+N) = 재귀 함수 stack + 트리의 크기
+
 ## 220828
 ### LeetCode 1329. Sort the Matrix Diagonally: [Problem](https://leetcode.com/problems/sort-the-matrix-diagonally/)
 - Algorithm: Array, Sorting, Matrix / Level: Medium
