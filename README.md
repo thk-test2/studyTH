@@ -20,6 +20,24 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220903
+### LeetCode 967. Numbers With Same Consecutive Differences: [Problem](https://leetcode.com/problems/numbers-with-same-consecutive-differences/)
+- Algorithm: 백트래킹, BFS / Level: Medium
+- Intro
+    - 만들어야 하는 숫자의 길이 N과 각 자리의 숫자의 차이 K가 주어질 때, 가능한 모든 숫자를 만들어라.
+    - 예를 들어 N = 3, K = 7 이면 [181,292,707,818,929]을 만들어야 한다.
+- Solve
+    1. 백트래킹(DFS)
+        - K가 0이면 계속 같은 숫자를 추가해준다.
+        - K가 0이 아니면 `num%10 + k < 10` 인 경우와 `num%10 - k >=0`인 경우를 나누어 num을 만들고 다음 단계로 진행한다.
+        - 숫자 길이가 N이 될때까지 진행하고 정답 배열에 추가해준다.
+    2. BFS도 가능하다.
+        - 최초 큐에 (1,2,3,4,5,6,7,8,9)를 넣고 조건에 맞는 숫자를 만들어서 큐에 다시 삽입한다.
+        - N자리가 될 때까지 반복한다.
+- Complexity
+    1. Time: O(2^N) = 각 단계에서 2개의 선택지가 있다. K가 0일때는 예외적으로 O(N)이 된다.
+    2. Space: O(N + 2^N) = 재귀 함수 공간 O(N) + 정답 가지수 9*2^(N-1)
+
 ## 220829
 ### LeetCode 108. Convert Sorted Array to Binary Search Tree: [Problem](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/)
 - Algorithm: Divide and Conquer, Binary Search Tree / Level: Easy
