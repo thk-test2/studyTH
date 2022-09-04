@@ -20,6 +20,46 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220904
+### LeetCode 987. Vertical Order Traversal of a Binary Tree: [Problem](https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/)
+- Algorithm: Hash Table, Binary Tree / Level: Hard
+- Intro
+    - 바이너리 트리가 주어질 때 vertical order traversal 결과를 구하여 리턴하기.
+    - vertical order traversal은 각 column 번호에 해당하는 배열에 row와 값의 크기 순으로 정렬하는 것이다.
+    - row는 tree의 depth와 같고 column은 왼쪽으로 진행하면 현재 column - 1, 오른쪽은 column + 1 이 된다.
+- Solve
+    1. 다음 map에 트리를 순회하며 값을 저장할 것이다. key는 column 번호, value에는 row와 노드 값이다.
+        - `map<int, vector<pair<int, int>>> m;`
+        - map을 쓰는 이유는 key 순서대로 정렬이 되기 때문이다.
+    2. 모든 트리 노드를 순회한 후,
+        - 각 column에 해당하는 vector의 값들을 정렬해준다. row와 값의 크기가 오름차순이어야 한다.
+        - 정답 vector에 저장하여 리턴한다.
+- Complexity
+    1. Time: O(N x (logN)^2) = 순회는 O(N)이지만, 정렬 및 정답 vector에 복사하는데 많은 시간이 든다.
+    2. Space: O(N + 2N + N) = 재귀 함수 공간 + map + 정답 vector
+
+### LeetCode 10. Regular Expression Matching: [Problem](https://leetcode.com/problems/regular-expression-matching/)
+- Algorithm: String, DP, Recursion / Level: Hard
+- Intro
+    - string과 pattern이 주어질 때 pattern이 모든 string을 cover할 수 있는지 확인하는 문제.
+    - 패턴에는 다음 특수문자들이 있을 수 있다.
+        - `.` : 어떤 문자와도 매칭될 수 있다.
+        - `*` : 별 앞의 문자가 몇 개이든 매칭될 수 있다(0개부터 무한대까지). 예를 들어 a*이면 "", "a", "aa" 등 아무거나 상관이 없다.
+    - 크게 p[i+1]의 문자가 별(*)인 경우와 아닌 경우로 나누어 진행된다.
+- Solve
+    1. p[i+1]이 별이면,
+        - p[i] 문자를 s[i]와 비교하지 않아도 되므로(0개), 별을 건너뛰어(p의 index를 2 증가) 진행할 수 있다.
+        - p[i] 문자를 s[i]와 비교한다면, 같은 문자는 무한대로 매칭할 수 있으므로 반복문을 써서 s의 index를 증가시켜 진행한다.
+    2. p[i+1]이 별이 아니라면,
+        - p[i]와 s[i] 문자를 비교하여, 같으면 각각의 index를 1씩 증가시켜 다음 재귀함수로 진행한다.
+        - p[i]가 `.` 이면 어떤 문자와도 매칭될 수 있으므로 각각의 index를 1씩 증가시켜 진행한다.
+        - 위 두가지 경우가 아니면 false를 리턴한다.
+    3. s와 p의 index를 인자로 하는 memo배열을 써서 반복 계산을 줄일 수 있다.
+        - `memo[i][j]`: i와 j일 때의 패턴 매칭 결과
+- Complexity
+    1. Time O(TP): text의 길이가 T, pattern의 길이가 P일 때, memo배열을 써서 각 index에 대해 한번씩만 계산함.
+    2. Space O(P + TP): 재귀 함수 공간과 추가로 memo 배열 사용함
+
 ## 220903
 ### LeetCode 967. Numbers With Same Consecutive Differences: [Problem](https://leetcode.com/problems/numbers-with-same-consecutive-differences/)
 - Algorithm: 백트래킹, BFS / Level: Medium
