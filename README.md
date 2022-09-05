@@ -20,6 +20,21 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220905
+### LeetCode 429. N-ary Tree Level Order Traversal: [Problem](https://leetcode.com/problems/n-ary-tree-level-order-traversal/)
+- Algorithm: Tree, BFS / Level: Medium
+- Intro
+    - N개의 child를 가질 수 있는 트리를 순회하여 각 level의 vector에 노드들을 모아서 리턴하기.
+    - root부터 시작하여 BFS 탐색을 해주면 된다.
+- Solve
+    1. Queue에는 `pair<Node*, int>`를 담는데, 두번째가 level에 해당한다.
+        - child 노드로 갈 때마다 level을 +1 해준다.
+        - Queue에서 꺼낼 때, 해당하는 level의 vector에 저장한다.
+    2. 모든 노드를 순회하고 결과를 정리하여 리턴한다.
+- Complexity
+    1. Time: O(N): 모든 노드를 순회하므로.
+    2. Space: O(N + N): BFS를 위한 큐 + level vector 추가로 사용함.
+
 ## 220904
 ### LeetCode 987. Vertical Order Traversal of a Binary Tree: [Problem](https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/)
 - Algorithm: Hash Table, Binary Tree / Level: Hard
