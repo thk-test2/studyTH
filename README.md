@@ -20,6 +20,24 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220906
+### LeetCode 814. Binary Tree Pruning: [Problem](https://leetcode.com/problems/binary-tree-pruning/)
+- Algorithm: Tree, DFS, Binary Tree / level: Medium
+- Intro
+    - 1과 0의 값을 갖는 바이너리 트리가 주어진다. 값이 모두 0으로 이루어진 sub tree들을 제거하여라.
+        - parent가 0이고 child가 1이면 parent를 제거할 수 없다.
+        - child가 모두 0이거나 없어야 child와 parent를 제거할 수 있다.
+    - 재귀적으로 leaf node 부터 올라오면서 제거해주는 것을 생각하였다.
+- Solve
+    1. leaf node에 도달할 때까지 left와 right에 대해 재귀 함수를 진행한다.(DFS)
+    2. leat node에 도달하고, 해당 node의 값이 0이면 제거한다.(node = nullptr)
+    3. 이후 node 값을 리턴하면 부모 node의 left나 right에 해당 값이 assign 된다.
+        - 만약 child가 모두 0이어서 제거되었다면 이제 부모가 leaf node가 되었을 것이다.
+        - 이제 부모 노드의 값이 0인지 체크하고 제거할 수 있다.
+- Complexity
+    1. Time: O(N) = 모든 tree node를 순회한다.
+    2. Space: O(N) = 재귀 함수 stack 공간은 노드의 개수만큼 필요하다.
+
 ## 220905
 ### LeetCode 429. N-ary Tree Level Order Traversal: [Problem](https://leetcode.com/problems/n-ary-tree-level-order-traversal/)
 - Algorithm: Tree, BFS / Level: Medium
@@ -32,8 +50,8 @@
         - Queue에서 꺼낼 때, 해당하는 level의 vector에 저장한다.
     2. 모든 노드를 순회하고 결과를 정리하여 리턴한다.
 - Complexity
-    1. Time: O(N): 모든 노드를 순회하므로.
-    2. Space: O(N + N): BFS를 위한 큐 + level vector 추가로 사용함.
+    1. Time: O(N) = 모든 노드를 순회하므로.
+    2. Space: O(N + N) = BFS를 위한 큐 + level vector 추가로 사용함.
 
 ## 220904
 ### LeetCode 987. Vertical Order Traversal of a Binary Tree: [Problem](https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/)
@@ -2285,7 +2303,7 @@
 - Algorithm: Hash Table, Graph, BFS, DFS
 - Intro: Use a Hash Table to contain the cloned graph.
 - Solve
-    1. Declare a hash table: `unordered_map<Node*, Node*> m;
+    1. Declare a hash table: `unordered_map<Node*, Node*> m;`
     2. Use DFS(or BFS) to make & connect the cloned nodes.
 - Complexity
     1. Time: O(N+E) - DFS, BFS same
