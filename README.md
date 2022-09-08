@@ -20,6 +20,20 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220909
+### LeetCode 24. Swap Nodes in Pairs: [Problem](https://leetcode.com/problems/swap-nodes-in-pairs/)
+- Algorithm: Linked List, Recursion / level: Medium
+- Intro
+    - 링크드 리스트가 주어질 때 두 개의 인접한 노드들을 swap 하여라.
+    - 예시: [1, 2, 3, 4] -> [2, 1, 4, 3]
+- Solve
+    - 앞의 노드를 가리키는 prev와 그 다음 노드를 가리키는 cur 포인터를 사용해서 pair별로 swap 해주었다.
+    - while 문을 사용하여 구현했는데, 연산과정 중 nullptr에 접근하지 않도록 하였다.
+    - 재귀적으로도 풀 수 있다고 한다.
+- Complexity
+    1. Time: O(N) = 모든 원소를 순회한다.
+    2. Space: O(1) = prev와 cur 포인터만 추가로 사용한다. 재귀로 푼다면 O(N)이 될 것이다.
+
 ## 220906
 ### LeetCode 814. Binary Tree Pruning: [Problem](https://leetcode.com/problems/binary-tree-pruning/)
 - Algorithm: Tree, DFS, Binary Tree / level: Medium
