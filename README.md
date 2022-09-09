@@ -21,6 +21,25 @@
     - 지수: 2<sup>n</sup>
 
 ## 220909
+### LeetCode 1996. The Number of Weak Characters in the Game: [Problem](https://leetcode.com/problems/the-number-of-weak-characters-in-the-game/)
+- Algorithm: Array, Sorting, Greedy, Monotonic Stack / Level: Medium
+- Intro
+    - attack과 defense 쌍이 벡터로 주어질 때, 두 수치가 모두 어떤 쌍에 비해 낮을때 weak 캐릭터라고 한다.
+    - weak 캐릭터의 숫자를 모두 구하여라.
+- Solve
+    1. pair의 첫번째 숫자를 기준으로 오름차순 정렬, 두번째 숫자를 기준으로 내림차순 정렬한다.
+        - 두번쨰 숫자를 내림차순 정렬하는 이유는, 첫번째 숫자가 같은 경우 count를 증가시키면 안 되기 때문이다.
+        - 예를 들어 (5,2) (5,4)로 정렬되었다면 우리는 뒤에서 부터 비교할 것이기 때문에 count = 1이 된다.(정답은 0)
+            - (5,4) (5,2)이어야 의도한대로 weak 캐릭터의 수는 0이 된다.
+    2. 배열의 맨 뒤에서부터 두번째 숫자의 최대값을 유지하면서 새로운 두번째 숫자와 비교한다.
+        - 첫번쨰 값으로 오름차순 정렬했기 때문에 두번째 값만 비교해주면 된다.
+        - 현재 최대값보다 작으면 weak 캐릭터라고 할 수 있으므로 count++ 해준다.
+    3. 모든 쌍을 비교한 후 결과를 리턴한다.
+- Complexity
+    1. Time: O(NlogN) = Sorting O(NlogN) + 전체 순회 O(N)
+    2. Space: O(1) = max defense 값을 저장하는 변수만 추가로 사용된다.
+
+## 220908
 ### LeetCode 24. Swap Nodes in Pairs: [Problem](https://leetcode.com/problems/swap-nodes-in-pairs/)
 - Algorithm: Linked List, Recursion / level: Medium
 - Intro
@@ -28,7 +47,7 @@
     - 예시: [1, 2, 3, 4] -> [2, 1, 4, 3]
 - Solve
     - 앞의 노드를 가리키는 prev와 그 다음 노드를 가리키는 cur 포인터를 사용해서 pair별로 swap 해주었다.
-    - while 문을 사용하여 구현했는데, 연산과정 중 nullptr에 접근하지 않도록 하였다.
+    - while 문을 사용하여 구현했으며, 연산과정 중 nullptr에 접근하지 않도록만 주의해서 구현하였다.
     - 재귀적으로도 풀 수 있다고 한다.
 - Complexity
     1. Time: O(N) = 모든 원소를 순회한다.
