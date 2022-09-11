@@ -20,6 +20,27 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220911
+### LeetCode 1383. Maximum Performance of a Team: [Problem](https://leetcode.com/problems/maximum-performance-of-a-team/)
+- Algorithm: Array, Greedy, Sorting, Heap / Level: Hard
+- Intro
+    - N명의 엔지니어에 대해 speed, efficiency 배열이 주어질 때 K명의 엔지니어를 골라서 만들 수 있는 maximum performance 구하기.
+    - 팀의 performance는 K명 엔지니어 speed의 합 * min(efficiency) 이다.
+- Solve: [참고](https://leetcode.com/problems/maximum-performance-of-a-team/discuss/539687/JavaC%2B%2BPython-Priority-Queue)
+    1. 필요한 자료구조
+        - `vector<pair<efficiency, speed>> ess` 벡터를 선언하여, efficiency가 감소하는 순서로 정렬한다.
+        - `priority_queue<int, vector<int>, greater<int>> pq`: 최소 speed를 추적하기 위한 우선순위 큐
+        - `long sumS = 0, res = 0`: speed의 합과 performance.
+    2. ess 벡터를 순회하며 다음 계산을 수행한다.
+        1. pq에 현재 speed를 삽입한다.
+        2. sumS에 현재 speed를 더한다.
+        3. pq의 size가 k보다 크면 sumS에서 pq.top()을 빼주고, pq.pop() 해준다.
+        4. `res = max(res, sumS * e);`
+    3. 계산된 res를 리턴한다.
+- Complexity
+    1. Time: O(NlogN) = efficiency 기준 정렬 O(NlogN) +  performance 계산 O(NlogK)
+    2. Space: O(N + K) = efficiency와 speed를 pair로 갖는 벡터 + 우선순위 큐 O(K)
+
 ## 220909
 ### LeetCode 1996. The Number of Weak Characters in the Game: [Problem](https://leetcode.com/problems/the-number-of-weak-characters-in-the-game/)
 - Algorithm: Array, Sorting, Greedy, Monotonic Stack / Level: Medium
