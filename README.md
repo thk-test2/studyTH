@@ -20,6 +20,22 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220916
+### LeetCode 2007. Find Original Array From Doubled Array: [Problem](https://leetcode.com/problems/find-original-array-from-doubled-array/)
+- Algorithm: Array, Hash Table, Greedy, Sorting / Level: Medium
+- Intro
+    - original int 배열의 원소들이 모두 2씩 곱해져서 원본 배열에 추가되고, 랜덤하게 섞여있다. 이를 changed 배열이라고 한다.
+    - changed 배열이 주어질 때 이것의 original 배열을 구할 수 있는지 판단하고 원본 배열을 리턴하여라.
+- Solve
+    1. changed 배열을 오름차순으로 정렬한다.
+    2. 배열을 순회하며 hash table에 각 원소의 빈도수를 기록한다.
+    3. 다시 배열을 순회하며 다음을 수행한다.
+        - 홀수이면 doubled 된 것이 아니므로 곱하기 2한 것이 hash table에 있는지 확인한다. 있으면 해당 값의 빈도수를 감소시키고 정답 배열에 추가한다.
+        - 짝수이면 곱하기와 나누기 모두 가능하므로, 둘 다 hash table에 있는지 확인한다. 있으면 해당 값의 빈도수를 감소시키고 정답 배열에 추가한다.
+- Complexity
+    1. Time: O(NlogN) = 정렬 O(NlogN) + Hash table에 추가 O(N) + 정답 확인 O(N)
+    2. Space: O(N) = Hash table 사용함
+
 ## 220911
 ### LeetCode 1383. Maximum Performance of a Team: [Problem](https://leetcode.com/problems/maximum-performance-of-a-team/)
 - Algorithm: Array, Greedy, Sorting, Heap / Level: Hard
