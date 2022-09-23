@@ -20,6 +20,49 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220923
+### LeetCode 1680. Concatenation of Consecutive Binary Numbers: [Problem](https://leetcode.com/problems/concatenation-of-consecutive-binary-numbers/)
+- Algorithm: Math, Bit Manipulation, Simulation / Level: Medium
+- Intro
+    - 정수 n이 주어질 때, 1부터 n까지의 숫자를 binary string으로 바꾸어서 연결한다.
+    - 연결된 후의 십진수 값을 10^9+7로 나눈 나머지를 리턴하라.
+    - 예를 들어 n = 3이면 1, 2, 3은 "1", "10", "11"이고 연결하면 "11011". 답은 27이 된다.
+- Solve
+    - i를 1부터 n까지 증가시키면서 sum에 더하고, 나머지를 구해주는데 고려할 점이 있다.
+        - i를 더하기 전, 기존 sum을 왼쪽으로 옮겨줘야 한다.
+        - 이진수를 계속 만들어나가기 때문에, 옮겨지는 자리수는 log2(i) + 1 이다.
+    - n까지 반복하여 계산 후 정답을 리턴한다.
+- Complexity
+    1. Time: O(N) = 1부터 N까지 순회
+    2. Space: O(1) = 추가 공간은 사용하지 않는다.
+
+### LeetCode 557. Reverse Words in a String III: [Problem](https://leetcode.com/problems/reverse-words-in-a-string-iii/)
+- Algorithm: Two Pointers, String / Level: Easy
+- Intro
+    - 주어진 string의 각 단어들을 반대로 뒤집어서 새로운 단어를 만드는 문제.
+    - 예를 들면 Input: s = "God Ding" / Output: "doG gniD"
+- Solve
+    - string의 find 메소드와 substr을 사용해서 ' ' 문자를 찾고 정답에 거꾸로 반복해서 추가해주었다.
+- Complexity
+    1. Time: O(N^2) = 매 단어마다 거꾸로 탐색해서 추가해 주므로 N^2
+    2. Space: O(1) = 추가 공간 없음
+
+### LeetCode 985. Sum of Even Numbers After Queries: [Problem](https://leetcode.com/problems/sum-of-even-numbers-after-queries/)
+- Algorithm: Array, Simulation / Level: Medium
+- Intro
+    - nums 배열과 query 배열이 주어진다. query의 각 element는 {val, index} 쌍으로 이루어져 있다.
+    - nums[index]에 val을 더한 뒤, nums 배열에 있는 모든 짝수의 합을 구하고 이를 정답 배열에 저장하여라.
+    - 예를 들어 nums = [1,2,3,4], queries = [[1,0],[-3,1],[-4,0],[2,3]] 이면
+        - query의 첫번째 pair를 적용하면 nums[0] += 1 이고, nums = [2, 2, 3, 4]가 된다. 짝수의 합은 2 + 2 + 4 = 8
+        - 이후 두번째 pair를 적용하면 nums[1] += -3 이고, nums = [2, -1, 3, 4]가 된다. 짝수의 합은 2 + 4 = 6
+        - 모두 반복하면 정답 배열은 [8, 6, 2, 4]가 된다.
+- Solve
+    - 문제를 이해하는 것이 약간 까다롭지만 이해했으면 그대로 구현해주면 된다.
+    - 짝수의 합을 미리 구해놓고, 매 쿼리를 적용할 때 짝수면 빼준 다음 다시 더한다. 그리고 정답 배열에 추가한다.
+- Complexity
+    1. Time: O(N) = 짝수들의 합을 미리 구할때 O(N) + 쿼리를 적용하기 위해 다시 순회할 때 O(N)
+    2. Space: O(1) = 정답 배열은 추가 공간에서 제외한다.
+
 ## 220916
 ### LeetCode 2007. Find Original Array From Doubled Array: [Problem](https://leetcode.com/problems/find-original-array-from-doubled-array/)
 - Algorithm: Array, Hash Table, Greedy, Sorting / Level: Medium
