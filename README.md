@@ -20,6 +20,23 @@
        ```
     - 지수: 2<sup>n</sup>
 
+## 220929
+### LeetCode 658. Find K Closest Elements: [Problem](https://leetcode.com/problems/find-k-closest-elements/)
+- Algorithm: Array, Two Pointers, Binary Search, Sorting, Heap / Level: Medium
+- Intro
+    - 오름차순으로 정렬된 int array가 주어질 때, k개의 x와 가까운 정수들을 구하여 리턴하라.
+    - x와 가깝다는 것은 다음 조건을 만족하는 것을 의미한다.
+        - `|a - x| < |b - x|, or`
+        - `|a - x| == |b - x| and a < b`
+- Solve
+    1. 주어진 array를 조건 그대로 정렬해 주었다. 우선순위 큐 같은 추가 자료구조를 쓰지 않았다.
+        - 람다 함수를 이용해 좀 더 간결한 코드를 구현하고자 했다.
+    2. 정렬된 array의 맨 앞부터 k개 까지를 정답 배열에 넣는다.
+    3. 정답 배열도 오름차순으로 정렬하여 리턴한다.
+- Complexity
+    1. Time: O(NlogN) = array를 정렬하는데 걸리는 시간 복잡도
+    2. Space: O(K) = 정답 배열을 위한 추가 공간 사용
+
 ## 220923
 ### LeetCode 1680. Concatenation of Consecutive Binary Numbers: [Problem](https://leetcode.com/problems/concatenation-of-consecutive-binary-numbers/)
 - Algorithm: Math, Bit Manipulation, Simulation / Level: Medium
