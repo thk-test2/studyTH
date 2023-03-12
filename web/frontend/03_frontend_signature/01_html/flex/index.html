@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="container">
+    <div class="item">
+      <div>TEST</div>
+      <img src="free.jpg" alt="FREE" style="width: 20%">
+    </div>
+    <div class="item">
+      <div>TEST</div>
+      <img src="free.jpg" alt="FREE" style="width: 20%">
+    </div>
+    <div class="item">
+      <div>TEST</div>
+      <img src="free.jpg" alt="FREE" style="width: 20%">
+    </div>
+    <div class="item">
+      <div>TEST</div>
+      <img src="free.jpg" alt="FREE" style="width: 20%">
+    </div>
+  </div>
+  <div class="container2">
+    <div class="item2">TEST
+      <div class="item3"></div>
+      <div class="item3"></div>
+      <div class="item3"></div>
+    </div>
+    <div class="item2">TEST
+      <div class="item3"></div>
+      <div class="item3"></div>
+      <div class="item3"></div>
+    </div>
+  </div>
+</body>
+<style>
+.container {
+  display: flex;
+  background-color: pink;
+  justify-content: space-between;
+  align-items: stretch;
+}
+.item {
+  display: flex;
+  /* flex-basis: 200px; */
+  height: 10vh;
+  background-color: lightblue;
+  align-items: center;
+  justify-content: space-around;
+  margin: 1%;
+}
+.container2 {
+  display: flex;
+  background-color: pink;
+  justify-content: space-between;
+  align-items: stretch;
+  height: 85vh;
+  margin: 10px 0 0 0;
+}
+.item2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: lightblue;
+  align-items: center;
+  margin: 1%;
+}
+.item2:nth-child(1) {
+  flex-grow: 3;
+}
+.item2:nth-child(2) {
+  flex-grow: 1;
+}
+.item3 {
+  width: 95%;
+  /* flex-basis: 25%; */
+  margin: 5px 0 5px 0;
+  background-color: lightgray;
+}
+.item3:nth-child(1) {
+  flex-grow: 1;
+}
+.item3:nth-child(2) {
+  flex-grow: 1;
+}
+.item3:nth-child(3) {
+  flex-grow: 1;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+</style>
+</html>

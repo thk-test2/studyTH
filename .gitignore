@@ -16,3 +16,8 @@ Makefile
 
 # Qt build files
 build-*
+
+# Web
+node_modules
+dist
+package-lock.json

@@ -1,0 +1,17 @@
+{
+  "name": "advanced",
+  "version": "1.0.0",
+  "description": "",
+  "main": "03_deep_copy.js",
+  "scripts": {
+    "dev": "parcel ./index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "parcel": "^2.8.3"
+  }
+}

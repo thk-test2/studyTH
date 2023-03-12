@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <!-- https://jsbin.com/cutivij/2/edit?html,css,output -->
+</head>
+<body>
+  <div class="blue"></div>
+  <div class="green"></div>
+  <div class="red"></div>
+</body>
+<style>
+div {
+  width:100px;height:100px;
+  border:1px solid gray;
+  font-size:0.7em;
+}
+
+.blue {  
+  background-color:blue;
+}
+
+.green {
+  float:left;
+  background-color:green;
+}
+
+.red {
+  background-color:red;
+  /*숨겨진 녹색을 드러내기 위해 relative로 살짝옮김*/
+  position:relative;
+  left:10px;
+}
+</style>
+</html>

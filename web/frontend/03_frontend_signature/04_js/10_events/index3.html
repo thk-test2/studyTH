@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script type="module" defer src="07_mouse_pointer.js"></script>
+  <style>
+    body {
+      height: 3000px;
+    }
+    .parent {
+      width: 300px;
+      height: 200px;
+      padding: 20px;
+      border: 10px solid;
+      background-color: red;
+      overflow: auto;
+    }
+    .child {
+      width: 200px;
+      height: 1000px;
+      border: 10px solid;
+      background-color: orange;
+    }
+    .child.active {
+      background-color: yellowgreen;
+    }
+  </style>
+</head>
+<body>
+  <div class='parent'>
+    <div class='child'>
+    </div>
+  </div>
+</body>
+</html>
