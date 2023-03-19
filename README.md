@@ -4,8 +4,8 @@
 ### 공부 주제
 - Computer Science Basics
 - 알고리즘
-- 프로그래밍 언어: Cpp, Python 등
-- 개발 프레임워크: Qt, OpenGL, GStreamer 등
+- 프로그래밍 언어: JS, Java, Cpp, Python 등
+- 개발 프레임워크: Web, Qt, OpenGL, GStreamer 등
 
 ### 기타
 - 마크다운 [문법](https://gist.github.com/ihoneymon/652be052a0727ad59601)
