@@ -1,0 +1,10 @@
+body {
+  height: 3000px;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: rgba(255,255,255,.5);
+}
