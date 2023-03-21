@@ -69,7 +69,9 @@ export class Store {
           state[key] = val;
           // this.observers['message']()
           // this.observers[key]();
-          this.observers[key].forEach(observer => observer(val));
+          if (Array.isArray(this.observers[key])) { // 호출할 콜백이 있는 경우!
+            this.observers[key].forEach(observer => observer(val));
+          }
         }
       });
     }

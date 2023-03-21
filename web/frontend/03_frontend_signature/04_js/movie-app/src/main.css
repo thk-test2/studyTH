@@ -23,6 +23,31 @@ body {
   padding: 40px 0;
 }
 
+.btn {
+  height: 50px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-white);
+  background-color: var(--color-area);
+  cursor: pointer;
+  transition: .3s;
+}
+.btn:hover {
+  background-color: var(--color-hover);
+}
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-black);
+}
+.btn-primary:hover {
+  background-color: var(--color-hover);
+  color: var(--color-white);
+}
+
 .headline {
   margin-bottom: 40px;
 }
@@ -37,4 +62,29 @@ body {
 }
 .headline p {
   color: var(--color-white-30);
+}
+
+
+.search {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+.search input {
+  flex-grow: 1;
+  height: 50px;
+  padding: 0 20px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: var(--color-white);
+  background-color: var(--color-area);
+}
+.search input::placeholder {
+  color: var(--color-white-30);
+}
+.search .btn {
+  flex-grow: 1;
+  max-width: 150px;
 }
