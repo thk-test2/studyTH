@@ -1,3 +1,4 @@
+/* Common */
 html {
   --color-black: #0E111B;
   --color-white: #FFF;
@@ -12,17 +13,31 @@ html {
 }
 body {
   background-color: var(--color-black);
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   line-height: 1.4;
   color: var(--color-white);
 }
 
+
+/* Container */
 .container {
   max-width: 1120px;
   margin: 0 auto;
   padding: 40px 0;
 }
+@media (max-width: 1200px) {
+  .container {
+    padding: 40px;
+  }
+}
+@media (max-width: 600px) {
+  .container {
+    padding: 40px 20px;
+  }
+}
 
+
+/* Button */
 .btn {
   height: 50px;
   padding: 0 20px;
@@ -49,6 +64,7 @@ body {
 }
 
 
+/* Default Loading Animation */
 .the-loader {
   width: 30px;
   height: 30px;
@@ -95,6 +111,7 @@ body {
 }
 
 
+/* components/TheHeader */
 header {
   padding: 20px 40px;
   background-color: rgba(14,17,27,.9);
@@ -106,8 +123,8 @@ header {
   gap: 40px;
 }
 header .logo {
-  font-size: 20px;
   font-family: "Oswald", sans-serif;
+  font-size: 20px;
   color: var(--color-white-50);
   text-decoration: none;
 }
@@ -146,8 +163,20 @@ header .user:hover {
 header .user img {
   width: 100%;
 }
+@media (max-width: 600px) {
+  header {
+    padding: 14px 20px;
+  }
+  header nav {
+    display: none;
+  }
+  header .user {
+    right: 20px;
+  }
+}
 
 
+/* components/TheFooter */
 footer {
   padding: 40px 40px 60px;
   text-align: center;
@@ -160,6 +189,8 @@ footer a:hover {
   text-decoration: underline;
 }
 
+
+/* components/Headline */
 .headline {
   margin-bottom: 40px;
 }
@@ -175,8 +206,14 @@ footer a:hover {
 .headline p {
   color: var(--color-white-30);
 }
+@media (max-width: 600px) {
+  .headline h1 {
+    font-size: 60px;
+  }
+}
 
 
+/* components/Search */
 .search {
   display: flex;
   gap: 10px;
@@ -202,6 +239,7 @@ footer a:hover {
 }
 
 
+/* components/MovieList */
 .movie-list {
   padding: 20px;
   border-radius: 4px;
@@ -220,6 +258,7 @@ footer a:hover {
 }
 
 
+/* components/MovieItem */
 .movies .movie {
   --width: 200px;
   width: var(--width);
@@ -240,6 +279,8 @@ footer a:hover {
   border: 6px solid var(--color-primary);
 }
 .movies .movie .info {
+  background-color: rgba(14,17,27,.3);
+  backdrop-filter: blur(10px);
   width: 100%;
   padding: 14px;
   box-sizing: border-box;
@@ -248,8 +289,6 @@ footer a:hover {
   position: absolute;
   left: 0;
   bottom: 0;
-  background-color: rgba(14,17,27,.3);
-  backdrop-filter: blur(10px);
 }
 .movies .movie .info .year {
   color: var(--color-primary);
@@ -259,7 +298,7 @@ footer a:hover {
 }
 
 
-
+/* components/MovieListMore */
 .view-more {
   width: 100%;
   max-width: 300px;
@@ -271,6 +310,7 @@ footer a:hover {
 }
 
 
+/* routes/Movie */
 .the-movie {
   color: var(--color-white-50);
   display: flex;
@@ -289,8 +329,8 @@ footer a:hover {
   flex-grow: 1;
 }
 .the-movie .title {
-  font-size: 70px;
   font-family: "Oswald", sans-serif;
+  font-size: 70px;
   line-height: 1;
   color: var(--color-white);
   margin-bottom: 30px;
@@ -310,13 +350,30 @@ footer a:hover {
   height: 400px;
 }
 .the-movie h3 {
-  font-size: 20px;
   font-family: "Oswald", sans-serif;
+  font-size: 20px;
   color: var(--color-white);
   margin: 24px 0 6px;
 }
+@media (max-width: 1200px) {
+  .the-movie {
+    gap: 30px;
+  }
+  .the-movie .poster {
+    --width: 300px;
+  }
+}
+@media (max-width: 720px) {
+  .the-movie {
+    display: block;
+  }
+  .the-movie .title {
+    font-size: 50px;
+    margin-top: 50px;
+  }
+}
 
-
+/* routes/About */
 .about .photo {
   width: 230px;
   height: 230px;
@@ -325,8 +382,8 @@ footer a:hover {
   background-size: cover;
 }
 .about .name {
-  font-size: 40px;
   font-family: "Oswald", sans-serif;
+  font-size: 40px;
   margin-bottom: 20px;
 }
 .about p {
@@ -340,4 +397,13 @@ footer a:hover {
 }
 .about a:hover {
   text-decoration: underline;
+}
+
+
+/* routes/NotFound */
+.not-found h1 {
+  font-size: 70px;
+  font-weight: 700;
+  color: var(--color-white-10);
+  text-align: center;
 }
