@@ -4,11 +4,23 @@ import './index.css';
 import Square from './Square';
 
 export default class Board extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null)
+    }
+  }
+
+  handleClick(i) {
+    const squares = this.state.squares.slice();
+    squares[i] = 'X';
+    this.setState({ squares: squares });
+  }
+
   renderSquare(i) {
     return (
-      <Square
-        value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i)}
+      <Square value={this.state.squares[i]}
+        onClick={() => this.handleClick(i)}
       />
     );
   }
@@ -16,6 +28,7 @@ export default class Board extends React.Component {
   render() {
     return (
       <div>
+        <div className='status'>Next player: X, O</div>
         <div className="board-row">
           {this.renderSquare(0)}
           {this.renderSquare(1)}
