@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './Board.css';
 import Square from './Square';
 
 const Board = ({squares, onClick}) => {
